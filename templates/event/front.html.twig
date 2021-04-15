@@ -1,0 +1,83 @@
+{% extends 'front/baseFront.html.twig' %}
+{% block bar%}
+    <div
+            class="padding-y-60 bg-cover"
+            data-dark-overlay="6"
+            style="background: url({{ asset('theme/img/cropper/1.jpg') }}) no-repeat"
+    >
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6 my-2 text-white">
+                    <ol class="breadcrumb breadcrumb-double-angle bg-transparent p-0">
+                        <li class="breadcrumb-item"><a href="#">Home</a></li>
+                        <li class="breadcrumb-item"><a href="{{ path('upgradi') }}">Events</a></li>
+                    </ol>
+                    <h2 class="h1">All Events</h2>
+                    {% set i=0 %}
+                    {% for e in events %}
+                        {% if e.getDateDebut<=date('now')  %}
+                        {% set i=i+1 %}
+                        {% endif %}
+                    {% endfor %}
+                    <p>{{ events|length-i}} Events found</p>
+                </div>
+                <form class="col-lg-5 my-2 ml-auto" method="post" action="{{ path('afterSearch1') }}">
+                    <div class="input-group bg-white rounded p-1">
+                        <input
+                                type="text"
+                                class="form-control border-white"
+                                placeholder="Search your fav event"
+                                required=""
+                                name="search1"
+                        />
+                        <div class="input-group-append">
+                            <button class="btn btn-info rounded" type="submit">
+                                Search
+                                <i class="ti-angle-right small"></i>
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+{% block createHere %}
+    {% if events %}
+        <section class="padding-y-60 bg-light">
+        <div class="container">
+        <div class="row">
+    {% for e in events %}
+        {% if e.getDateDebut>=date('now')  %}
+        <div class="col-lg-4 col-md-6 marginTop-30">
+            <div class="card height-100p shadow-v1">
+                <img class="card-img-top" src="{{ e.getImage }}" alt="" />
+                <div class="card-body">
+                    <a href="#" class="h4">
+                        {{ e.getNomevent }}
+                    </a>
+                    <ul class="list-unstyled line-height-lg mt-4">
+                        <li>
+                            <i class="ti-time text-primary mr-2"></i>{{ e.getDatedebut|date('d/m/Y') }}  Time:{{ e.getHeure }}h
+                        </li>
+                        <li>
+                            <i class="ti-location-pin text-primary mr-2"></i>En ligne
+                        </li>
+                    </ul>
+                    <a href="page-event-details.html" class="btn btn-link pl-0"
+                    >View Details</a
+                    >
+                </div>
+            </div>
+        </div>
+{% endif %}
+{% endfor %}
+        </div>
+        </div>
+        </section>
+    {% else %}
+    <h1>pas d'Events</h1>
+    {% endif %}
+
+{% endblock %}

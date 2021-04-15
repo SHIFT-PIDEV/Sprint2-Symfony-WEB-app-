@@ -1,0 +1,119 @@
+{% extends 'base.html.twig' %}
+
+{% block bar %}
+    <div class="breadcome-area">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="breadcome-list single-page-breadcome">
+                        <div class="row">
+                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                <div class="breadcome-heading">
+                                    <form method="post" action="{{ path('afterSearch') }}"  role="search" class="sr-input-func">
+                                        <input type="text" placeholder="Search..." class="search-int form-control" name="search">
+                                        <a  ><i class="fa fa-search"></i></a>
+                                    </form>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                <ul class="breadcome-menu">
+                                    <li><a href="#">Home</a> <span class="bread-slash">/</span>
+                                    </li>
+                                    <li><span class="bread-blod">All Events</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+{% endblock %}
+
+{% block body %}
+
+
+    <!-- ***********-->
+    <center style="padding-right: 30px;padding-left: 30px">
+        {% for message in app.flashes('success') %}
+            <div class="alert alert-success" >
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <strong>Success!</strong> {{ message }}
+            </div>
+        {% endfor %}
+    </center>
+    <div class="product-status mg-b-15">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="product-status-wrap">
+                        <h4>Events List</h4>
+                        <div class="add-product">
+                            <a href="{{ path('addEvent') }}">Add Event</a>
+                        </div>
+                        <div class="asset-inner">
+                            <table>
+                                <tr>
+
+                                    <th>No</th>
+                                    <th>Id Formateur</th>
+                                    <th>Image</th>
+                                    <th>Name of Event</th>
+                                    <th>availability</th>
+                                    <th>Date </th>
+                                    <th>Hour</th>
+                                    <th>Duration(/h)</th>
+                                    <th>Description</th>
+                                    <th>Setting</th>
+                                </tr>
+                                {% if events %}
+                                {% for e in events %}
+                                <tr>
+                                    <td>{{ e.getIdevent }}</td>
+                                    <td>{{ e.getIdformateur }}</td>
+                                    <td><img src="{{ e.getImage }}" alt="" /></td>
+                                    <td>{{ e.getNomevent }}</td>
+                                    <td>
+                                        {% if e.getDateDebut<=date('now')  %}
+                                            <button class="ds-setting">Unavailable</button>
+                                        {% else %}
+                                            <button class="pd-setting">Available  ...</button>
+                                            {% endif %}
+                                    </td>
+                                    <td>{{ e.getDatedebut|date('d/m/Y') }}</td>
+                                    <td>{{ e.getHeure }}H</td>
+                                    <td>{{ e.getDuree }}</td>
+                                    <td>{{ e.getDescevent|nl2br }}</td>
+                                    <td>
+
+                                        <button onclick="window.location.href='{{ path('updateEvent',{'idEvent':e.getIdevent}) }}';" data-toggle="tooltip" title="Edit" class="pd-setting-ed"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
+                                        <form method="post" action="{{ path('deleteEvent',{'idEvent':e.getIdevent}) }}" style="display:inline-block" onsubmit="return confirm('Are you Sure you want delete this Event ! ')">
+                                            <input type="hidden" name="_method" value="DELETE">
+                                            <button data-toggle="tooltip" title="Trash" class="pd-setting-ed"><i class="fa fa-trash-o" aria-hidden="true" ></i></button>
+                                        </form>
+                                    </td>
+                                </tr>
+
+                                {% endfor %}
+                                {% else %}
+                                    <center>
+                                        <h1 style="padding-top: 10px">VIDE</h1>
+                                    </center>
+                                {% endif %}
+                            </table>
+                        </div>
+                        <div class="custom-pagination">
+                            <ul class="pagination">
+                                {{ knp_pagination_render(events) }}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
