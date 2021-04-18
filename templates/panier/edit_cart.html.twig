@@ -1,0 +1,24 @@
+{% extends 'dashboard.html.twig' %}
+{% block content %}
+
+    {{ form_start(form,{attr:{'id':'form_chauffeur'}}) }}
+    <div class="container">
+        <div class="form-group">
+            {{ form_label(form.idcour,"ID Cour:") }}
+
+            {{ form_widget(form.idcour, {attr: {class:'form-control','id':'idcour'}}) }}
+        </div>
+        <div class="form-group">
+            {{ form_label(form.idclient,"ID Client:" ) }}
+
+            {{ form_widget(form.idclient,{attr: {class:'form-control','id':'idclient'}}) }}
+        </div>
+
+    </div>
+    <div class="card-footer">
+        <button  type="submit"  class="btn btn-primary">Submit</button>
+    </div>
+
+    {{ form_end(form) }}
+
+{% endblock  %}

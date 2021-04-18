@@ -1,0 +1,84 @@
+{% extends 'page/body.html.twig' %}
+
+{% block title %}Checkout{% endblock %}
+
+{% block content %}
+
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">LISTE LES INFORMATIONS DE PAYEMENT /</h3>
+        </div>
+        <div class="card-body p-0">
+            <form class="w-search">
+                <div class="sidebar-search">
+
+                    <div class="input-group custom-search-form">
+
+                        <input type="text" id="search" class="form-control pl-3" placeholder="Search here">
+                    </div>
+                    <!-- /input-group -->
+                </div>
+                <ul class="nav" id="side-menu">
+                    <li>
+                        <a href="#"><span class="fa arrow"></span></a>
+                        <ul style="background-color: #0b0b0b" class="nav " id="entitiesNav">
+                        </ul>
+                    </li>
+                </ul>
+
+
+
+            </form>
+            <br>
+            <br>
+            <br>
+            <table id="panier" class="table table-striped">
+                <thead>
+                <tr>
+                    <th style="width: 10px">#</th>
+                    <th>Nom</th>
+                    <th>Prenom</th>
+                    <th>Email</th>
+                    <th>Pays</th>
+                    <th>Code Postal</th>
+                    <th>Num Carte</th>
+                    <th>Date</th>
+                    <th>CVC</th>
+                    <th>Action</th>
+
+                </tr>
+                </thead>
+                <tbody>
+                {% for i in nom %}
+                    <tr>
+                        <td>{{ i.id }}</td>
+                        <td>{{ i.nom }}</td>
+                        <td>{{ i.prenom }}</td>
+                        <td>{{ i.email }}</td>
+                        <td>{{ i.pays }}</td>
+                        <td>{{ i.codepostal }}</td>
+                        <td>{{ i.numcarte }}</td>
+                        <td>{{ i.datecarte }}</td>
+                        <td>{{ i.cvc }}</td>
+
+                        <td>
+                            <a class="btn btn-block btn-success" href=" {{ path('edit_pm',{'id':i.id}) }} " > modifier</a>
+                        </td>
+                        <td>
+                            <a class="btn btn-block btn-danger"  href="{{ path('delete_pm',{'id':i.id}) }} " onclick="confirm('Etes-vous sûr de supprimer cet element?');" >supprimer </a>
+                        </td>
+
+                        </td>
+                    </tr>
+
+
+                {% endfor %}
+                </tbody>
+
+            </table>
+        </div>
+
+
+
+    </div>
+{% endblock content %}
