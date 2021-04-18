@@ -1,0 +1,74 @@
+{% extends 'DashbordBack.html.twig' %}
+{% block titre %}Gestion des Réponses{% endblock %}
+{% block miniTitre %}Gestion des Réponses{% endblock  %}
+
+{% block content %}
+
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">LISTE DES REPONSES</h3>
+        </div>
+        <div class="card-body p-0">
+            <form class="w-search">
+                <div class="sidebar-search">
+
+                    <div class="input-group custom-search-form">
+
+                        <input type="text" id="search" class="form-control pl-3" placeholder="Search here">
+                    </div>
+                    <!-- /input-group -->
+                </div>
+                <ul class="nav" id="side-menu">
+                    <li>
+                        <a href="#"><span class="fa arrow"></span></a>
+                        <ul style="background-color: #0b0b0b" class="nav " id="entitiesNav">
+                        </ul>
+                    </li>
+                </ul>
+
+
+
+            </form>
+            <br>
+            <br>
+            <br>
+            <table id="reponse" class="table table-striped">
+                <thead>
+                <tr>
+                    <th style="width: 10px">#</th>
+                    <th>reponse</th>
+                    <th>question </th>
+                    <th>reponse Correct</th>
+                    <th>Action</th>
+
+                </tr>
+                </thead>
+                <tbody>
+                {% for r in reponse %}
+                    <tr>
+                        <td>{{ r.id }}</td>
+                        <td>{{ r.reponse }}</td>
+                        <td>{{ r.reponsec.question }}</td>
+                        <td>{{ r.reponsec.reponsec }}</td>
+
+                        <td>
+                            <a class="btn btn-block btn-success" href="{{ path('edit_reponse',{'idReponse':r.id}) }}" > modifier</a>
+                        </td>
+                        <td>
+                            <a class="btn btn-block btn-danger" href="{{ path('delete_reponse',{'idReponse':r.id}) }}" >supprimer </a>
+                        </td>
+
+                        </td>
+                    </tr>
+
+
+                {% endfor %}
+                </tbody>
+
+            </table>
+        </div>
+
+
+
+    </div>
+{% endblock content %}

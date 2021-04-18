@@ -1,0 +1,46 @@
+{% extends 'Front_navbar_footer.html.twig' %}
+
+{% block title %}Inscripexam{% endblock %}
+
+{% block body %}
+    <h1>Inscripexam</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Idinscri</th>
+                <td>{{ inscripexam.idinscri }}</td>
+            </tr>
+            <tr>
+                <th>ID client</th>
+                <td>{{ inscripexam.idclient.id }}</td>
+            </tr>
+            <tr>
+                <th>Dateinscri</th>
+                <td>{{ inscripexam.dateinscri ? inscripexam.dateinscri|date('Y-m-d') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Nom</th>
+                <td>{{ inscripexam.nom }}</td>
+            </tr>
+            <tr>
+                <th>Prenom</th>
+                <td>{{ inscripexam.prenom }}</td>
+            </tr>
+            <tr>
+                <th>Email</th>
+                <td>{{ inscripexam.email }}</td>
+            </tr>
+            <tr>
+                <th>examen title</th>
+                <td>{{ inscripexam.idexam.titre }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('inscripexam_index') }}">back to list</a>
+
+    <a href="{{ path('inscripexam_edit', {'idinscri': inscripexam.idinscri}) }}">edit</a>
+
+    {{ include('inscripexam/_delete_form.html.twig') }}
+{% endblock %}

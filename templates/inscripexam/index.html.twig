@@ -1,0 +1,45 @@
+{% extends 'Front_navbar_footer.html.twig' %}
+
+{% block title %}Inscripexam index{% endblock %}
+
+{% block body %}
+    <h1>Inscripexam index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Idinscri</th>
+                <th>IdClient</th>
+                <th>Dateinscri</th>
+                <th>Nom</th>
+                <th>Prenom</th>
+                <th>Email</th>
+                <th>examen titre</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for inscripexam in inscripexams %}
+            <tr>
+                <td>{{ inscripexam.idinscri }}</td>
+                <td>{{ inscripexam.idclient.id }}</td>
+                <td>{{ inscripexam.dateinscri ? inscripexam.dateinscri|date('Y-m-d') : '' }}</td>
+                <td>{{ inscripexam.nom }}</td>
+                <td>{{ inscripexam.prenom }}</td>
+                <td>{{ inscripexam.email }}</td>
+                <td>{{ inscripexam.idexam.titre}}</td>
+                <td>
+                    <a href="{{ path('inscripexam_show', {'idinscri': inscripexam.idinscri}) }}">show</a>
+                    <a href="{{ path('inscripexam_edit', {'idinscri': inscripexam.idinscri}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="6">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+
+{% endblock %}

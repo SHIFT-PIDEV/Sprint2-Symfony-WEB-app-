@@ -1,0 +1,31 @@
+{% extends 'DashbordBack.html.twig' %}
+{% block titre %}Gestion des Réponses{% endblock %}
+{% block miniTitre %}Gestion des Réponses{% endblock  %}
+{% block content %}
+
+    {{ form_start(form, {attr: {'novalidate': 'novalidate'}}) }}
+    <div class="container">
+        <div class="form-group">
+            {{ form_label(form.reponse,"Reponse:") }}
+            {{ form_errors(form.reponse)}}
+            {{ form_widget(form.reponse, {attr: {class:'form-control','id':'reponse'}}) }}
+        </div>
+        <div class="form-group">
+            {{ form_label(form.reponsec,"Reponse Correct:" ) }}
+            {{ form_errors(form.reponsec)}}
+            {{ form_widget(form.reponsec,{attr: {class:'form-control','id':'reponsec'}}) }}
+        </div>
+
+    </div>
+    <div class="card-footer">
+        <button  type="submit" href="{{ path('add_reponse') }}" class="btn btn-primary">Submit</button>
+    </div>
+
+
+
+
+    {{ form_end(form) }}
+
+
+
+{% endblock  %}

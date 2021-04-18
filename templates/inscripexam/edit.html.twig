@@ -1,0 +1,13 @@
+{% extends 'Front_navbar_footer.html.twig' %}
+
+{% block title %}Edit Inscripexam{% endblock %}
+
+{% block body %}
+    <h1>Edit Inscripexam</h1>
+
+    {{ include('inscripexam/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('inscripexam_index') }}">back to list</a>
+
+    {{ include('inscripexam/_delete_form.html.twig') }}
+{% endblock %}
