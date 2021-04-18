@@ -61,7 +61,7 @@ class Client
      *
      * @ORM\Column(name="nbrnotif", type="integer", nullable=true)
      */
-    private $nbrnotif = '0';
+    private $nbrnotif;
 
     public function getId(): ?int
     {

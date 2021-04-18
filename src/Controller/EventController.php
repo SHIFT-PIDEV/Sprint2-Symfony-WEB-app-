@@ -46,6 +46,24 @@ class EventController extends AbstractController
         ));
     }
 
+    /**
+     * @param EventRepository $repository
+     * @param Request $request
+     * @param PaginatorInterface $paginator
+     * @return Response
+     * @Route("event/afterSearch",name="afterSearch")
+     */
+    public function searchEvent(EventRepository $repository,Request $request,PaginatorInterface $paginator): Response
+    {
+        $data=$request->get('afterSearch');
+        $eventsList=$paginator->paginate($repository->findByNameOrDesc($data),
+            $request->query->getInt('page', 1),
+            3
+        );
+        return $this->render('event/index.html.twig',array(
+            'events'=>$eventsList,
+        ));
+    }
 
     /**
      * @param Request $request
@@ -110,26 +128,9 @@ class EventController extends AbstractController
         ));
     }
 
-    /**
-     * @param EventRepository $repository
-     * @param Request $request
-     *
-     * @param PaginatorInterface $paginator
-     * @return Response
-     * @Route("event/afterSearch",name="afterSearch")
-     */
-    public function searchEvent(EventRepository $repository,Request $request,PaginatorInterface $paginator): Response
-    {
-        $data=$request->get('search');
-        $eventsList=$paginator->paginate($repository->findByNameOrDesc($data),
-            $request->query->getInt('page', 1),
-            3
-        );
-        return $this->render('event/index.html.twig',array(
-            'events'=>$eventsList,
-        ));
-    }
-
+/*
+ * partie front
+ */
     /**
      * @param EventRepository $sr
      * @param Request $r
@@ -142,6 +143,20 @@ class EventController extends AbstractController
         $events=$sr->findByNameOrDesc2($email);
         return $this->render("event/front.html.twig",array(
             'events'=>$events
+        ));
+    }
+
+    /**
+     * @param $idEvent
+     * @param EventRepository $repository
+     * @return Response
+     * @Route("/upgradi/eventDetails/{idEvent}", name="eventDetails")
+     */
+    public function eventDetails($idEvent,EventRepository $repository): Response
+    {
+        $event=$repository->find($idEvent);
+        return $this->render("front/eventDetails.html.twig",array(
+            'event'=>$event
         ));
     }
 }

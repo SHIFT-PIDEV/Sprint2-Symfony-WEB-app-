@@ -5,18 +5,15 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
+ * Event
+ *
  * @ORM\Table(name="event")
- * @ORM\Entity(repositoryClass="App\Repository\EventRepository")
+ * @ORM\Entity
  */
 class Event
 {
-
-    public function __construct(){
-
-    }
     /**
      * @var int
-     *
      * @ORM\Column(name="idEvent", type="integer", nullable=false)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
@@ -25,7 +22,7 @@ class Event
 
     /**
      * @var int
-     *@Assert\NotNull(message="id formateur is required!")
+     * @Assert\NotNull(message="idformateur is required!")
      * @ORM\Column(name="idFormateur", type="integer", nullable=false)
      */
     private $idformateur;
@@ -38,29 +35,25 @@ class Event
     private $nomevent;
 
     /**
-     * @var \DateTime
-     * @Assert\NotNull(message="Date is required!")
-     * @Assert\GreaterThanOrEqual("today",message="Date should be greater than today")
+     * @var \DateTime|null
+     *@Assert\NotNull(message="Date is required!")
+     * @Assert\GreaterThanOrEqual("today",message="Date should be greater than today!")
      * @ORM\Column(name="dateDebut", type="date", nullable=true)
      */
     private $datedebut;
 
     /**
      * @var int
-     * @Assert\Range(
-     * min=0,
-     * max=23,
-     *    notInRangeMessage="verifier l'heure !"
-     * )
-     * @Assert\NotNull(message="hour of Event is required!")
+     *@Assert\NotNull(message="Hour is required!")
+     * @Assert\Range(min=0,max=23,notInRangeMessage="check the hour!")
      * @ORM\Column(name="heure", type="integer", nullable=false)
      */
     private $heure;
 
     /**
      * @var int
-     * @Assert\Positive(message="check the duration")
-     * @Assert\NotNull (message="Duration is required!")
+     *@Assert\NotNull(message="Duration is required!")
+     * @Assert\Positive(message="check the duration!")
      * @ORM\Column(name="duree", type="integer", nullable=false)
      */
     private $duree;
@@ -68,7 +61,7 @@ class Event
     /**
      * @var string
      * @Assert\NotNull (message="Description is required!")
-     * @ORM\Column(name="descEvent", type="text",nullable=false)
+     * @ORM\Column(name="descEvent", type="text", nullable=false)
      */
     private $descevent;
 
@@ -113,7 +106,7 @@ class Event
         return $this->datedebut;
     }
 
-    public function setDatedebut(\DateTimeInterface $datedebut): self
+    public function setDatedebut(?\DateTimeInterface $datedebut): self
     {
         $this->datedebut = $datedebut;
 
