@@ -50,6 +50,14 @@ class CheckoutController extends AbstractController
             "nom" => $Paymentmethod,]);
     }
     /**
+     * @Route("/checkout/success", name="success")
+     */
+    public function success(Request $request)
+    {
+
+        return $this->render('checkout/success.html.twig');
+    }
+    /**
      * @Route("/checkout/delete/{id}", name="delete_pm")
      */
     public function delete(int $id): Response
@@ -58,7 +66,7 @@ class CheckoutController extends AbstractController
         $Paymentmethod = $entityManager->getRepository(Paymentmethod::class)->find($id);
         $entityManager->remove($Paymentmethod);
         $entityManager->flush();
-        return $this->redirectToRoute('list_pm');
+        return $this->redirectToRoute('add_pm');
     }
     /**
      * @Route("/checkout/edit/{id}", name="edit_pm")

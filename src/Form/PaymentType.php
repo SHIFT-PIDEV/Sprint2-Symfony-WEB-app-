@@ -5,6 +5,7 @@ namespace App\Form;
 use App\Entity\Paymentmethod;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class PaymentType extends AbstractType
@@ -15,7 +16,12 @@ class PaymentType extends AbstractType
             ->add('nom')
             ->add('prenom')
             ->add('email')
-            ->add('pays')
+            ->add('pays' , ChoiceType::class, [
+                'choices'  => [
+                    'Choose ...' => 'NULL',
+                    'United States' => 'United States',
+                ],
+            ])
             ->add('codepostal')
             ->add('numcarte')
             ->add('cvc')

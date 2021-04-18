@@ -46,8 +46,9 @@ class Paymentmethod
      * @var string
      *
      * @ORM\Column(name="email", type="string", length=255, nullable=false)
-     * @Assert\NotBlank(
-     *     message = "Champ Vide!"
+     * @Assert\NotBlank(message="Champ vide")
+     * @Assert\Email(
+     *     message = "email '{{ value }}' est non valide."
      * )
      */
     private $email;
@@ -56,8 +57,7 @@ class Paymentmethod
      * @var string
      *
      * @ORM\Column(name="pays", type="string", length=25, nullable=false)
-     * @Assert\NotBlank(
-     *     message = "Champ Vide!"
+     * @Assert\NotEqualTo("NULL", message = "Choisi votre pays !")
      * )
      */
     private $pays;
@@ -71,8 +71,9 @@ class Paymentmethod
      * )
      * @Assert\GreaterThanOrEqual(
      *     value = 0,
-     *     message= "Ce champ ne doit pas etre negarive ! "
+     *     message= "Ce champ ne doit pas etre negative ! "
      * )
+     * @Assert\Length(max=5)
      */
     private $codepostal;
 
@@ -85,7 +86,11 @@ class Paymentmethod
      * )
      * @Assert\GreaterThanOrEqual(
      *     value = 0,
-     *     message= "Ce champ ne doit pas etre negarive ! "
+     *     message= "Ce champ ne doit pas etre negative ! "
+     * )
+     * @Assert\CardScheme(
+     *     schemes={"VISA"},
+     *     message="Your credit card number is invalid."
      * )
      */
     private $numcarte;
@@ -99,7 +104,7 @@ class Paymentmethod
      * )
      * @Assert\GreaterThanOrEqual(
      *     value = 0,
-     *     message= "Ce champ ne doit pas etre negarive ! "
+     *     message= "Ce champ ne doit pas etre negative ! "
      * )
      */
     private $cvc;
