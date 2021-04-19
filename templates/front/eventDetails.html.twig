@@ -25,6 +25,24 @@
 {% block createHere %}
     <section class="padding-y-60 bg-light">
         <div class="container">
+            <center style="padding-right: 30px;padding-left: 30px; padding-top: 30px">
+                {% for message in app.flashes('warning') %}
+                    <div
+                            class="alert border border-warning text-warning px-4 py-3 alert-dismissible fade show"
+                            role="alert"
+                    >
+                        <strong> Warning!</strong> {{ message }}
+                        <button
+                                type="button"
+                                class="close font-size-14 absolute-center-y"
+                                data-dismiss="alert"
+                                aria-label="Close"
+                        >
+                            <i class="ti-close"></i>
+                        </button>
+                    </div>
+                {% endfor %}
+            </center>
             <div class="row">
                 <div class="col-lg-8 mt-4">
                     <div class="card shadow-v1">
@@ -212,8 +230,81 @@
                                 <!-- END tab-pane -->
                             </div>
                             <!-- END tab-content-->
+
                         </div>
                     </div>
+                    <!-- ************** -->
+                    <div class="card shadow-v5 mt-5 padding-40">
+                        <ol class="list-unstyled comments-area">
+                            <li>
+                                <div class="media mb-5">
+                                    <img
+                                            class="iconbox iconbox-lg mr-3"
+                                            src="assets/img/avatar/5.jpg"
+                                            alt=""
+                                    />
+                                    <div class="media-body">
+                                        <a
+                                                href="#"
+                                                class="float-right btn btn-outline-primary btn-pill btn-sm"
+                                        >
+                                            <i class="ti-back-right"></i> REPLY
+                                        </a>
+                                        <h4 class="h5 mb-0">Randy Orton</h4>
+                                        <p class="text-gray">August 12, 2017</p>
+                                        <p>
+                                            Business and Finance Sequitur mutatin was onem consue
+                                            ktudium. Investiga tiones demonstr aver unt lectores
+                                            legere me lius quod kqua legunt saepius.
+                                        </p>
+                                    </div>
+                                </div>
+
+                            </li>
+
+                            <li class="text-center mt-5">
+                                <a href="#" class="btn btn-icon btn-outline-primary">
+                                    <i class="ti-reload mr-2"></i> Load More
+                                </a>
+                            </li>
+                        </ol>
+                    </div>
+                    <!-- ************** -->
+                    <!--*****************-->
+                    <div class="card shadow-v5 mt-5 padding-40">
+                        <h4>Leave a Reply</h4>
+                        <p>
+                            Your email address will not be published. Required fields are
+                            marked *
+                        </p>
+                        <form action="" method="POST">
+                            <div class="row mt-4">
+                                <div class="col-md-6 mb-4">
+                                    <input
+                                            type="text"
+                                            class="form-control"
+                                            placeholder="Skander"
+                                            disabled
+                                    />
+                                </div>
+                                <div class="col-md-6 mb-4">
+                                    <input
+                                            type="text"
+                                            class="form-control"
+                                            placeholder="skander@esprit.tn"
+                                            disabled
+                                    />
+                                </div>
+                            </div>
+                            <textarea
+                                    class="form-control mb-4"
+                                    rows="5"
+                                    placeholder="Your text *"
+                            ></textarea>
+                            <button class="btn btn-primary">Post Comment</button>
+                        </form>
+                    </div>
+                    <!--********************** -->
                 </div>
 
 
@@ -268,7 +359,7 @@
                                     <i class="ti-user text-primary mt-2"></i>
                                     <div class="media-body ml-3">
                                         <h6 class="my-0">total registrations</h6>
-                                        <span>1500</span>
+                                        <span>{{ inscriptions|length }}</span>
                                     </div>
                                 </div>
                             </div>
@@ -335,10 +426,11 @@
                             <div class="media">
                                 <div class="media-body ml-3">
                                     <div style="margin-top: 1px">
-                                        <button class="btn btn-success mr-3 mb-3">Register</button>
-                                        <button class="btn btn-danger mr-3 mb-3" style="margin-left: 40px">Cancel</button>
+                                        <button onclick="window.location.href='{{ path('sinscrire',{'idEvent':event.getIdevent,'idClient':1})}} ';" class="btn btn-success mr-3 mb-3">Register</button>
+                                        <button onclick="window.location.href='{{ path('annulation',{'idEvent':event.getIdevent,'idClient':1})}} ';" class="btn btn-danger mr-3 mb-3" style="margin-left: 40px">Cancel</button>
                                     </div>
                                 </div>
+
                             </div>
                         </div>
                     </div>
@@ -349,4 +441,7 @@
         </div>
         <!-- END container-->
     </section>
+
+
+
 {% endblock %}

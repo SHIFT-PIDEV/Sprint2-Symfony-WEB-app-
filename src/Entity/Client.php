@@ -2,13 +2,15 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * Client
  *
  * @ORM\Table(name="client")
- * @ORM\Entity
+ * *@ORM\Entity(repositoryClass="App\Repository\ClientRepository")
  */
 class Client
 {
@@ -62,6 +64,17 @@ class Client
      * @ORM\Column(name="nbrnotif", type="integer", nullable=true)
      */
     private $nbrnotif;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Inscrievent::class,mappedBy="Client",cascade={"all"},orphanRemoval=true)
+     */
+    private $inscriptions;
+
+    public function __construct()
+    {
+        $this->inscriptions = new ArrayCollection();
+    }
+
 
     public function getId(): ?int
     {
@@ -136,6 +149,36 @@ class Client
     public function setNbrnotif(?int $nbrnotif): self
     {
         $this->nbrnotif = $nbrnotif;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Inscrievent[]
+     */
+    public function getInscriptions(): Collection
+    {
+        return $this->inscriptions;
+    }
+
+    public function addInscription(Inscrievent $inscription): self
+    {
+        if (!$this->inscriptions->contains($inscription)) {
+            $this->inscriptions[] = $inscription;
+            $inscription->setClient($this);
+        }
+
+        return $this;
+    }
+
+    public function removeInscription(Inscrievent $inscription): self
+    {
+        if ($this->inscriptions->removeElement($inscription)) {
+            // set the owning side to null (unless already changed)
+            if ($inscription->getClient() === $this) {
+                $inscription->setClient(null);
+            }
+        }
 
         return $this;
     }

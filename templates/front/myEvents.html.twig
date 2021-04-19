@@ -1,0 +1,141 @@
+{% extends 'front/baseFront.html.twig' %}
+{% block bar%}
+    <div
+            class="padding-y-60 bg-cover"
+            data-dark-overlay="6"
+            style="background: url({{ asset('theme/img/cropper/1.jpg') }}) no-repeat"
+    >
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6 my-2 text-white">
+                    <ol class="breadcrumb breadcrumb-double-angle bg-transparent p-0">
+                        <li class="breadcrumb-item"><a href="#">Home</a></li>
+                        <li class="breadcrumb-item"><a href="{{ path('upgradi') }}">Events</a></li>
+                    </ol>
+                    <h2 class="h1">My Events</h2>
+                    <p>{{ events|length}} Events found</p>
+                </div>
+                <form class="col-lg-5 my-2 ml-auto" method="post" action="{{ path('afterSearch1') }}">
+                    <div class="input-group bg-white rounded p-1">
+                        <input
+                                type="text"
+                                class="form-control border-white"
+                                placeholder="Search your fav event"
+                                required=""
+                                name="search1"
+                        />
+                        <div class="input-group-append">
+                            <button class="btn btn-info rounded" type="submit">
+                                Search
+                                <i class="ti-angle-right small"></i>
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+{% block createHere %}
+    <!-- -->
+    <section class="py-3 position-relative shadow-v1">
+        <div class="container">
+            <form class="row">
+                <div class="col-md-6 my-2">
+                    <ul class="list-inline">
+
+                        <li class="list-inline-item my-2">
+                            <select class="form-control">
+                                <option selected default>Filter</option>
+                                <option >available</option>
+                                <option>unavailable</option>
+                                <option>ALL</option>
+
+                            </select>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-md-6 my-2 text-md-right">
+                    <div class="d-inline-flex justify-md-content-end">
+                        <!--hereeeeeeee-->
+                        <button onclick="window.location.href='{{ path('upgradi')}} ';" class="btn btn-primary shadow-primary mr-3 mb-3">
+                            All Events
+                        </button>
+                    </div>
+                </div>
+            </form>
+            <!-- END row-->
+        </div>
+        <!-- END container-->
+    </section>
+    <!-- -->
+
+        <section class="padding-y-60 bg-light">
+            <div class="container">
+                <center style="padding-right: 30px;padding-left: 30px; padding-top: 30px">
+                    {% for message in app.flashes('success') %}
+                        <div class="alert border border-primary text-primary px-4 py-3 alert-dismissible fade show" role="alert">
+                            <strong>Success!</strong> {{ message }}
+                            style.
+                            <button type="button" class="close font-size-14 absolute-center-y" data-dismiss="alert" aria-label="Close">
+                                <i class="ti-close"></i>
+                            </button>
+                        </div>
+                    {% endfor %}
+                </center>
+                <center style="padding-right: 30px;padding-left: 30px; padding-top: 30px">
+                    {% for message in app.flashes('warning') %}
+                    <div
+                            class="alert border border-warning text-warning px-4 py-3 alert-dismissible fade show"
+                            role="alert"
+                    >
+                        <strong> Warning!</strong> {{ message }}
+                        <button
+                                type="button"
+                                class="close font-size-14 absolute-center-y"
+                                data-dismiss="alert"
+                                aria-label="Close"
+                        >
+                            <i class="ti-close"></i>
+                        </button>
+                    </div>
+                    {% endfor %}
+                </center>
+                <div class="row">
+
+                   {% if events %}
+                    {% for e in events %}
+                            <div class="col-lg-4 col-md-6 marginTop-30">
+                                <div class="card height-100p shadow-v1">
+                                    <img class="card-img-top" src="{{ e.getImage }}" alt="" />
+                                    <div class="card-body">
+                                        <a href="#" class="h4">
+                                            {{ e.getNomevent }}
+                                        </a>
+                                        <ul class="list-unstyled line-height-lg mt-4">
+                                            <li>
+                                                <i class="ti-time text-primary mr-2"></i>{{ e.getDatedebut|date('d/m/Y') }}  Time:{{ e.getHeure }}h
+                                            </li>
+                                            <li>
+                                                <i class="ti-location-pin text-primary mr-2"></i>En ligne
+                                            </li>
+                                        </ul>
+                                        <a href="{{ path('eventDetails',{'idEvent':e.getIdevent}) }}" class="btn btn-link pl-0"
+                                        >View Details</a
+                                        >
+                                    </div>
+                                </div>
+                            </div>
+                    {% endfor %}
+                   {% else %}
+                       <center style="margin-top: 50px">
+                           <h1>You have no registrations choose your best events and register</h1>
+                       </center>
+
+                   {% endif %}
+                </div>
+            </div>
+        </section>
+
+{% endblock %}

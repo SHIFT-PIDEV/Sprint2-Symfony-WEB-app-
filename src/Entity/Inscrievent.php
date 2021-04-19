@@ -6,9 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * Inscrievent
- *
- * @ORM\Table(name="inscrievent", indexes={@ORM\Index(name="fk_idevent", columns={"idEvent"}), @ORM\Index(name="fk_idclient", columns={"idClient"})})
- * @ORM\Entity
+ *@ORM\Entity(repositoryClass="App\Repository\InscrieventRepository")
  */
 class Inscrievent
 {
@@ -22,53 +20,27 @@ class Inscrievent
     private $idinscri;
 
     /**
-     * @var int
-     *
-     * @ORM\Column(name="idClient", type="integer", nullable=false)
-     */
-    private $idclient;
-
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="idEvent", type="integer", nullable=false)
-     */
-    private $idevent;
-
-    /**
      * @var \DateTime
      *
      * @ORM\Column(name="dateInscri", type="datetime", nullable=false)
      */
     private $dateinscri;
 
+    /**
+     *@ORM\ManyToOne (targetEntity=Client::class,inversedBy="inscriptions")
+     * @ORM\JoinColumn(name="idClient", referencedColumnName="id",nullable=false)
+     */
+    private $client;
+
+    /**
+     * @ORM\ManyToOne (targetEntity=Event::class,inversedBy="inscriptions")
+     * @ORM\JoinColumn(name="idEvent", referencedColumnName="idEvent",nullable=false)
+     */
+    private $event;
+
     public function getIdinscri(): ?int
     {
         return $this->idinscri;
-    }
-
-    public function getIdclient(): ?int
-    {
-        return $this->idclient;
-    }
-
-    public function setIdclient(int $idclient): self
-    {
-        $this->idclient = $idclient;
-
-        return $this;
-    }
-
-    public function getIdevent(): ?int
-    {
-        return $this->idevent;
-    }
-
-    public function setIdevent(int $idevent): self
-    {
-        $this->idevent = $idevent;
-
-        return $this;
     }
 
     public function getDateinscri(): ?\DateTimeInterface
@@ -79,6 +51,30 @@ class Inscrievent
     public function setDateinscri(\DateTimeInterface $dateinscri): self
     {
         $this->dateinscri = $dateinscri;
+
+        return $this;
+    }
+
+    public function getClient(): ?Client
+    {
+        return $this->client;
+    }
+
+    public function setClient(?Client $client): self
+    {
+        $this->client = $client;
+
+        return $this;
+    }
+
+    public function getEvent(): ?Event
+    {
+        return $this->event;
+    }
+
+    public function setEvent(?Event $event): self
+    {
+        $this->event = $event;
 
         return $this;
     }

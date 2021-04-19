@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Event;
 use App\Form\EventType;
 use App\Repository\EventRepository;
+use App\Repository\InscrieventRepository;
 use Doctrine\ORM\EntityManager;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -149,14 +150,17 @@ class EventController extends AbstractController
     /**
      * @param $idEvent
      * @param EventRepository $repository
+     * @param InscrieventRepository $repository2
      * @return Response
      * @Route("/upgradi/eventDetails/{idEvent}", name="eventDetails")
      */
-    public function eventDetails($idEvent,EventRepository $repository): Response
+    public function eventDetails($idEvent,EventRepository $repository,InscrieventRepository $repository2): Response
     {
         $event=$repository->find($idEvent);
+        $insTable=$repository2->getByIdEvent($idEvent);
         return $this->render("front/eventDetails.html.twig",array(
-            'event'=>$event
+            'event'=>$event,
+            'inscriptions'=>$insTable
         ));
     }
 }

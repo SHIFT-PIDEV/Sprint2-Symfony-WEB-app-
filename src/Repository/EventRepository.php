@@ -79,4 +79,5 @@ class EventRepository extends ServiceEntityRepository
             ->setParameter('nomevent', '%' . $data . '%')
             ->getResult();
     }
+
 }

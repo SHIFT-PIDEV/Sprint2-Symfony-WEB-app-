@@ -44,6 +44,40 @@
 
 {% endblock %}
 {% block createHere %}
+    <!-- -->
+    <section class="py-3 position-relative shadow-v1">
+        <div class="container">
+            <form class="row">
+                <div class="col-md-6 my-2">
+                    <ul class="list-inline">
+
+                        <li class="list-inline-item my-2">
+                            <select class="form-control">
+                                <option selected default>Filter</option>
+                                <option >available</option>
+                                <option>unavailable</option>
+                                <option>ALL</option>
+
+                            </select>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-md-6 my-2 text-md-right">
+                    <div class="d-inline-flex justify-md-content-end">
+                        <!--hereeeeeeee-->
+
+                        <button onclick="window.location.href='{{ path('myEvents',{'idclient':1})}} ';" class="btn btn-pill btn-primary mr-3 mb-3">
+                            My Events
+                        </button>
+                        <a href="{{ path('myEvents',{'idclient':1})}}">my events</a>
+                    </div>
+                </div>
+            </form>
+            <!-- END row-->
+        </div>
+        <!-- END container-->
+    </section>
+    <!-- -->
     {% if events %}
         <section class="padding-y-60 bg-light">
         <div class="container">

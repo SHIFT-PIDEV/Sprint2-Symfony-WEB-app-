@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Entity;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -71,6 +73,18 @@ class Event
      * @ORM\Column(name="image", type="string", length=500, nullable=false)
      */
     private $image;
+
+
+    /**
+     * @ORM\OneToMany(targetEntity=Inscrievent::class,mappedBy="Event",cascade={"all"},orphanRemoval=true)
+     */
+    private $inscriptions;
+
+    public function __construct()
+    {
+        $this->inscriptions = new ArrayCollection();
+    }
+
 
     public function getIdevent(): ?int
     {
@@ -157,6 +171,36 @@ class Event
     public function setImage(string $image): self
     {
         $this->image = $image;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Inscrievent[]
+     */
+    public function getInscriptions(): Collection
+    {
+        return $this->inscriptions;
+    }
+
+    public function addInscription(Inscrievent $inscription): self
+    {
+        if (!$this->inscriptions->contains($inscription)) {
+            $this->inscriptions[] = $inscription;
+            $inscription->setEvent($this);
+        }
+
+        return $this;
+    }
+
+    public function removeInscription(Inscrievent $inscription): self
+    {
+        if ($this->inscriptions->removeElement($inscription)) {
+            // set the owning side to null (unless already changed)
+            if ($inscription->getEvent() === $this) {
+                $inscription->setEvent(null);
+            }
+        }
 
         return $this;
     }

@@ -79,9 +79,9 @@
                                     <td>{{ e.getNomevent }}</td>
                                     <td>
                                         {% if e.getDateDebut<=date('now')  %}
-                                            <button class="ds-setting">Unavailable</button>
+                                            <button onclick="window.location.href='{{ path('lesInscriptions',{'idevent':e.getIdevent}) }}';" class="ds-setting">Inscriptions</button>
                                         {% else %}
-                                            <button class="pd-setting">Available  ...</button>
+                                            <button onclick="window.location.href='{{ path('lesInscriptions',{'idevent':e.getIdevent}) }}';" class="pd-setting">Inscriptions</button>
                                             {% endif %}
                                     </td>
                                     <td>{{ e.getDatedebut|date('d/m/Y') }}</td>
