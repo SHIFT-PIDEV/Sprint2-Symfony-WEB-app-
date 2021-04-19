@@ -1,0 +1,79 @@
+{% extends 'Front_navbar_footer.html.twig' %}
+{% block title %} <div
+        class="padding-y-60 bg-cover"
+        data-dark-overlay="6"
+        style="background: url({{ asset('frontoffice/assets/img/passageex.png')}}) no-repeat"
+>
+        <div class="container">
+            <h1 class="text-white">Mes Examens :</h1>
+            <ol
+                    class="breadcrumb breadcrumb-double-angle text-white bg-transparent p-0"
+            >
+                <li class="breadcrumb-item"><a href="#">Home</a></li>
+                <li class="breadcrumb-item"><a href="#">Examens</a></li>
+                <li class="breadcrumb-item">Mes Examens</li>
+            </ol>
+        </div>
+    </div>{% endblock %}
+{% block body %}
+    <section class="pt-5 paddingBottom-100 bg-light-v2">
+
+        <div class="container">
+            <h5>ce sont les cours du client : {{ inscripexam[0].idclient.nom }}</h5>
+            <div class="row">
+
+                {% for e in inscripexam %}
+
+                    <div class="col-lg-4 col-md-6 marginTop-30">
+                        <div class="card shadow-v1">
+                            <img
+                                    class="card-img-top"
+                                    src="{{ asset('frontoffice/assets/img/Exam.jpg') }}"
+                                    alt=""
+                            />
+                            <div class="card-body">
+                                <a href="#" class="h6 mb-3">
+                                    <h4>{{ e.idexam.titre }}</h4>
+                                </a>
+                                <br>
+                                <p class="mb-0">
+                                    l'examen eura lieu le : <label style="color: #0074f0">{{ e.idexam.date | date("d/m/Y") }}</label>
+                                    Avec un prix de  <label style="color: #0c84ff"> {{ e.idexam.prix }}DT</label> et un niveau <label style="color: #0c84ff">
+                                        {{ e.idexam.niveau }}</label>.
+                                </p>
+                                <br>
+                                <p class="mb-0" style="color:#ff2255">
+                                    <i class='fas fa-exclamation-circle' style='color:red'></i>
+                                    Cette inscription est validé le : <br>{{ e.dateinscri ? e.dateinscri|date('Y-m-d') : '' }}
+                                    <br>
+                                    Tenter votre chance et inscrivez vous dans l'examen  <label style="color: #0074f0">{{e.idexam.titre}}</label>
+                                    et Bonne Chance !!!
+
+                                </p>
+
+
+                            </div>
+                            <div class="card-footer">
+                                <div class="media">
+                                    <!--  <img class="iconbox" src="{{ asset('frontoffice/assets/img/avatar/4.jpg')}}" alt="" />    -->
+
+                                    <div class="media-body ml-4">
+                                        <a class="btn btn-block btn-outline-instagram" href="{{  path('passage_exam',{'idinscri':e.idinscri}) }}" >Passer </a>
+                                    </div>
+                                    <div class="media-body ml-4">
+                                        <a class="btn btn-block btn-outline-danger" href="{{  path('delete_inscripexam',{'idinscri':e.idinscri}) }}" onsubmit="return confirm('Are you sure you want to delete this item?');">Abondonner </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+
+
+            </div>
+
+            <!--END row-->
+        </div>
+        <!-- END container-->
+    </section>
+{% endblock %}

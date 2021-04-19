@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Examen;
 use App\Entity\Inscripexam;
 use App\Form\InscripexamType;
+use http\Client;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -39,7 +40,7 @@ class InscripexamController extends AbstractController
 
         $exam = $entityManager->getRepository(Examen::class)->find($idexam);
         $inscripexam->setIdexam($exam);
-      //git init  $inscripexam->setIdclient(2);
+
         $form = $this->createForm(InscripexamType::class, $inscripexam);
         $form->handleRequest($request);
 
@@ -86,33 +87,41 @@ class InscripexamController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/{idinscri}", name="inscripexam_delete", methods={"POST"})
-     */
-    public function delete(Request $request, Inscripexam $inscripexam): Response
-    {
-        if ($this->isCsrfTokenValid('delete'.$inscripexam->getIdinscri(), $request->request->get('_token'))) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->remove($inscripexam);
-            $entityManager->flush();
-        }
 
-        return $this->redirectToRoute('inscripexam_index');
+    /**
+     * @Route("/inscripexam/delete_inscripexam/{idinscri}", name="delete_inscripexam")
+     */
+    public function delete(int $idinscri): Response
+    {
+        $entityManager = $this->getDoctrine()->getManager();
+        $inscripexam = $entityManager->getRepository(Inscripexam::class)->find($idinscri);
+        $entityManager->remove($inscripexam);
+        $entityManager->flush();
+
+        return $this->redirectToRoute('list_mes_exam');
     }
     /**
      * @Route("/inscripexam/mesexamens", name="list_mes_exam")
      */
     public function mesExamens(Request $request)
     {   $entityManager = $this->getDoctrine()->getManager();
-       // $examen = $entityManager->getRepository(Examen::class)->findAll();
-        if($request->isMethod("GET"))
-        {
-            $idc=$request->get('rech_c');
 
+            $idc=4;
             $inscripexam = $entityManager->getRepository(Inscripexam::class)->findBy(array('idclient' => $idc));
 
-        }
+
         return $this->render('inscripexam/mes_examens.html.twig', [
-            "inscripexam" => $inscripexam,]);
+            "inscripexam" => $inscripexam,
+            ]);
+    }
+    /**
+     * @Route("/inscripexam/passageexam/{idinscri}", name="passage_exam")
+     */
+    public function PassageExam(int $idinscri)
+    {   $entityManager = $this->getDoctrine()->getManager();
+        $inscripexam = $entityManager->getRepository(Inscripexam::class)->find($idinscri);
+        return $this->render('inscripexam/Passage_examen.html.twig', [
+            "inscripexam" => $inscripexam,
+        ]);
     }
 }

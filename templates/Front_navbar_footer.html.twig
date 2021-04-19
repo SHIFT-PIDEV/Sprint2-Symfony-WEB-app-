@@ -267,7 +267,7 @@
                                 </a>
                             </li>
                             <li>
-                                <a href="#" class="nav-link__list">
+                                <a href="{{ path('list_mes_exam')}}" class="nav-link__list">
                                     Mes Examens
                                 </a>
                             </li>
@@ -1081,7 +1081,9 @@
     </form>
 </div>
 <!-- END site-search-->
-
+{% block title %}
+    aaa
+{% endblock %}
 {% block body %}
 {% endblock %}
 
@@ -1213,6 +1215,7 @@
 {% block js %}
     <script src="{{ asset('frontoffice/assets/js/vendors.bundle.js') }}"></script>
     <script src="{{ asset('frontoffice/assets/js/app.min.js') }}"></script>
+    <script src="{{ asset('frontoffice/assets/js/app.js') }}"></script>
 {% endblock %}
 </body>
 </html>

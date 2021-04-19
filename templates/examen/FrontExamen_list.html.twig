@@ -1,4 +1,20 @@
 {% extends 'Front_navbar_footer.html.twig' %}
+{% block title %} <div
+        class="padding-y-60 bg-cover"
+        data-dark-overlay="6"
+        style="background: url({{ asset('frontoffice/assets/img/passageex.png')}}) no-repeat"
+>
+        <div class="container">
+            <h1 class="text-white">Liste des Examens :</h1>
+            <ol
+                    class="breadcrumb breadcrumb-double-angle text-white bg-transparent p-0"
+            >
+                <li class="breadcrumb-item"><a href="#">Home</a></li>
+                <li class="breadcrumb-item"><a href="#">Examens</a></li>
+                <li class="breadcrumb-item">Liste des Examen</li>
+            </ol>
+        </div>
+    </div>{% endblock %}
 {% block body %}
 <section class="pt-5 paddingBottom-100 bg-light-v2">
     <div class="container">
@@ -37,9 +53,7 @@
                             <div class="media-body ml-4">
                                 <a class="btn btn-block btn-outline-instagram" href="{{ path('inscripexam_new', {'idexam': e.id}) }}" >S'inscrire </a>
                             </div>
-                            <div class="media-body ml-4">
-                                <a class="btn btn-block btn-outline-danger" href="#" >Annuler </a>
-                            </div>
+
 
                         </div>
 
