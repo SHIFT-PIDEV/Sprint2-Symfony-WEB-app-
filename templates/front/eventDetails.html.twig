@@ -11,7 +11,7 @@
                     <ol class="breadcrumb breadcrumb-double-angle bg-transparent p-0">
                         <li class="breadcrumb-item"><a href="#">Home</a></li>
                         <li class="breadcrumb-item"><a href="{{ path('upgradi') }}">Events</a></li>
-                        <li class="breadcrumb-item"><a href="{{ path('eventDetails',{'idEvent':event.getIdevent}) }}">Event Details</a></li>
+                        <li class="breadcrumb-item"><a href="{{ path('eventDetails',{'idEvent':event.getIdevent,'idClient':1}) }}">Event Details</a></li>
                     </ol>
                     <h2 class="h1">Events</h2>
 
@@ -235,39 +235,68 @@
                     </div>
                     <!-- ************** -->
                     <div class="card shadow-v5 mt-5 padding-40">
+                        <center style="padding-right: 30px;padding-left: 30px; padding-top: 30px">
+                            {% for message in app.flashes('successCommDelete') %}
+                                <div class="alert border border-primary text-primary px-4 py-3 alert-dismissible fade show" role="alert">
+                                    <strong>Success!</strong> {{ message }}
+                                    style.
+                                    <button type="button" class="close font-size-14 absolute-center-y" data-dismiss="alert" aria-label="Close">
+                                        <i class="ti-close"></i>
+                                    </button>
+                                </div>
+                            {% endfor %}
+                        </center>
+                        {% if commentaires %}
                         <ol class="list-unstyled comments-area">
+                            <center style="padding-right: 30px;padding-left: 30px; padding-top: 30px">
+                                {% for message in app.flashes('successComm') %}
+                                    <div class="alert border border-primary text-primary px-4 py-3 alert-dismissible fade show" role="alert">
+                                        <strong>Success!</strong> {{ message }}
+                                        style.
+                                        <button type="button" class="close font-size-14 absolute-center-y" data-dismiss="alert" aria-label="Close">
+                                            <i class="ti-close"></i>
+                                        </button>
+                                    </div>
+                                {% endfor %}
+                            </center>
+
+                           {% for c in commentaires %}
                             <li>
                                 <div class="media mb-5">
                                     <img
                                             class="iconbox iconbox-lg mr-3"
-                                            src="assets/img/avatar/5.jpg"
+                                            src="{{ c.getClient.getPic }}"
                                             alt=""
                                     />
                                     <div class="media-body">
+                                        {% if c.getClient.getId==1 %}
                                         <a
-                                                href="#"
+                                                href="{{ path('deleteComm',{'idComm':c.getIdcomm,'idEvent':c.getEvent.getIdevent,'idClient':1}) }}"
                                                 class="float-right btn btn-outline-primary btn-pill btn-sm"
                                         >
-                                            <i class="ti-back-right"></i> REPLY
+                                            <i class="ti-back-right"></i> Delete
+
                                         </a>
-                                        <h4 class="h5 mb-0">Randy Orton</h4>
-                                        <p class="text-gray">August 12, 2017</p>
+                                        {% endif %}
+                                        <h4 class="h5 mb-0">{{ c.getClient.getNom }}</h4>
+                                        <p class="text-gray">{{ c.getDatecomm|date("m/d/Y") }}</p>
                                         <p>
-                                            Business and Finance Sequitur mutatin was onem consue
-                                            ktudium. Investiga tiones demonstr aver unt lectores
-                                            legere me lius quod kqua legunt saepius.
+                                            {{ c.getDesccomm }}
                                         </p>
                                     </div>
                                 </div>
-
                             </li>
+                            {% endfor %}
 
-                            <li class="text-center mt-5">
+                           <!-- <li class="text-center mt-5">
                                 <a href="#" class="btn btn-icon btn-outline-primary">
                                     <i class="ti-reload mr-2"></i> Load More
                                 </a>
-                            </li>
+                            </li>-->
                         </ol>
+                            {% else %}
+                                <h4>No Comments</h4>
+                        {% endif %}
                     </div>
                     <!-- ************** -->
                     <!--*****************-->
@@ -277,32 +306,23 @@
                             Your email address will not be published. Required fields are
                             marked *
                         </p>
-                        <form action="" method="POST">
+                       <!--******** FORM ADD COMMENT-->
+                            {{form_start(form)}}
                             <div class="row mt-4">
                                 <div class="col-md-6 mb-4">
-                                    <input
-                                            type="text"
-                                            class="form-control"
-                                            placeholder="Skander"
-                                            disabled
-                                    />
+                                    <input type="text" class="form-control" placeholder="Skander" disabled/>
                                 </div>
                                 <div class="col-md-6 mb-4">
-                                    <input
-                                            type="text"
-                                            class="form-control"
-                                            placeholder="skander@esprit.tn"
-                                            disabled
-                                    />
+                                    <input type="text" class="form-control" placeholder="skander@esprit.tn" disabled />
                                 </div>
                             </div>
-                            <textarea
-                                    class="form-control mb-4"
-                                    rows="5"
-                                    placeholder="Your text *"
-                            ></textarea>
+                            {{ form_errors(form.desccomm,{'attr': {'style': 'color:red'}}) }}
+                            {{ form_widget(form.desccomm, {'attr': {'class': 'form-control mb-4','placeholder':'Your Comment here...'}}) }}
+
                             <button class="btn btn-primary">Post Comment</button>
-                        </form>
+
+                        {{ form_end(form) }}
+                        <!--******** END FORM ADD COMMENT-->
                     </div>
                     <!--********************** -->
                 </div>
@@ -340,16 +360,6 @@
                                     <div class="media-body ml-3">
                                         <h6 class="my-0">Duration</h6>
                                         <span>{{ event.getDuree }}h</span>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="border-bottom py-3">
-                                <div class="media">
-                                    <i class="ti-location-pin text-primary mt-2"></i>
-                                    <div class="media-body ml-3">
-                                        <h6 class="my-0">Venue</h6>
-                                        <span>South Street, London, UK</span>
                                     </div>
                                 </div>
                             </div>

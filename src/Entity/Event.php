@@ -79,10 +79,16 @@ class Event
      * @ORM\OneToMany(targetEntity=Inscrievent::class,mappedBy="Event",cascade={"all"},orphanRemoval=true)
      */
     private $inscriptions;
+    /**
+     * @ORM\OneToMany(targetEntity=Commentaire::class,mappedBy="Event",cascade={"all"},orphanRemoval=true)
+     */
+    private $comms;
+
 
     public function __construct()
     {
         $this->inscriptions = new ArrayCollection();
+        $this->comms = new ArrayCollection();
     }
 
 
@@ -199,6 +205,36 @@ class Event
             // set the owning side to null (unless already changed)
             if ($inscription->getEvent() === $this) {
                 $inscription->setEvent(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Commentaire[]
+     */
+    public function getComms(): Collection
+    {
+        return $this->comms;
+    }
+
+    public function addComm(Commentaire $comm): self
+    {
+        if (!$this->comms->contains($comm)) {
+            $this->comms[] = $comm;
+            $comm->setEvent($this);
+        }
+
+        return $this;
+    }
+
+    public function removeComm(Commentaire $comm): self
+    {
+        if ($this->comms->removeElement($comm)) {
+            // set the owning side to null (unless already changed)
+            if ($comm->getEvent() === $this) {
+                $comm->setEvent(null);
             }
         }
 

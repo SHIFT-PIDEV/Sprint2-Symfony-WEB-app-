@@ -2,8 +2,12 @@
 
 namespace App\Controller;
 
+use App\Entity\Client;
+use App\Entity\Commentaire;
 use App\Entity\Event;
+use App\Form\CommentaireType;
 use App\Form\EventType;
+use App\Repository\CommentaireRepository;
 use App\Repository\EventRepository;
 use App\Repository\InscrieventRepository;
 use Doctrine\ORM\EntityManager;
@@ -149,18 +153,45 @@ class EventController extends AbstractController
 
     /**
      * @param $idEvent
-     * @param EventRepository $repository
+     * @param $idClient
      * @param InscrieventRepository $repository2
+     * @param Request $request
+     * @param CommentaireRepository $repository3
      * @return Response
-     * @Route("/upgradi/eventDetails/{idEvent}", name="eventDetails")
+     * @Route("/upgradi/eventDetails/{idEvent}/{idClient}", name="eventDetails")
      */
-    public function eventDetails($idEvent,EventRepository $repository,InscrieventRepository $repository2): Response
+    public function eventDetails($idEvent,$idClient,InscrieventRepository $repository2,Request $request,CommentaireRepository $repository3): Response
     {
-        $event=$repository->find($idEvent);
         $insTable=$repository2->getByIdEvent($idEvent);
+        $event=$this->getDoctrine()->getRepository(Event::class)->find($idEvent);
+        $client=$this->getDoctrine()->getRepository(Client::class)->find($idClient);
+        /*
+         * partie add Commentaire
+         */
+        $comm=new Commentaire();
+        $comm->setEvent($event);
+        $comm->setClient($client);
+        $comm->setDatecomm(new \DateTime());
+        //$cc=new CommentaireController();
+        $form=$this->createForm(CommentaireType::class,$comm);
+        $form->handleRequest($request);
+        if($form->isSubmitted() && $form->isValid()){
+            $em=$this->getDoctrine()->getManager();
+            $em->persist($comm);
+            $em->flush();
+            $this->addFlash('successComm',"Your Comment added successfully");
+            return $this->redirectToRoute('eventDetails',['idClient'=>$idClient,'idEvent'=>$idEvent, 'inscriptions'=>$insTable]);
+        }
+        /*
+         * partie affichage commentaires
+         */
+        $CommentairesList=$repository3->findCommByEvent($idEvent);
+
         return $this->render("front/eventDetails.html.twig",array(
             'event'=>$event,
-            'inscriptions'=>$insTable
+            'inscriptions'=>$insTable,
+            'form'=>$form->createView(),
+            'commentaires'=>$CommentairesList
         ));
     }
 }
