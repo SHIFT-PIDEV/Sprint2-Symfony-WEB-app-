@@ -80,4 +80,21 @@ class EventRepository extends ServiceEntityRepository
             ->getResult();
     }
 
+    /**
+     * @return int|mixed|string
+     */
+    public function findunvailableEvents(){
+        $em=$this->getEntityManager();
+        return $em->createQuery('select e from App\Entity\Event e where e.datedebut <= CURRENT_DATE()')
+            ->getResult();
+    }
+    /**
+     * @return int|mixed|string
+     */
+    public function findvailableEvents(){
+        $em=$this->getEntityManager();
+        return $em->createQuery('select e from App\Entity\Event e where e.datedebut > CURRENT_DATE()')
+            ->getResult();
+    }
+
 }

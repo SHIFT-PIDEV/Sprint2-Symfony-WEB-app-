@@ -1,0 +1,11 @@
+{# templates/emails/registration.html.twig #}
+<h1>Hi {{ client.getNom }}!</h1>
+<h3>your Inscription has been successfully registered</h3>
+<h3>Event name : <a href="{{ path('eventDetails',{'idEvent':event.getIdevent,'idClient':1}) }}">{{ event.getNomevent }}</a></h3>
+<h3>Event Date: {{ event.getDatedebut|date('d/m/Y') }}</h3>
+<h3>At : {{ event.getHeure }}h</h3>
+<h3>Duration : {{ event.getDuree }}</h3>
+<img src="{{ asset(event.getImage) }}">
+be on time
+Thanks!
+

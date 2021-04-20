@@ -24,7 +24,7 @@ class EventController extends AbstractController
      * @param EventRepository $repository
      * @return Response
      */
-    public function index(EventRepository $repository): Response
+    public function allEvent(EventRepository $repository): Response
     {
         $events=$repository->findAll();
 
@@ -33,6 +33,28 @@ class EventController extends AbstractController
         ]);
     }
 
+    /**
+     * @param EventRepository $repository
+     * @return Response
+     * @Route("/upgradi/unvailableEvents", name="unvailableEvents")
+     */
+    public function unavailableEvents(EventRepository $repository){
+        $events=$repository->findunvailableEvents();
+        return $this->render('event/front.html.twig', [
+            'events' => $events,
+        ]);
+    }
+    /**
+     * @param EventRepository $repository
+     * @return Response
+     * @Route("/upgradi/availableEvents", name="availableEvents")
+     */
+    public function availableEvents(EventRepository $repository){
+        $events=$repository->findvailableEvents();
+        return $this->render('event/front.html.twig', [
+            'events' => $events,
+        ]);
+    }
 
     /**
      * @param EventRepository $er

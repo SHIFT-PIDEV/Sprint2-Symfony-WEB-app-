@@ -26,10 +26,11 @@ class InscrieventController extends AbstractController
      * @param $idClient
      * @param $idEvent
      * @param InscrieventRepository $repository
+     * @param \Swift_Mailer $mailer
      * @return Response
      * @route("/upgradi/eventDetails/inscription/{idClient}/{idEvent}",name="sinscrire")
      */
-    public function addInscriEvent($idClient,$idEvent,InscrieventRepository $repository): Response
+    public function addInscriEvent($idClient,$idEvent,InscrieventRepository $repository,\Swift_Mailer $mailer): Response
     {
         $insTest=$repository->findOneByIdClientIdEvent($idClient,$idEvent);
         $client=$this->getDoctrine()->getRepository(Client::class)->find($idClient);
@@ -45,6 +46,22 @@ class InscrieventController extends AbstractController
             $em->flush();
             $this->addFlash('success',"votre inscription à l'événement <<".$event->getNomevent().
                 ">> a été enregistrée avec succès mr ".$client->getNom()." please check your mail");
+            /*
+             * SEND MAIL
+             */
+            $message = (new \Swift_Message('Upgradi'))
+                ->setFrom('hamdiskander5@gmail.com')
+                ->setTo('skander.hamdi@esprit.tn')
+                ->setBody(
+                    $this->renderView(
+                        'front/email.html.twig',
+                        ['client' => $client,'event'=>$event]
+                    ),
+                    'text/html'
+                );
+            $mailer->send($message);
+
+            /*     */
             return $this->redirectToRoute('myEvents',['idclient'=>$idClient]);
         }
         else{
