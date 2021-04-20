@@ -69,6 +69,7 @@ class ExamenController extends AbstractController
      */
     public function listExamen(Request $request, PaginatorInterface $paginator)
     {
+        $date = new \DateTime('now');
         $examen = $this->getDoctrine()->getRepository(Examen::class)->findAll();
         $pagination = $paginator->paginate(
             $examen,
@@ -167,4 +168,78 @@ class ExamenController extends AbstractController
         ]);
     }
 
+    /**
+     *@Route("/searchajax", name="ajaxsearch")
+     */
+    public function searchAction(Request $request)
+    {
+        $em=$this->getDoctrine()->getManager();
+        $requestString = $request->get('q');
+        $examen = $em->getRepository(Examen::class)->findEntitiesByString($requestString);
+        if(!$examen)
+        {
+            $result['examen']['error']="examen introuvable :( ";
+
+        }else{
+            $result['examen']=$this->getRealEntities($examen);
+        }
+        return new Response(json_encode($result));
+
+    }
+    public function getRealEntities($examen){
+        foreach ($examen as $examen){
+            $realEntities[$examen->getId()] = [$examen->getTitre()];
+        }
+        return $realEntities;
+    }
+
+
+    /**
+     * @Route("/examen/listexamenFDetail/{id}", name="list_examen_Front_d")
+     */
+    public function listExamenFrontDetail(Request $request ,int $id)
+    {
+        $examen = $this->getDoctrine()->getRepository(Examen::class)->find($id);
+         return $this->render('examen/FrontExamen_listDetails.html.twig',[
+            "examen" =>$examen,
+        ]);
+    }
+    ////////////////////////////////////////end front ///////////////////
+    /////////////////////Start block Metier trier DQL////////////////////
+    /**
+     * @Route("/examen/listExamenASC", name="listExamen_ASC")
+     */
+    public function sortASCService(Request $request, PaginatorInterface $paginator)
+    {
+        $examen = $this->getDoctrine()->getRepository(Examen::class)->findBy(array(),array("prix"=>"ASC"));
+
+
+        $pagination = $paginator->paginate(
+            $examen,
+            $request->query->getInt('page', 1), /*page number*/
+            3 /*limit per page*/
+        );
+        return $this->render("examen/FrontExamen_listASC.html.twig", [
+            "examen" => $pagination,
+        ]);
+
+    }
+    /**
+     *@Route("/examen/listExamenDESC", name="listExamen_DESC")
+     */
+    public function sortDESCService(Request $request, PaginatorInterface $paginator)
+    {
+        $examen = $this->getDoctrine()->getRepository(Examen::class)->findBy(array(),array("prix"=>"DESC"));
+
+
+        $pagination = $paginator->paginate(
+            $examen,
+            $request->query->getInt('page', 1), /*page number*/
+            3 /*limit per page*/
+        );
+        return $this->render("examen/FrontExamen_listDESC.html.twig", [
+            "examen" => $pagination,
+        ]);
+    }
+    /////////////////////endblock Metier trier DQL////////////////////
 }

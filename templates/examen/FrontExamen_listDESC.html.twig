@@ -1,0 +1,105 @@
+{% extends 'Front_navbar_footer.html.twig' %}
+{% block title %} <div
+        class="padding-y-60 bg-cover"
+        data-dark-overlay="6"
+        style="background: url({{ asset('frontoffice/assets/img/passageex.png')}}) no-repeat"
+>
+        <div class="container">
+            <h1 class="text-white">Liste des Examens :</h1>
+            <ol
+                    class="breadcrumb breadcrumb-double-angle text-white bg-transparent p-0"
+            >
+                <li class="breadcrumb-item"><a href="#">Home</a></li>
+                <li class="breadcrumb-item"><a href="#">Examens</a></li>
+                <li class="breadcrumb-item">Liste des Examen</li>
+            </ol>
+        </div>
+    </div>{% endblock %}
+{% block body %}
+
+    <section class="pt-5 paddingBottom-100 bg-light-v2">
+
+        <div class="container">
+            <!--block examen tri -->
+            <li class="nav-item nav-item__has-dropdown">
+                <a
+                        class="nav-link dropdown-toggle"
+                        href="#"
+                        data-toggle="dropdown">Trier Par Prix</a>
+                <ul class="dropdown-menu">
+                    <li>
+                        <a href="{{ path('list_examen_Front') }}" class="nav-link__list">
+                            ALL
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ path('listExamen_ASC') }}" class="nav-link__list">
+                            Ascendant
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ path('listExamen_DESC')}}" class="nav-link__list">
+                              Descendant
+                        </a>
+                    </li>
+
+                </ul>
+            </li>
+            <div class="row">
+
+                {% for e in examen %}
+                    <div class="col-lg-4 col-md-6 marginTop-30">
+                        <div class="card shadow-v1">
+                            <img
+                                    class="card-img-top"
+                                    src="{{ asset('frontoffice/assets/img/Exam.jpg') }}"
+                                    alt=""
+                            />
+                            <div class="card-body">
+                                <a href="#" class="h6 mb-3">
+                                    <h4>{{ e.titre }}</h4>
+                                </a>
+                                <br>
+                                <p class="mb-0">
+                                    l'examen eura lieu le : <label style="color: #0074f0">{{ e.date | date("d/m/Y") }}</label>
+                                    Avec un prix de  <label style="color: #0c84ff"> {{ e.prix }}DT</label> et un niveau <label style="color: #0c84ff">
+                                        {{ e.niveau }}</label>.
+                                </p>
+                                <br>
+                                <p class="mb-0" style="color:#ff2255">
+                                    <i class='fas fa-exclamation-circle' style='color:red'></i>
+                                    Tenter votre chance et inscrivez vous dans l'examen  <label style="color: #0074f0">{{e.titre}}</label>
+                                    et Bonne Chance !!!
+                                </p>
+
+                            </div>
+                            <div class="card-footer">
+                                <div class="media">
+                                    <!--  <img class="iconbox" src="{{ asset('frontoffice/assets/img/avatar/4.jpg')}}" alt="" />    -->
+
+                                    <div class="media-body ml-4">
+                                        <a class="btn btn-block btn-outline-instagram" href="{{ path('inscripexam_new', {'idexam': e.id}) }}" >S'inscrire </a>
+                                    </div>
+
+
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+
+
+            </div>
+            {# display navigation #}
+            <div class="navigation">
+                {{ knp_pagination_render(examen) }}
+            </div>
+            <!--END row-->
+        </div>
+        <!-- END container-->
+    </section>
+
+{% endblock %}
+
+

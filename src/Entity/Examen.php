@@ -3,12 +3,13 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Examen
  *
  * @ORM\Table(name="examen", indexes={@ORM\Index(name="fn_qq", columns={"qq"}), @ORM\Index(name="fn_q", columns={"q"}), @ORM\Index(name="fn_qqq", columns={"qqq"})})
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="App\Repository\ExamenRepository")
  */
 class Examen
 {
@@ -27,14 +28,44 @@ class Examen
      * @ORM\Column(name="titre", type="string", length=255, nullable=false)
      */
     private $titre;
-
+////////////////////////////////////////////////////////////////
     /**
      * @var \DateTime|null
-     *
-     * @ORM\Column(name="date", type="date", nullable=true)
+     * @Assert\GreaterThan("today")
+     * @ORM\Column(name="date", type="date", nullable=false)
      */
     private $date;
+    /**
+     * Examen constructor.
+     */
+    public function __construct()
+    {
+        $this->date= new \DateTime();
+    }
 
+    /**
+     * @return mixed
+     */
+    public function getDate()
+    {
+
+        return $this->date;
+    }
+
+    /**
+     * @param mixed $date
+     */
+    public function setDate($date): void
+    {
+        $this->date = $date;
+        $day   = $date->format('d'); // Format the current date, take the current day (01 to 31)
+        $month = $date->format('m'); // Same with the month
+        $year  = $date->format('Y'); // Same with the year
+
+        $date = $day.'-'.$month.'-'.$year; // Return a string and not an object
+
+    }
+    /////////////////////////////////////////
     /**
      * @var string
      *
@@ -103,17 +134,7 @@ class Examen
         return $this;
     }
 
-    public function getDate(): ?\DateTimeInterface
-    {
-        return $this->date;
-    }
 
-    public function setDate(?\DateTimeInterface $date): self
-    {
-        $this->date = $date;
-
-        return $this;
-    }
 
     public function getNiveau(): ?string
     {
