@@ -1,0 +1,58 @@
+{% extends 'DashbordBack.html.twig' %}
+{% block titre %}Gestion des Examens{% endblock %}
+{% block miniTitre %}Gestion des Examens{% endblock  %}
+{% block content %}
+
+    {{ form_start(form, {attr: {'novalidate': 'novalidate'}}) }}
+    <div class="container">
+        <div class="form-group">
+            {{ form_label(form.titre,"Titre :") }}
+            {{ form_errors(form.titre)}}
+            {{ form_widget(form.titre, {attr: {class:'form-control','id':'titre'}}) }}
+        </div>
+        <div class="form-group">
+            {{ form_label(form.date,"Date :" ) }}
+            {{ form_errors(form.date)}}
+            {{ form_widget(form.date) }}
+        </div>
+        <div class="form-group">
+            {{ form_label(form.niveau,"Niveau :" ) }}
+            {{ form_errors(form.niveau)}}
+            {{ form_widget(form.niveau,{attr: {class:'form-control','id':'reponsec'}}) }}
+        </div>
+        <div class="form-group">
+            {{ form_label(form.prix,"Prix  :" ) }}
+            {{ form_errors(form.prix)}}
+            {{ form_widget(form.prix,{attr: {class:'form-control','id':'reponsec'}}) }}
+        </div>
+        <div class="form-group">
+            {{ form_label(form.q,"Question numero 1:" ) }}
+            {{ form_errors(form.q)}}
+            {{ form_widget(form.q,{attr: {class:'form-control','id':'reponsec'}}) }}
+        </div>
+        <div class="form-group">
+            {{ form_label(form.qq,"Question numero 2:" ) }}
+            {{ form_errors(form.qq)}}
+            {{ form_widget(form.qq,{attr: {class:'form-control','id':'reponsec'}}) }}
+        </div>
+        <div class="form-group">
+            {{ form_label(form.qqq,"Question numero 3:" ) }}
+            {{ form_errors(form.qqq)}}
+            {{ form_widget(form.qqq,{attr: {class:'form-control','id':'reponsec'}}) }}
+        </div>
+        <div class="form-group">
+            {{ form_row(form.captchaCode) }}
+        </div>
+    </div>
+    <div class="card-footer">
+        <button  type="submit" href="{{ path('add_examen') }}" class="btn btn-primary">Ajouter Examen</button>
+    </div>
+
+
+
+
+    {{ form_end(form) }}
+
+
+
+{% endblock  %}

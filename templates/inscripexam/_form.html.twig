@@ -1,0 +1,31 @@
+
+        {{ form_start(form) }}
+        <div class="container">
+            <h1>inscription à examen :</h1>
+            <div class="form-group">
+                {{ form_label(form.nom,"Nom :") }}
+
+                {{ form_widget(form.nom, {attr: {class:'form-control','id':'nom'}}) }}
+            </div>
+            <div class="form-group">
+                {{ form_label(form.prenom,"Prenom :") }}
+
+                {{ form_widget(form.prenom, {attr: {class:'form-control','id':'prenom'}}) }}
+            </div>
+            <div class="form-group">
+                {{ form_label(form.email,"Email :") }}
+
+                {{ form_widget(form.email, {attr: {class:'form-control','id':'email'}}) }}
+            </div>
+            <div class="form-group">
+                {{ form_label(form.idexam,"Titre Examen :") }}
+
+                {{ form_widget(form.idexam, {attr: {class:'form-control','id':'idexam'}}) }}
+            </div>
+            <div class="form-group">
+    {{ form_widget(form) }}
+    <button class="btn btn-outline-info">{{ button_label|default('confirmer') }}</button>
+            </div>
+        </div>
+{{ form_end(form) }}
+

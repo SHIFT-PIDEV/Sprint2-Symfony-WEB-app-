@@ -1,0 +1,25 @@
+{% extends 'DashbordBack.html.twig' %}
+{% block content %}
+
+    {{ form_start(form,{attr:{'id':'form_chauffeur'}}) }}
+    <div class="container">
+        <div class="form-group">
+            {{ form_label(form.nomCat,"Nom Categorie:") }}
+
+            {{ form_widget(form.nomCat, {attr: {class:'form-control','id':'Nom Categorie'}}) }}
+        </div>
+
+
+    </div>
+    <div class="card-footer">
+        <button  type="submit"  class="btn btn-primary">Modifier Categorie</button>
+    </div>
+
+
+
+
+    {{ form_end(form) }}
+
+
+
+{% endblock  %}

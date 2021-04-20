@@ -1,0 +1,63 @@
+{% extends 'DashbordBack.html.twig' %}
+{% block titre %}Gestion des Examens{% endblock %}
+{% block miniTitre %}Gestion des Examens{% endblock  %}
+{% block title %}{% endblock %}
+
+{% block content %}
+
+
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">LISTE DES EXAMENS :</h3>
+        </div>
+        <div class="card-body p-0">
+            <br>
+            <table id="examen" class="table table-striped">
+                <thead>
+                <tr>
+                    <th style="width: 10px">#</th>
+                    <th>TITRE</th>
+                    <th>DATE</th>
+                    <th>NIVEAU</th>
+                    <th>PRIX</th>
+                    <th>QUESTION 1</th>
+                    <th>QUESTION 2</th>
+                    <th>QUESTION 3</th>
+                    <th>Action</th>
+
+                </tr>
+                </thead>
+                <tbody>
+                {% for e in examen %}
+
+                    <tr>
+                        <td>{{ e.id }}</td>
+                        <td>{{ e.titre }}</td>
+                        <td>{{ e.date | date("d/m/Y") }} </td>
+                        <td>{{ e.niveau }}</td>
+                        <td>{{ e.prix }}</td>
+                        <td>{{ e.q.question }}</td>
+                        <td>{{ e.qq.question }}</td>
+                        <td>{{ e.qqq.question }}</td>
+
+                        <td>
+                            <a class="btn btn-block btn-success" href="{{ path('edit_examen',{'idExamen':e.id}) }}" > modifier</a>
+                        </td>
+                        <td>
+                            <a class="btn btn-block btn-danger" href="{{ path('delete_examen',{'idExamen':e.id}) }}" >supprimer </a>
+                        </td>
+
+                        </td>
+                    </tr>
+
+
+                {% endfor %}
+                </tbody>
+
+            </table>
+        </div>
+
+
+
+    </div>
+{% endblock content %}

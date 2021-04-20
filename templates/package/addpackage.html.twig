@@ -1,0 +1,63 @@
+{% extends 'DashbordBack.html.twig' %}
+{% block content %}
+
+    {{ form_start(form,{attr:{'id':'form_package'}}) }}
+    <div class="container">
+        <div class="form-group">
+            {{ form_label(form.nompackage,"Nom du package :") }}
+
+            {{ form_widget(form.nompackage, {attr: {class:'form-control','id':'nompackage'}}) }}
+        </div>
+        <div class="form-group">
+            {{ form_label(form.prix,"Prix  :" ) }}
+
+            {{ form_widget(form.prix,{attr: {class:'form-control','id':'prix'}}) }}
+        </div>
+        <div class="form-group">
+            {{ form_label(form.duree,"Duree :" ) }}
+
+            {{ form_widget(form.duree,{attr: {class:'form-control','id':'duree'}}) }}
+        </div>
+        <div class="form-group">
+            {{ form_label(form.description,"Description :" ) }}
+
+            {{ form_widget(form.description, {attr: {class:'form-control','id':'description'}}) }}
+        </div>
+        <div class="form-group">
+            {{ form_label(form.nbrcours,"Nombre cour :" ) }}
+
+            {{ form_widget(form.nbrcours, {attr: {class:'form-control','id':'nbrcours'}}) }}
+        </div>
+        <div class="form-group">
+            {{ form_label(form.idca,"Categorie:" ) }}
+
+            {{ form_widget(form.idca,{attr: {class:'form-control','id':'idca'}}) }}
+        </div>
+        <div class="form-group">
+            {{ form_label(form.courp,"Cour 1:" ) }}
+
+            {{ form_widget(form.courp,{attr: {class:'form-control','id':'courp'}}) }}
+        </div>
+        <div class="form-group">
+            {{ form_label(form.courpp,"Cour 2:" ) }}
+
+            {{ form_widget(form.courpp,{attr: {class:'form-control','id':'courpp'}}) }}
+        </div>
+        <div class="form-group">
+            {{ form_label(form.courppp,"Cour 3:" ) }}
+
+            {{ form_widget(form.courppp,{attr: {class:'form-control','id':'courppp'}}) }}
+        </div>
+    </div>
+    <div class="card-footer">
+        <button  type="submit" class="btn btn-primary">Ajouter Package</button>
+    </div>
+
+
+
+
+    {{ form_end(form) }}
+
+
+
+{% endblock  %}

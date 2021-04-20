@@ -1,0 +1,11 @@
+{% extends 'Front_navbar_footer.html.twig' %}
+
+{% block title %}New Inscripexam{% endblock %}
+
+{% block body %}
+
+
+    {{ include('inscripexam/_form.html.twig') }}
+
+    <a href="{{ path('inscripexam_index') }}">back to list</a>
+{% endblock %}

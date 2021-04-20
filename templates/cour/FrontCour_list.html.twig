@@ -1,0 +1,65 @@
+{% extends 'Front_navbar_footer.html.twig' %}
+{% block body %}
+    <section class="pt-5 paddingBottom-100 bg-light-v2">
+        <div class="container">
+            <div class="row">
+                {% for e in cour %}
+                    <div class="col-md-6 marginTop-30">
+                        <div
+                                href="page-course-details.html"
+                                class="card text-gray shadow-v1"
+                        >
+                            <a href="{{ path('cour_details',{'idcour':e.idcour}) }}"> <img
+                                    class="card-img-top"
+                                src="{{ asset("images/cour/#{e.img}") }} "
+
+                                    alt=""
+
+                            />
+                            </a>
+                            <div class="card-body">
+                                <a href="#" class="h5"> {{ e.nom }}</a>
+                                <p class="my-3">
+                                    <i class="ti-user mr-2"></i>
+                                    {{ e.formateur }}
+                                </p>
+                                <p class="mb-0">
+                                    <i class="fas fa-star text-warning"></i>
+                                    <i class="fas fa-star text-warning"></i>
+                                    <i class="fas fa-star text-warning"></i>
+                                    <i class="fas fa-star text-warning"></i>
+                                    <i class="fas fa-star text-warning"></i>
+                                    <span class="text-dark">5</span>
+                                    <span>(4578)</span>
+                                </p>
+                            </div>
+                            <div
+                                    class="card-footer media align-items-center justify-content-between"
+                            >
+                                <ul class="list-unstyled mb-0">
+                                    <li class="mb-1">
+                                        <i class="ti-headphone small mr-2"></i>
+                                        46 lectures
+                                    </li>
+                                    <li class="mb-1">
+                                        <i class="ti-time small mr-2"></i>
+                                        {{ e.duration}}
+                                    </li>
+                                </ul>
+                                <h4 class="h5 text-right">
+                                    <span class="text-primary"> ${{ e.prix }}</span>
+                                </h4>
+                            </div>
+                        </div>
+                    </div>
+                 {% endfor %}
+            </div>
+            {# display navigation #}
+            <div class="navigation">
+                {{ knp_pagination_render(cour) }}
+            </div>
+            <!--END row-->
+        </div>
+        <!-- END container-->
+    </section>
+{% endblock %}

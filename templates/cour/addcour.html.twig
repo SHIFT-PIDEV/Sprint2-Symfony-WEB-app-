@@ -1,0 +1,90 @@
+{% extends 'DashbordBack.html.twig' %}
+
+
+{% block content %}
+
+    {{ form_start(form, {attr: {'novalidate': 'novalidate'}}) }}
+    <div class="container">
+        <div class="form-group">
+            {{ form_label(form.nom,"Nom :") }}
+
+
+            {{ form_widget(form.nom, {attr: {class:'form-control','id':'nom'}}) }}
+            <div style="color: red">
+                {{ form_errors(form.nom) }}
+            </div>
+        </div>
+        <div class="form-group">
+            {{ form_label(form.formateur,"Formateur :" ) }}
+
+            {{ form_widget(form.formateur, {attr: {class:'form-control','id':'formateur'}}) }}
+            <div style="color: red">
+                {{ form_errors(form.formateur) }}
+            </div>
+        </div>
+
+        <div class="form-group">
+            {{ form_label(form.description,"Description :" ) }}
+
+            {{ form_widget(form.description, {attr: {class:'form-control','id':'description'}}) }}
+
+            <div style="color: red">
+                {{ form_errors(form.description) }}
+            </div>
+        </div>
+        <div class="form-group">
+            {{ form_label(form.prix,"Prix  :" ) }}
+
+            {{ form_widget(form.prix,{attr: {class:'form-control','id':'prix'}}) }}
+            <div style="color: red">
+                {{ form_errors(form.prix) }}
+            </div>
+        </div>
+
+        <div class="form-group">
+            {{ form_label(form.niveau,"Niveau :" ) }}
+
+            {{ form_widget(form.niveau,{attr: {class:'form-control','id':'niveau'}}) }}
+
+            <div style="color: red">
+                {{ form_errors(form.niveau) }}
+            </div>
+        </div>
+        <div class="form-group">
+            {{ form_label(form.duration,"Duration :" ) }}
+
+            {{ form_widget(form.duration,{attr: {class:'form-control','id':'duration'}}) }}
+
+            <div style="color: red">
+                {{ form_errors(form.duration) }}
+            </div>
+        </div>
+
+        <div class="form-group">
+            {{ form_label(form.idC,"Categorie:" ) }}
+
+            {{ form_widget(form.idC,{attr: {class:'form-control','id':'idC'}}) }}
+        </div>
+        <div class=" col-md-2">
+            {{ form_row(form.imageFile  ) }}
+
+        </div>
+
+
+
+
+
+
+    </div>
+
+
+
+
+    <div class="card-footer">
+        <button  type="submit"  class="btn btn-primary">Ajouter Cour</button>
+    </div>
+    {{ form_end(form) }}
+
+
+
+{% endblock  %}
