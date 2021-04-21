@@ -98,7 +98,7 @@ class CourController extends AbstractController
     }
     ////////////////////////////////////Front //////////////////
     /**
-     * @Route("/examen/listcourF", name="list_cour_Front")
+     * @Route("/cour/listcourF", name="list_cour_Front")
      */
     public function listCourFront(Request $request, PaginatorInterface $paginator)
     {
@@ -115,6 +115,30 @@ class CourController extends AbstractController
             "cour" =>$pagination,
         ]);
     }
+    /**
+     *@Route("/searchajax", name="ajaxsearch")
+     */
+    public function searchAction(Request $request)
+    {
+        $em=$this->getDoctrine()->getManager();
+        $requestString = $request->get('q');
+        $cour = $em->getRepository(Cour::class)->findEntitiesByString($requestString);
+        if(!$cour)
+        {
+            $result['cour']['error']="cour introuvable :( ";
+
+        }else{
+            $result['cour']=$this->getRealEntities($cour);
+        }
+        return new Response(json_encode($result));
+
+    }
+    public function getRealEntities($cour){
+        foreach ($cour as $cour){
+            $realEntities[$cour->getIdcour()] = [$cour->getNom()];
+        }
+        return $realEntities;
+    }
 
     /**
      * @Route("/cour/courDetails/{idcour}", name="cour_details")
@@ -127,5 +151,41 @@ class CourController extends AbstractController
 
         return $this->render('cour/FrontCourDetails.html.twig', [
             "cour" => $cour,]);
+    }
+    /////////////////////////////////metier trie///////////////
+    /**
+     * @Route("/cour/listCourASC", name="listCour_ASC")
+     */
+    public function sortASCService(Request $request, PaginatorInterface $paginator)
+    {
+        $cour = $this->getDoctrine()->getRepository(Cour::class)->findBy(array(),array("prix"=>"ASC"));
+
+
+        $pagination = $paginator->paginate(
+            $cour,
+            $request->query->getInt('page', 1), /*page number*/
+            3 /*limit per page*/
+        );
+        return $this->render("cour/FrontCour_listASC.html.twig", [
+            "cour" => $pagination,
+        ]);
+
+    }
+    /**
+     *@Route("/cour/listCourDESC", name="listCour_DESC")
+     */
+    public function sortDESCService(Request $request, PaginatorInterface $paginator)
+    {
+        $cour = $this->getDoctrine()->getRepository(Cour::class)->findBy(array(),array("prix"=>"DESC"));
+
+
+        $pagination = $paginator->paginate(
+            $cour,
+            $request->query->getInt('page', 1), /*page number*/
+            3 /*limit per page*/
+        );
+        return $this->render("cour/FrontCour_listDESC.html.twig", [
+            "cour" => $pagination,
+        ]);
     }
 }

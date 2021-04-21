@@ -12,7 +12,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  * Cour
  *
  * @ORM\Table(name="cour", indexes={@ORM\Index(name="fn_categorie", columns={"id_c"})})
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="App\Repository\CourRepository")
  * @Vich\Uploadable
  */
 class Cour

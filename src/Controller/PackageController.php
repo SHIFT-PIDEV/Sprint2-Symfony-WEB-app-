@@ -63,4 +63,35 @@ class PackageController extends AbstractController
 
         return $this->render('package/packages.html.twig',["package"=> $pagination]);
     }
+    /**
+     * @Route("/package/edit_package/{idPackage}", name="edit_package")
+     */
+    public function editPackage(Request $request, int $idPackage): Response
+    {
+
+        $entityManager = $this->getDoctrine()->getManager();
+
+        $Package = $entityManager->getRepository(Package::class)->find($idPackage);
+        $form = $this->createForm(PackageType::class,$Package);
+        $form->handleRequest($request);
+
+
+        if($form->isSubmitted()&& $form->isValid())
+        {
+
+            $entityManager = $this->getDoctrine()->getManager();
+
+
+
+            $entityManager->flush();
+
+            return $this->redirectToRoute('list_package');
+
+        }
+
+        return $this->render("package/edit_package.html.twig", [
+            "form_title" => "Modifier un package",
+            "form" => $form->createView(),
+        ]);
+    }
 }

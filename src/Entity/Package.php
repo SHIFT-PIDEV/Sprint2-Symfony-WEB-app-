@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Package
  *
  * @ORM\Table(name="package", indexes={@ORM\Index(name="fn_packagesss", columns={"courppp"}), @ORM\Index(name="fn_categories", columns={"idca"}), @ORM\Index(name="fn_packages", columns={"courp"}), @ORM\Index(name="fn_packagess", columns={"courpp"})})
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="App\Repository\PackageRepository")
  */
 class Package
 {

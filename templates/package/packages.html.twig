@@ -65,7 +65,9 @@
                         <td>{{ e.courpp.nom }}</td>
                         <td>{{ e.courppp.nom }}</td>
 
-
+                        <td>
+                            <a class="btn btn-block btn-success" href="{{ path('edit_package',{'idPackage':e.idpackage}) }}" > modifier</a>
+                        </td>
                         <td>
                             <a class="btn btn-block btn-danger"  href="{{ path('delete_package',{'idPackage':e.idpackage}) }}" >supprimer </a>
                         </td>
