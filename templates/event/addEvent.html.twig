@@ -56,7 +56,6 @@
                                                         <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                                                             <div class="form-group">
                                                                 {{ form_errors(form.idformateur,{'atte':{'class':'invalid'}})   }}
-                                                                <!--<input name="coursename" type="text" class="form-control" placeholder="id formateur">-->
                                                                 {{ form_widget(form.idformateur,{'attr': {'class': 'form-control','placeholder':'Id Formateur'}}) }}
                                                             </div>
 
@@ -66,25 +65,21 @@
                                                                     {{ form_errors(form.datedebut,{'attr': {'class': 'login2 pull-right pull-right-pro'}}) }}
                                                             <div class="input-group date">
                                                                 <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                                                                <!--<input type="text" class="form-control" value="10/04/2017">-->
                                                                 {{ form_widget(form.datedebut, {'attr': {'class': 'form-control'}}) }}
                                                             </div>
                                                                 </div>
                                                             </div>
                                                             <div class="form-group">
                                                                     {{ form_errors(form.nomevent,{'attr':{'class':'login2 pull-right pull-right-pro'}}) }}
-                                                               <!-- <input name="duration" type="text" class="form-control" placeholder="Nom de l'Event">-->
                                                                 {{ form_widget(form.nomevent, {'attr': {'class': 'form-control','placeholder':'Event Name'}}) }}
                                                             </div>
                                                             <div class="form-group">
                                                                     {{ form_errors(form.heure) }}
-                                                                <!--<input name="price" type="number" class="form-control" placeholder="heure">-->
                                                                 {{ form_widget(form.heure, {'attr': {'class': 'form-control','placeholder':'Heure Debut'}}) }}
                                                             </div>
 
                                                             <div class="form-group res-mg-t-15">
                                                                 {{ form_errors(form.duree) }}
-                                                                <!-- <input name="department" type="text" class="form-control" placeholder="duree">-->
                                                                 {{ form_widget(form.duree, {'attr': {'class': 'form-control','placeholder':'Duration'}}) }}
                                                             </div>
 
@@ -92,13 +87,11 @@
                                                         </div>
                                                         <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                                                             <div>
-                                                                {{ form_errors(form.image) }}
-                                                               <!-- <input class="form-control form-control-lg" id="formFileLg" type="file" />-->
-                                                                {{ form_widget(form.image, {'attr': {'class': 'form-control form-control-lg','placeholder':'image path'}}) }}
+                                                                {{ form_label(form.pic) }}
+                                                                {{ form_widget(form.pic, {'attr': {'class': 'form-control form-control-lg','placeholder':'image path'}}) }}
                                                             </div>
                                                             <div class="form-group">
                                                                 {{ form_errors(form.descevent,{'attr': {'style': 'color:red'}}) }}
-                                                                <!--<textarea name="description" placeholder="Description"></textarea>-->
                                                                 {{ form_widget(form.descevent, {'attr': {'class': 'form-control','placeholder':'Description...'}}) }}
                                                             </div>
 

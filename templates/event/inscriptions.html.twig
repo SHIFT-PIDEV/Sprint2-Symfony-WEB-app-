@@ -37,7 +37,7 @@
         <div class="sparkline8-list">
             <div class="sparkline8-hd">
                 <div class="main-sparkline8-hd">
-                    <h1>{{ event.getNomevent }}: {{ inscriptions|length }} Inscriptions</h1>
+                    <h1>{{ event.getNomevent }}: {{ event.getInscriptions|length }} Inscriptions</h1>
                 </div>
             </div>
             <div class="sparkline8-graph">
@@ -53,8 +53,8 @@
                             <th>Date </th>
                         </tr>
                         </thead>
-                        {% if inscriptions %}
-                            {% for i in inscriptions %}
+                        {% if event.getInscriptions %}
+                            {% for i in event.getInscriptions %}
                         <tbody>
                         <tr>
                             <td>{{ i.getIdinscri }}</td>

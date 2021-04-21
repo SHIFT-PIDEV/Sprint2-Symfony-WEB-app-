@@ -66,11 +66,11 @@ class Client
     private $nbrnotif;
 
     /**
-     * @ORM\OneToMany(targetEntity=Inscrievent::class,mappedBy="Client",cascade={"all"},orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity=Inscrievent::class,mappedBy="client",cascade={"all"},orphanRemoval=true)
      */
     private $inscriptions;
     /**
-     * @ORM\OneToMany(targetEntity=Commentaire::class,mappedBy="Client",cascade={"all"},orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity=Commentaire::class,mappedBy="client",cascade={"all"},orphanRemoval=true)
      */
     private $comms;
 

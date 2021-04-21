@@ -70,19 +70,24 @@ class Event
     /**
      * @var string
      *
-     * @ORM\Column(name="image", type="string", length=500, nullable=false)
+     * @ORM\Column(name="image", type="string", length=500, nullable=true)
      */
     private $image;
 
 
     /**
-     * @ORM\OneToMany(targetEntity=Inscrievent::class,mappedBy="Event",cascade={"all"},orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity=Inscrievent::class,mappedBy="event",cascade={"all"},orphanRemoval=true)
      */
     private $inscriptions;
     /**
-     * @ORM\OneToMany(targetEntity=Commentaire::class,mappedBy="Event",cascade={"all"},orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity=Commentaire::class,mappedBy="event",cascade={"all"},orphanRemoval=true)
      */
     private $comms;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $pic;
 
 
     public function __construct()
@@ -237,6 +242,18 @@ class Event
                 $comm->setEvent(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getPic(): ?string
+    {
+        return $this->pic;
+    }
+
+    public function setPic(?string $pic): self
+    {
+        $this->pic = $pic;
 
         return $this;
     }

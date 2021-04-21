@@ -51,7 +51,7 @@ class InscrieventController extends AbstractController
              */
             $message = (new \Swift_Message('Upgradi'))
                 ->setFrom('hamdiskander5@gmail.com')
-                ->setTo('skander.hamdi@esprit.tn')
+                ->setTo($client->getEmail())
                 ->setBody(
                     $this->renderView(
                         'front/email.html.twig',
@@ -108,10 +108,10 @@ class InscrieventController extends AbstractController
      */
     public function inscriOfIdEvent($idevent,InscrieventRepository $repository): Response
     {
-        $inscriptions=$repository->getByIdEvent($idevent);
+        //$inscriptions=$repository->getByIdEvent($idevent);
         $event=$this->getDoctrine()->getRepository(Event::class)->find($idevent);
         return $this->render("event/inscriptions.html.twig",array(
-            'inscriptions'=>$inscriptions,
+           // 'inscriptions'=>$inscriptions,
             'event'=>$event
 
         ));
@@ -125,11 +125,12 @@ class InscrieventController extends AbstractController
      */
     public function inscriOfClient($idclient,InscrieventRepository $repository): Response
     {
-        $inscriptions=$repository->getByIdClient($idclient);
+        //$inscriptions=$repository->getByIdClient($idclient);
+        $client=$this->getDoctrine()->getRepository(Client::class)->find($idclient);
         $events= array();
-        $n=sizeof($inscriptions);
+        $n=sizeof($client->getInscriptions());
         for( $i=0;$i<$n;$i++){
-            $events[$i]=$this->getDoctrine()->getRepository(Event::class)->find($inscriptions[$i]->getEvent()->getidevent());
+            $events[$i]=$this->getDoctrine()->getRepository(Event::class)->find($client->getInscriptions()[$i]->getEvent()->getidevent());
         }
 
         return $this->render("front/myEvents.html.twig",array(

@@ -99,7 +99,7 @@
                     {% for e in events %}
                             <div class="col-lg-4 col-md-6 marginTop-30">
                                 <div class="card height-100p shadow-v1">
-                                    <img class="card-img-top" src="{{ e.getImage }}" alt="" />
+                                    <img class="card-img-top" src="{{ '/uploads/'~e.getPic }}" alt="" />
                                     <div class="card-body">
                                         <a href="#" class="h4">
                                             {{ e.getNomevent }}
@@ -112,7 +112,7 @@
                                                 <i class="ti-location-pin text-primary mr-2"></i>En ligne
                                             </li>
                                         </ul>
-                                        <a href="{{ path('eventDetails',{'idEvent':e.getIdevent,'idClient':1}) }}" class="btn btn-link pl-0"
+                                        <a href="{{ path('eventDetails',{'idEvent':e.getIdevent,'idClient':3}) }}" class="btn btn-link pl-0"
                                         >View Details</a
                                         >
                                     </div>

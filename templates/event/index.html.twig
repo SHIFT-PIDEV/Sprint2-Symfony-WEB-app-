@@ -75,7 +75,7 @@
                                 <tr>
                                     <td>{{ e.getIdevent }}</td>
                                     <td>{{ e.getIdformateur }}</td>
-                                    <td><img src="{{ e.getImage }}" alt="" /></td>
+                                    <td><img src="{{ '/uploads/'~e.getPic }}" alt="" /></td>
                                     <td>{{ e.getNomevent }}</td>
                                     <td>
                                         {% if e.getDateDebut<=date('now')  %}

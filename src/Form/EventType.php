@@ -20,7 +20,12 @@ class EventType extends AbstractType
             ->add('heure')
             ->add('duree')
             ->add('descevent')
-            ->add('image')
+            //->add('image')
+            ->add('pic',FileType::class,[
+                'label'=>'image',
+                'mapped'=>false,
+                'required'=>false
+            ])
         ;
     }
 

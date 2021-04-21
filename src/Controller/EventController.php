@@ -100,9 +100,20 @@ class EventController extends AbstractController
     public function addEvent(Request $request){
         $event =new Event();
         $form =$this->createForm(EventType::class,$event);
-        //$form->add('Submit',SubmitType::class);
         $form->handleRequest($request);
         if($form->isSubmitted()&&$form->isValid()){
+            //On récupere le pic transmise
+            $image=$form->get('pic')->getData();
+            //on génère un nouveau nom de fichier
+            $fichier1=md5(uniqid()).'.'.$image->guessExtension();
+            //on copie le fichier dans le dossier uploads
+            $image->move(
+                $this->getParameter('images_directory'),
+                $fichier1
+            );
+            //on stocke l'image dans la base de données
+            $event->setPic($fichier1);
+
             $em=$this->getDoctrine()->getManager();
             $em->persist($event);
             $em->flush();
@@ -110,11 +121,12 @@ class EventController extends AbstractController
             return $this->redirectToRoute('allEvents');
         }
         else{
-            $this->addFlash('notsuccess',"Check your inputs");
+           // $this->addFlash('notsuccess',"Check your inputs");
+            return $this->render('event/addEvent.html.twig',array(
+                'form'=>$form->createView()
+            ));
         }
-        return $this->render('event/addEvent.html.twig',array(
-            'form'=>$form->createView()
-        ));
+
 
     }
 
@@ -145,6 +157,19 @@ class EventController extends AbstractController
         $form =$this->createForm(EventType::class,$event);
         $form->handleRequest($request);
         if($form->isSubmitted()&&$form->isValid()){
+
+            //On récupere le pic transmise
+            $image=$form->get('pic')->getData();
+            //on génère un nouveau nom de fichier
+            $fichier1=md5(uniqid()).'.'.$image->guessExtension();
+            //on copie le fichier dans le dossier uploads
+            $image->move(
+                $this->getParameter('images_directory'),
+                $fichier1
+            );
+            //on stocke l'image dans la base de données
+            $event->setPic($fichier1);
+
             $em=$this->getDoctrine()->getManager();
             $em->flush();
             $this->addFlash('success',"Event updated successfully");
@@ -194,7 +219,6 @@ class EventController extends AbstractController
         $comm->setEvent($event);
         $comm->setClient($client);
         $comm->setDatecomm(new \DateTime());
-        //$cc=new CommentaireController();
         $form=$this->createForm(CommentaireType::class,$comm);
         $form->handleRequest($request);
         if($form->isSubmitted() && $form->isValid()){
@@ -202,16 +226,16 @@ class EventController extends AbstractController
             $em->persist($comm);
             $em->flush();
             $this->addFlash('successComm',"Your Comment added successfully");
-            return $this->redirectToRoute('eventDetails',['idClient'=>$idClient,'idEvent'=>$idEvent, 'inscriptions'=>$insTable]);
+            return $this->redirectToRoute('eventDetails',['idClient'=>$idClient,'idEvent'=>$idEvent]);
         }
         /*
          * partie affichage commentaires
          */
-        $CommentairesList=$repository3->findCommByEvent($idEvent);
+        $CommentairesList=$event->getComms();
 
         return $this->render("front/eventDetails.html.twig",array(
             'event'=>$event,
-            'inscriptions'=>$insTable,
+            'client'=>$client,
             'form'=>$form->createView(),
             'commentaires'=>$CommentairesList
         ));
