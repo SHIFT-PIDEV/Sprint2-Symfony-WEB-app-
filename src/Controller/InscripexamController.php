@@ -34,7 +34,7 @@ class InscripexamController extends AbstractController
     /**
      * @Route("/new/{idexam}", name="inscripexam_new", methods={"GET","POST"})
      */
-    public function new(Request $request , int $idexam): Response
+    public function new(Request $request , int $idexam,\Swift_Mailer $mailer): Response
     {
         $entityManager = $this->getDoctrine()->getManager();
         $inscripexam = new Inscripexam();
@@ -49,7 +49,22 @@ class InscripexamController extends AbstractController
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($inscripexam);
             $entityManager->flush();
-            return $this->redirectToRoute('inscripexam_index');
+
+            // block mailing
+
+            $message = (new \Swift_Message('You Got Mail!'))
+                ->setFrom('space.upgardi@gmail.com')
+                ->setTo($inscripexam->getEmail())
+                ->setBody(' <p>Bonjour '.$inscripexam->getPrenom().' '.$inscripexam->getNom().',</p>'
+                    .'<p> Votre inscription est validée le :'.  $inscripexam->getDateinscri()->format('Y-m-d') .',</p>'
+                    .'<p>  vous etes inscrits dans lexamen : '.$exam->getTitre().',</p>'
+                    .'<p>  qui aura lieu le '.$inscripexam->getIdexam()->getDate()->format('Y-m-d').',</p>'
+                    .'<p>  on vous souhaite une bonne chance ! BYE BYE . </p>'
+                    .'<a href="http://127.0.0.1:8000/examen/listexamenF"> consulter notre site ');
+            $mailer->send($message);
+            // endblock mailing
+
+            return $this->redirectToRoute('list_mes_exam');
         }
 
         return $this->render('inscripexam/new.html.twig', [
