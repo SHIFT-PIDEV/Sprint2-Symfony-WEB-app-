@@ -1,5 +1,6 @@
 {% extends 'Front_navbar_footer.html.twig' %}
 {% block title %} <div
+
         class="padding-y-60 bg-cover"
         data-dark-overlay="6"
         style="background: url({{ asset('frontoffice/assets/img/passageex.png')}}) no-repeat"
@@ -21,30 +22,65 @@
 
         <div class="container">
             <!--block examen tri -->
-            <li class="nav-item nav-item__has-dropdown">
+            <ul class="nav-item nav-item__has-dropdown">
                 <a
                         class="nav-link dropdown-toggle"
                         href="#"
-                        data-toggle="dropdown">Trier Par Prix</a>
+                        data-toggle="dropdown"><i class='fas fa-filter'>Trier Par </i></a>
                 <ul class="dropdown-menu">
                     <li>
-                        <a href="{{ path('list_examen_Front') }}" class="nav-link__list">
+                        <a href="{{ path('list_examen_Front') }}" class="nav-link">
                             ALL
                         </a>
                     </li>
                     <li>
-                        <a href="{{ path('listExamen_ASC') }}" class="nav-link__list">
-                            Ascendant
+                        <a href="{{ path('listExamen_ASC') }}" class="nav-link">
+                            Prix Ascendant
                         </a>
                     </li>
                     <li>
-                        <a href="{{ path('listExamen_DESC')}}" class="nav-link__list">
-                              Descendant
+                        <a href="{{ path('listExamen_DESC')}}" class="nav-link" >
+                            Prix Descendant
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ path('listExamen_TITRE')}}" class="nav-link">
+                            TItre
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ path('listExamen_DATE')}}" class="nav-link" >
+                            Date
                         </a>
                     </li>
 
                 </ul>
-            </li>
+            </ul>
+
+            <!--endblock examen tri -->
+            <!--block examen recherche avancee jquery and ajax -->
+            <form class="w-search">
+                <div class="sidebar-search">
+
+                    <div class="input-group custom-search-form">
+
+                        <input type="text" id="search" class="form-control pl-3" placeholder="Search here">
+                    </div>
+                    <!-- /input-group -->
+                </div>
+                <ul class="nav" id="side-menu">
+                    <li>
+                        <a href="#"><span class="fa arrow"></span></a>
+                        <ul  class="nav " id="entitiesNav">
+                        </ul>
+                    </li>
+                </ul>
+
+
+
+            </form>
+            <!--Endblock examen recherche avancee jquery and ajax -->
+
             <div class="row">
 
                 {% for e in examen %}
@@ -91,14 +127,70 @@
 
 
             </div>
+
             {# display navigation #}
             <div class="navigation">
                 {{ knp_pagination_render(examen) }}
             </div>
+
+
             <!--END row-->
+
+
         </div>
         <!-- END container-->
+
     </section>
+
+    <script src="{{ asset('frontoffice/assets/vendor/jquery-3.5.1/jquery-3.5.1.min.js') }}"></script>
+    <script>
+        jQuery(document).ready(function() {
+            var searchRequest = null;
+            $("#search").keyup(function() {
+                var minlength = 1;
+                var that = this;
+                var value = $(this).val();
+                var entitySelector = $("#entitiesNav").html('');
+                if (value.length >= minlength ) {
+                    if (searchRequest != null)
+                        searchRequest.abort();
+                    searchRequest = $.ajax({
+                        type: "GET",
+                        url: "{{ path('ajaxsearch') }}",
+                        data: {
+                            'q' : value
+                        },
+                        dataType: "text",
+                        success: function(msg){
+                            //we need to check if the value is the same
+                            if (value===$(that).val()) {
+                                var result = JSON.parse(msg);
+                                $.each(result, function(key, arr) {
+                                    $.each(arr, function(id, value) {
+                                        if (key === 'examen') {
+                                            if (id !== 'error') {
+                                                console.log(value);
+                                                console.log(id);
+                                                entitySelector.append('<ul ><li>' +
+                                                    '<a class="nav-link__list" href="http://127.0.0.1:8000/examen/listexamenFDetail/'+id+'">'+value[0]+'</a></li></ul><br>')   ;
+                                            } else {
+                                                entitySelector.append('<li class="errorLi">'+value+'</li>');
+                                            }
+                                        }
+                                    });
+                                });
+                            }
+                        }
+                    });
+                }
+            });
+        });
+    </script>
+
+
+
+
+
 
 {% endblock %}
 

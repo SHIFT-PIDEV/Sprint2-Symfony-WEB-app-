@@ -241,5 +241,40 @@ class ExamenController extends AbstractController
             "examen" => $pagination,
         ]);
     }
+    /**
+     *@Route("/examen/listExamenTitreASC", name="listExamen_TITRE")
+     */
+    public function sortTitreService(Request $request, PaginatorInterface $paginator)
+    {
+        $examen = $this->getDoctrine()->getRepository(Examen::class)->findBy(array(),array("titre"=>"ASC"));
+
+
+        $pagination = $paginator->paginate(
+            $examen,
+            $request->query->getInt('page', 1), /*page number*/
+            3 /*limit per page*/
+        );
+        return $this->render("examen/FrontExamen_listTitre.html.twig", [
+            "examen" => $pagination,
+        ]);
+    }
+    /**
+     *@Route("/examen/listExamenDateASC", name="listExamen_DATE")
+     */
+    public function sortDateService(Request $request, PaginatorInterface $paginator)
+    {
+        $examen = $this->getDoctrine()->getRepository(Examen::class)->findBy(array(),array("date"=>"ASC"));
+
+
+        $pagination = $paginator->paginate(
+            $examen,
+            $request->query->getInt('page', 1), /*page number*/
+            3 /*limit per page*/
+        );
+        return $this->render("examen/FrontExamen_listDate.html.twig", [
+            "examen" => $pagination,
+        ]);
+    }
+
     /////////////////////endblock Metier trier DQL////////////////////
 }

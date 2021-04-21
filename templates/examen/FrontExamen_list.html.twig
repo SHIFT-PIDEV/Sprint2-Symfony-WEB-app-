@@ -26,21 +26,31 @@
             <a
                     class="nav-link dropdown-toggle"
                     href="#"
-                    data-toggle="dropdown">Trier Par Prix</a>
+                    data-toggle="dropdown"><i class='fas fa-filter'></i> Trier Par </a>
             <ul class="dropdown-menu">
                 <li>
-                    <a href="{{ path('list_examen_Front') }}" class="nav-link__list">
+                    <a href="{{ path('list_examen_Front') }}" class="nav-link">
                         ALL
                     </a>
                 </li>
                 <li>
-                    <a href="{{ path('listExamen_ASC') }}" class="nav-link__list">
-                        Ascendant
+                    <a href="{{ path('listExamen_ASC') }}" class="nav-link">
+                        Prix Ascendant
                     </a>
                 </li>
                 <li>
-                    <a href="{{ path('listExamen_DESC')}}" class="nav-link__list">
-                        Descendant
+                    <a href="{{ path('listExamen_DESC')}}" class="nav-link" >
+                        Prix Descendant
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ path('listExamen_TITRE')}}" class="nav-link">
+                        TItre
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ path('listExamen_DATE')}}" class="nav-link" >
+                        Date
                     </a>
                 </li>
 
