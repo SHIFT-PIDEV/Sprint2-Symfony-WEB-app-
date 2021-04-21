@@ -1081,9 +1081,11 @@
     </form>
 </div>
 <!-- END site-search-->
-{% block title %}
-    aaa
-{% endblock %}
+
+
+        {% block title %}{% endblock %}
+
+
 {% block body %}
 {% endblock %}
 
@@ -1216,6 +1218,8 @@
     <script src="{{ asset('frontoffice/assets/js/vendors.bundle.js') }}"></script>
     <script src="{{ asset('frontoffice/assets/js/app.min.js') }}"></script>
     <script src="{{ asset('frontoffice/assets/js/app.js') }}"></script>
+    <script src="{{ asset('frontoffice/assets/vendor/jquery.countdown/dist/jquery.countdown.min.js') }}"></script>
+    <script src="{{ asset('frontoffice/assets/js/sweetalert.min.js') }}"></script>
 {% endblock %}
 </body>
 </html>

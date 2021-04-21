@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Examen;
 use App\Entity\Inscripexam;
+use App\Entity\Reponse;
 use App\Form\InscripexamType;
 use http\Client;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -115,13 +116,23 @@ class InscripexamController extends AbstractController
             ]);
     }
     /**
-     * @Route("/inscripexam/passageexam/{idinscri}", name="passage_exam")
+     * @Route("/passageexam/{idinscri}", name="passage_exam")
      */
     public function PassageExam(int $idinscri)
     {   $entityManager = $this->getDoctrine()->getManager();
+        $inscri =new inscripexam;
         $inscripexam = $entityManager->getRepository(Inscripexam::class)->find($idinscri);
+
+       //$r1 = $entityManager->getRepository(Reponse::class)->find($inscripexam->getIdexam()->getQ());
+        $r1 = $entityManager->getRepository(Reponse::class)->findBy(array('reponsec' => $inscripexam->getIdexam()->getQ()));
+        $r2 = $entityManager->getRepository(Reponse::class)->findBy(array('reponsec' => $inscripexam->getIdexam()->getQq()));
+        $r3 = $entityManager->getRepository(Reponse::class)->findBy(array('reponsec' => $inscripexam->getIdexam()->getQqq()));
+
+
+
         return $this->render('inscripexam/Passage_examen.html.twig', [
-            "inscripexam" => $inscripexam,
+            "inscripexam" => $inscripexam, "r1" => $r1 ,"r2" => $r2 ,"r3" => $r3 ,
         ]);
     }
+
 }

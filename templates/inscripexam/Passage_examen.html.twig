@@ -31,51 +31,9 @@
                                     src="{{ asset('frontoffice/assets/img/passageex2.jpg')}}"
                                     alt=""
                             />
-                            <div
-                                    class="position-absolute bottom-0 width-100p bg-primary-0_7 text-center text-white"
-                            >
-                                <ul class="list-inline my-2" data-countdown="2022/01/01">
-                                    <li
-                                            class="list-inline-item iconbox iconbox-xxl bg-white-0_2 my-1"
-                                    >
-                                        <h4
-                                                class="countdown-days font-size-md-28 mb-0 line-height-reset"
-                                        >
-                                            226
-                                        </h4>
-                                        <small>Days</small>
-                                    </li>
-                                    <li
-                                            class="list-inline-item iconbox iconbox-xxl bg-white-0_2 my-1"
-                                    >
-                                        <h4
-                                                class="countdown-hours font-size-md-28 mb-0 line-height-reset"
-                                        >
-                                            12
-                                        </h4>
-                                        <small>Hours</small>
-                                    </li>
-                                    <li
-                                            class="list-inline-item iconbox iconbox-xxl bg-white-0_2 my-1"
-                                    >
-                                        <h4
-                                                class="countdown-minutes font-size-md-28 mb-0 line-height-reset"
-                                        >
-                                            23
-                                        </h4>
-                                        <small>Minutes</small>
-                                    </li>
-                                    <li
-                                            class="list-inline-item iconbox iconbox-xxl bg-white-0_2 my-1"
-                                    >
-                                        <h4
-                                                class="countdown-seconds font-size-md-28 mb-0 line-height-reset"
-                                        >
-                                            40
-                                        </h4>
-                                        <small>Second</small>
-                                    </li>
-                                </ul>
+
+                            <div class="position-absolute bottom-0 width-100p bg-primary-0_7 text-center text-white">
+                                <h1>chronometre lenna</h1>
                             </div>
                         </div>
                         <div class="card-body padding-40">
@@ -106,19 +64,144 @@
                                         id="Tabs_1-1"
                                         role="tabpanel"
                                 >
+
+                                    {% block javascript_calcule_note %}
+                                    <script>
+                                        function verif_exam()
+                                        {
+                                            var result =0;
+                                            var res =0
+                                            $('#button').click(function() {
+                                                if(($('#q1c1').is(':checked'))&&($('#q2c1').is(':checked'))&&($('#q3c1').is(':checked'))) {
+                                                    result=100;
+                                                    res = Math.round(result * 100) / 100;
+                                                   // swal("BRAVOO !", "3 Réponses corrects , Niveau Expert !! votre note est "+res+"/100", "success");
+                                                    swal({
+                                                        title: "BRAVOO !",
+                                                        text: "3 Réponses corrects , Niveau Expert ! vous etes un genie ! votre note est "+res+"/100",
+                                                        icon: "success",
+
+                                                    })
+                                                        .then((willDelete) => {
+                                                            if (willDelete) {
+                                                                swal("bye bye", {
+                                                                    icon: "success",
+                                                                });
+                                                                $(location).attr('href','http://127.0.0.1:8000/examen/listexamenF')
+                                                            } else {
+                                                                swal("Veuillez-verifier vos champs");
+                                                            }
+                                                        });
+                                                    return result;
+                                                }
+                                                else if((($('#q1c1').is(':checked'))&&($('#q2c1').is(':checked')))||((($('#q2c1').is(':checked'))&&($('#q3c1').is(':checked'))))||(($('#q1c1').is(':checked'))&&($('#q3c1').is(':checked')))){
+                                                    result=(100/3)*2;
+                                                    res = Math.round(result * 100) / 100;
+                                                   // swal("BRAVOO !", "2 Réponses corrects , Niveau Moyen !! votre note est "+res+"/100", "success");
+                                                    swal({
+                                                        title: "BIEN !",
+                                                        text: "2 Réponses corrects , Niveau Moyen ! tu peut mieux faire! votre note est "+res+"/100",
+                                                        icon: "warning",
+
+                                                    })
+                                                        .then((willDelete) => {
+                                                            if (willDelete) {
+                                                                swal("bye bye", {
+                                                                    icon: "success",
+                                                                });
+                                                                $(location).attr('href','http://127.0.0.1:8000/examen/listexamenF')
+                                                            } else {
+                                                                swal("Veuillez-verifier vos champs");
+                                                            }
+                                                        });
+
+                                                    return result;
+
+                                                }
+                                                if(($('#q3c1').is(':checked'))||($('#q1c1').is(':checked'))||($('#q2c1').is(':checked'))){
+                                                    result=100/3;
+                                                    res = Math.round(result * 100) / 100;
+                                                   // swal("BRAVOO !", "1 Réponse correct , Niveau Faible !! votre note est "+res+"/100", "error");
+                                                    swal({
+                                                        title: "OOOPESS !",
+                                                        text: "1 Réponse correct , Niveau Faible !! votre note est "+res+"/100",
+                                                        icon: "error",
+                                                        buttons: true,
+                                                        dangerMode: true,
+                                                    })
+                                                        .then((willDelete) => {
+                                                            if (willDelete) {
+                                                                swal("bye bye", {
+                                                                    icon: "success",
+                                                                });
+                                                                $(location).attr('href','http://127.0.0.1:8000/examen/listexamenF')
+                                                            } else {
+                                                                swal("Veuillez-verifier vos champs");
+                                                            }
+                                                        });
+
+                                                   // return result;
+
+
+                                                }
+                                            });
+                                        }
+
+                                    </script>
+                                    {% endblock  %}
+
+                                    <form name="myform" method="get" >
+                                        <br>
                                     <h4 class="mb-3">Question 1 :</h4>
                                     <p>
                                         {{ inscripexam.idexam.q.question }}
                                     </p>
                                     <div>
-                                        <input type="radio" name="radioQ" value="{"> {{ inscripexam.idexam.q.reponsec}}
+                                        <input type="radio" name="radioQ" id="q1c1" value="R1correct"> {{ inscripexam.idexam.q.reponsec }}
 
                                     </div>
                                     <div>
-                                        <input type="radio" name="radioQ"  value="{"> {{ inscripexam.idexam.q.reponsec}}
+                                        {% for e in r1 %}
+                                        <input type="radio" name="radioQ"  id="q1c2"  value="R1fausse"> {{ e.reponse}}
+                                        {% endfor %}
+                                    </div>
+                                        <br>
+                                    <h4 class="mb-3">Question 2 :</h4>
+                                    <p>
+                                        {{ inscripexam.idexam.qq.question }}
+                                    </p>
+                                    <div>
+                                        <input type="radio" name="radioQQ" id="q2c1" value="R2correct"> {{ inscripexam.idexam.qq.reponsec}}
 
                                     </div>
+                                    <div>
+                                        {% for e in r2 %}
+                                        <input type="radio" name="radioQQ" id="q2c2"  value="R2fausse"> {{ e.reponse}}
+                                        {% endfor %}
+                                    </div>
+                                        <br>
+                                    <h4 class="mb-3">Question 3 :</h4>
+                                    <p>
+                                        {{ inscripexam.idexam.qqq.question }}
+                                    </p>
+                                    <div>
+                                        <input type="radio" name="radioQQQ" id="q3c1" value="R3correct"> {{ inscripexam.idexam.qqq.reponsec}}
 
+                                    </div>
+                                    <div>
+                                        {% for e in r3 %}
+                                        <input type="radio" name="radioQQQ" id="q3c2" value="R3fausse"> {{ e.reponse}}
+                                        {% endfor %}
+                                    </div>
+
+                                        <div>
+                                            <br>
+                                            <br>
+                                            <input type="button" class="btn btn-block btn-outline-pinterest" onclick="verif_exam()" id="button" value="valider">
+                                            <br>
+                                            <br>
+                                        </div>
+                                    </form>
 
 
                                     <!-- END row-->
@@ -167,21 +250,6 @@
                                 </div>
                                 <!-- END tab-pane-->
 
-
-
-
-
-
-                                <div class="tab-pane fade" id="Tabs_1-5" role="tabpanel">
-                                    <div
-                                            class="google-map"
-                                            data-address="Harvard University"
-                                            data-zoom="14"
-                                            data-key="AIzaSyB0uuKeEkPfAo7EUINYPQs3bzXn7AabgJI"
-                                            style="height: 450px"
-                                    ></div>
-                                </div>
-                                <!-- END tab-pane -->
                             </div>
                             <!-- END tab-content-->
                         </div>

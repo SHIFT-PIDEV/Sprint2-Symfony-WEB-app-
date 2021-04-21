@@ -1,11 +1,27 @@
 {% extends 'Front_navbar_footer.html.twig' %}
 
-{% block title %}Inscription à examen :{% endblock %}
+{% block title %}
+<div
+        class="padding-y-60 bg-cover"
+        data-dark-overlay="6"
+        style="background: url({{ asset('frontoffice/assets/img/passageex.png')}}) no-repeat"
+>
+        <div class="container">
+            <h1 class="text-white">Inscription à un Examen :</h1>
+            <ol
+                    class="breadcrumb breadcrumb-double-angle text-white bg-transparent p-0"
+            >
+                <li class="breadcrumb-item"><a href="#">Home</a></li>
+                <li class="breadcrumb-item"><a href="#">Examen</a></li>
+                <li class="breadcrumb-item">Inscription à Examen</li>
+            </ol>
+        </div>
+    </div>
+{% endblock %}
 
 {% block body %}
 
 
     {{ include('inscripexam/_form.html.twig') }}
 
-    <a href="{{ path('inscripexam_index') }}">back to list</a>
 {% endblock %}
