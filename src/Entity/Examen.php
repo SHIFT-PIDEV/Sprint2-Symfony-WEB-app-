@@ -26,6 +26,14 @@ class Examen
      * @var string
      *
      * @ORM\Column(name="titre", type="string", length=255, nullable=false)
+     * * @Assert\NotBlank(message="le titre ne doit pas étre vide")
+     *  @Assert\Length(
+     *      min = 5,
+     *      max = 100,
+     *      minMessage = "Le Titre correct doit comporter au minimum {{ limit }} characters",
+     *      maxMessage = "Le Titre correct ne doit pas depasser {{ limit }} characters",
+     *      allowEmptyString = false
+     *     )
      */
     private $titre;
 ////////////////////////////////////////////////////////////////
@@ -70,6 +78,7 @@ class Examen
      * @var string
      *
      * @ORM\Column(name="niveau", type="string", length=255, nullable=false)
+     * * @Assert\NotBlank
      */
     private $niveau;
 
@@ -77,6 +86,11 @@ class Examen
      * @var int|null
      *
      * @ORM\Column(name="prix", type="integer", nullable=true)
+     * @Assert\NotBlank(message="le champ prix ne doit pas étre vide")
+     * @Assert\GreaterThan (
+     *      value = 0,
+     *      message="le prix doit etre superieur à zéro"
+     * )
      */
     private $prix;
 

@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Inscripexam
@@ -57,6 +58,14 @@ class Inscripexam
      * @var string
      *
      * @ORM\Column(name="nom", type="string", length=255, nullable=false)
+     * @Assert\NotBlank(message="le champs nom de doit pas etre vide ")
+     * @Assert\Length(
+     *      min = 5,
+     *      max = 30,
+     *      minMessage = "Le Nom correct doit comporter au minimum {{ limit }} characters",
+     *      maxMessage = "Le Nom correct ne doit pas depasser {{ limit }} characters",
+     *      allowEmptyString = false
+     *     )
      */
     private $nom;
 
@@ -64,6 +73,14 @@ class Inscripexam
      * @var string
      *
      * @ORM\Column(name="prenom", type="string", length=255, nullable=false)
+     * @Assert\NotBlank(message="le champs prénom de doit pas etre vide ")
+     * @Assert\Length(
+     *      min = 5,
+     *      max = 30,
+     *      minMessage = "Le Prénom correct doit comporter au minimum {{ limit }} characters",
+     *      maxMessage = "Le Prénom correct ne doit pas depasser {{ limit }} characters",
+     *      allowEmptyString = false
+     *     )
      */
     private $prenom;
 
@@ -71,6 +88,10 @@ class Inscripexam
      * @var string
      *
      * @ORM\Column(name="email", type="string", length=255, nullable=false)
+     *  * @Assert\Email(
+     *     message = "The email '{{ value }}' is not a valid email."
+     * )
+     * @Assert\NotBlank(message="le champs Email de doit pas etre vide ")
      */
     private $email;
 

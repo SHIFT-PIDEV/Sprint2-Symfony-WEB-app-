@@ -1,5 +1,5 @@
 
-        {{ form_start(form) }}
+{{ form_start(form, {attr: {'novalidate': 'novalidate'}}) }}
         <div class="container">
             <br>
            <h3>Vous allez etres inscrit à l'examen :{{ inscripexam.idexam.titre }}:</h3>
@@ -7,25 +7,32 @@
 
             <div class="form-group">
                 {{ form_label(form.nom,"Nom :") }}
-
+                <div style="color: red">
+                {{ form_errors(form.nom)}}
+                </div>
                 {{ form_widget(form.nom, {attr: {class:'form-control','id':'nom'}}) }}
             </div>
             <div class="form-group">
                 {{ form_label(form.prenom,"Prenom :") }}
-
+                <div style="color: red">
+                    {{ form_errors(form.prenom)}}
+                </div>
                 {{ form_widget(form.prenom, {attr: {class:'form-control','id':'prenom'}}) }}
             </div>
             <div class="form-group">
                 {{ form_label(form.email,"Email :") }}
-
+                <div style="color: red">
+                    {{ form_errors(form.email)}}
+                </div>
                 {{ form_widget(form.email, {attr: {class:'form-control','id':'email'}}) }}
             </div>
-
-
             <div class="form-group">
-    {{ form_widget(form) }}
+                {{ form_row(form.captchaCode) }}
+            </div>
+            <div class="form-group">
+                    {{ form_widget(form) }}
                 <br>
-    <button class="btn btn-outline-info">{{ button_label|default('confirmer') }}</button>
+                <button class="btn btn-outline-info">{{ button_label|default('confirmer') }}</button>
             </div>
         </div>
 {{ form_end(form) }}

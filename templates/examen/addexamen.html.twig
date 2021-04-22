@@ -7,41 +7,58 @@
     <div class="container">
         <div class="form-group">
             {{ form_label(form.titre,"Titre :") }}
-            {{ form_errors(form.titre)}}
+            <div style="color: red">
+                {{ form_errors(form.titre)}}
+            </div>
             {{ form_widget(form.titre, {attr: {class:'form-control','id':'titre'}}) }}
         </div>
         <div class="form-group">
             {{ form_label(form.date,"Date :" ) }}
-            {{ form_errors(form.date)}}
+            <div style="color: red">
+                {{ form_errors(form.date)}}
+            </div>
             {{ form_widget(form.date) }}
         </div>
         <div class="form-group">
             {{ form_label(form.niveau,"Niveau :" ) }}
-            {{ form_errors(form.niveau)}}
+            <div style="color: red">
+                {{ form_errors(form.niveau)}}
+            </div>
             {{ form_widget(form.niveau,{attr: {class:'form-control','id':'reponsec'}}) }}
         </div>
         <div class="form-group">
             {{ form_label(form.prix,"Prix  :" ) }}
-            {{ form_errors(form.prix)}}
+            <div style="color: red">
+                {{ form_errors(form.prix)}}
+            </div>
             {{ form_widget(form.prix,{attr: {class:'form-control','id':'reponsec'}}) }}
         </div>
         <div class="form-group">
             {{ form_label(form.q,"Question numero 1:" ) }}
-            {{ form_errors(form.q)}}
+            <div style="color: red">
+                {{ form_errors(form.q)}}
+            </div>
             {{ form_widget(form.q,{attr: {class:'form-control','id':'reponsec'}}) }}
         </div>
         <div class="form-group">
             {{ form_label(form.qq,"Question numero 2:" ) }}
-            {{ form_errors(form.qq)}}
+            <div style="color: red">
+                {{ form_errors(form.qq)}}
+            </div>
             {{ form_widget(form.qq,{attr: {class:'form-control','id':'reponsec'}}) }}
         </div>
         <div class="form-group">
             {{ form_label(form.qqq,"Question numero 3:" ) }}
-            {{ form_errors(form.qqq)}}
+            <div style="color: red">
+                {{ form_errors(form.qqq)}}
+            </div>
             {{ form_widget(form.qqq,{attr: {class:'form-control','id':'reponsec'}}) }}
         </div>
         <div class="form-group">
             {{ form_row(form.captchaCode) }}
+            <div style="color: red">
+                {{ form_errors(form.captchaCode)}}
+            </div>
         </div>
     </div>
     <div class="card-footer">

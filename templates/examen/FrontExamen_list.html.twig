@@ -21,7 +21,23 @@
 <section class="pt-5 paddingBottom-100 bg-light-v2">
 
     <div class="container">
+
+
+        <!--block examen recherche avancee jquery and ajax -->
+        <form class="w-search">
+            <div class="sidebar-search"  >
+
+                <div class="input-group custom-search-form" >
+                    <input type="text" id="search" class="form-control pl-3" placeholder="Search here">
+                 </div>
+                <ul class="list-group"  id="entitiesNav">
+                </ul>
+            </div>
+
+        </form>
+        <!--Endblock examen recherche avancee jquery and ajax -->
         <!--block examen tri -->
+        <div>
         <ul class="nav-item nav-item__has-dropdown">
             <a
                     class="nav-link dropdown-toggle"
@@ -57,29 +73,9 @@
             </ul>
         </ul>
 
+
         <!--endblock examen tri -->
-        <!--block examen recherche avancee jquery and ajax -->
-        <form class="w-search">
-            <div class="sidebar-search">
-
-                <div class="input-group custom-search-form">
-
-                    <input type="text" id="search" class="form-control pl-3" placeholder="Search here">
-                </div>
-                <!-- /input-group -->
-            </div>
-            <ul class="nav" id="side-menu">
-                <li>
-                    <a href="#"><span class="fa arrow"></span></a>
-                    <ul  class="nav " id="entitiesNav">
-                    </ul>
-                </li>
-            </ul>
-
-
-
-        </form>
-        <!--Endblock examen recherche avancee jquery and ajax -->
+        </div>
 
         <div class="row">
 
@@ -171,8 +167,8 @@
                                             if (id !== 'error') {
                                                 console.log(value);
                                                 console.log(id);
-                                                entitySelector.append('<ul ><li>' +
-                                                    '<a class="nav-link__list" href="http://127.0.0.1:8000/examen/listexamenFDetail/'+id+'">'+value[0]+'</a></li></ul><br>')   ;
+                                                entitySelector.append('<li class="list-group-item">' +
+                                                    '<a class="nav-link__list" href="http://127.0.0.1:8000/examen/listexamenFDetail/'+id+'"><i class="fas fa-terminal"></i>'+value[0]+'</a></li>')   ;
                                             } else {
                                                 entitySelector.append('<li class="errorLi">'+value+'</li>');
                                             }

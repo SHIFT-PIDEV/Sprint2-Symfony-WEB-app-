@@ -6,7 +6,10 @@ use App\Entity\Examen;
 use App\Entity\Inscripexam;
 use App\Entity\Reponse;
 use App\Form\InscripexamType;
-use http\Client;
+use App\Entity\Client;
+
+
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -38,32 +41,47 @@ class InscripexamController extends AbstractController
     {
         $entityManager = $this->getDoctrine()->getManager();
         $inscripexam = new Inscripexam();
+        $client= new Client();
 
+
+        $client=$entityManager->getRepository(Client::class)->find(4);
         $exam = $entityManager->getRepository(Examen::class)->find($idexam);
         $inscripexam->setIdexam($exam);
+        $inscripexam->setIdclient($client);
 
         $form = $this->createForm(InscripexamType::class, $inscripexam);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($inscripexam);
-            $entityManager->flush();
-
             // block mailing
 
+            $path= (new \Swift_Attachment())   ;
             $message = (new \Swift_Message('You Got Mail!'))
                 ->setFrom('space.upgardi@gmail.com')
                 ->setTo($inscripexam->getEmail())
-                ->setBody(' <p>Bonjour '.$inscripexam->getPrenom().' '.$inscripexam->getNom().',</p>'
-                    .'<p> Votre inscription est validée le :'.  $inscripexam->getDateinscri()->format('Y-m-d') .',</p>'
-                    .'<p>  vous etes inscrits dans lexamen : '.$exam->getTitre().',</p>'
-                    .'<p>  qui aura lieu le '.$inscripexam->getIdexam()->getDate()->format('Y-m-d').',</p>'
-                    .'<p>  on vous souhaite une bonne chance ! BYE BYE . </p>'
-                    .'<a href="http://127.0.0.1:8000/examen/listexamenF"> consulter notre site ');
+                ->setSubject('Inscription validée MR/MME '.$inscripexam->getPrenom().' '.$inscripexam->getNom())
+                ->setBody(
+                    $this->renderView(
+                    // templates/emails/registration.html.twig
+                        'emails/registration.html.twig',
+                        ['nom' => $inscripexam->getNom(),'prenom' =>$inscripexam->getPrenom(),
+                            'titre' =>$inscripexam->getIdexam()->getTitre(),
+                            'dateinscri'=>$inscripexam->getDateinscri()->format('Y-m-d'),
+                            'dateex'=>$inscripexam->getIdexam()->getDate()->format('Y-m-d'),
+                        ]
+                    ),
+                    'text/html'
+                )
+                 ->attach($path::fromPath('D:\--Etudes--\3eme\S2\PI-DEV\Symfony\upgradiWebSym\public\frontoffice\upgradi5.png'))
+                ;
+
             $mailer->send($message);
             // endblock mailing
 
+
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($inscripexam);
+            $entityManager->flush();
             return $this->redirectToRoute('list_mes_exam');
         }
 
@@ -119,15 +137,19 @@ class InscripexamController extends AbstractController
     /**
      * @Route("/inscripexam/mesexamens", name="list_mes_exam")
      */
-    public function mesExamens(Request $request)
+    public function mesExamens(Request $request, PaginatorInterface $paginator)
     {   $entityManager = $this->getDoctrine()->getManager();
 
             $idc=4;
             $inscripexam = $entityManager->getRepository(Inscripexam::class)->findBy(array('idclient' => $idc));
-
+        $pagination = $paginator->paginate(
+            $inscripexam,
+            $request->query->getInt('page', 1), /*page number*/
+            3 /*limit per page*/
+        );
 
         return $this->render('inscripexam/mes_examens.html.twig', [
-            "inscripexam" => $inscripexam,
+            "inscripexam" => $pagination,
             ]);
     }
     /**

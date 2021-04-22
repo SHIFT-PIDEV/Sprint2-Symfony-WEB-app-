@@ -19,7 +19,7 @@
     <section class="pt-5 paddingBottom-100 bg-light-v2">
 
         <div class="container">
-            <h5>ce sont les cours du client : {{ inscripexam[0].idclient.nom }}</h5>
+
             <div class="row">
 
                 {% for e in inscripexam %}
@@ -71,7 +71,10 @@
 
 
             </div>
-
+            {# display navigation #}
+            <div class="navigation">
+                {{ knp_pagination_render(inscripexam) }}
+            </div>
             <!--END row-->
         </div>
         <!-- END container-->

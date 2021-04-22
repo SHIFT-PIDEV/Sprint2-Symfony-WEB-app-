@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Reponse
@@ -25,6 +26,14 @@ class Reponse
      * @var string
      *
      * @ORM\Column(name="reponse", type="string", length=255, nullable=false)
+     * * @Assert\NotBlank(message="le champs reponse fausse de doit pas etre vide ")
+     *  @Assert\Length(
+     *      min = 5,
+     *      max = 100,
+     *      minMessage = "La reponse fausse doit comporter au minimum {{ limit }} characters",
+     *      maxMessage = "La reponse fausse ne doit pas depasser {{ limit }} characters",
+     *      allowEmptyString = false
+     *     )
      */
     private $reponse;
 
