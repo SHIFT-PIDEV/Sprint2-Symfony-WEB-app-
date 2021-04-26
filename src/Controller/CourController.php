@@ -9,6 +9,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Knp\Component\Pager\PaginatorInterface;
+use Vonage\Voice\NCCO\NCCO;
 
 
 class CourController extends AbstractController
@@ -16,7 +17,7 @@ class CourController extends AbstractController
     /**
      * @Route("/cour/addcour", name="add_cour")
      */
-    public function addcour(Request $request): Response
+    public function addcour(Request $request,\Swift_Mailer $mailer): Response
     {
         $cour = new Cour();
         $form = $this->createForm(CourType::class,$cour);
@@ -31,6 +32,14 @@ class CourController extends AbstractController
             $entityManager->persist($cour);
 
             $entityManager->flush();
+            // block mailing
+
+            $message = (new \Swift_Message('You Got Maillllll!'))
+                ->setFrom('upgradisite1@gmail.com')
+                ->setTo('mohamedaziz.ghorbel@esprit.tn')
+                ->setBody('new cour in the list check our site thanks');
+            $mailer->send($message);
+            // endblock mailing
 
             return $this->redirectToRoute('list_cour');
 
@@ -96,6 +105,22 @@ class CourController extends AbstractController
             "form" => $form->createView(),
         ]);
     }
+    /**
+     * @Route("/cour/listcourAfterRech", name="list_courAfterRech")
+     */
+    public function researchByNom(Request $request)
+    {   $entityManager = $this->getDoctrine()->getManager();
+        $cour = $entityManager->getRepository(Cour::class)->findAll();
+        if($request->isMethod("GET"))
+        {
+            $nom=$request->get('searchbar');
+
+            $cour = $entityManager->getRepository(Cour::class)->findBy(array('nom' => $nom));
+
+        }
+        return $this->render('cour/coursAfterRech.html.twig', [
+            "cour" => $cour,]);
+    }
     ////////////////////////////////////Front //////////////////
     /**
      * @Route("/cour/listcourF", name="list_cour_Front")
@@ -139,6 +164,7 @@ class CourController extends AbstractController
         }
         return $realEntities;
     }
+
 
     /**
      * @Route("/cour/courDetails/{idcour}", name="cour_details")

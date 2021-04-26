@@ -2,51 +2,32 @@
 {% block body %}
     <section class="pt-5 paddingBottom-100 bg-light-v2">
         <div class="container">
-            <ul class="nav-item nav-item__has-dropdown">
-                <a
-                        class="nav-link dropdown-toggle"
-                        href="#"
-                        data-toggle="dropdown">Trier Les prix</a>
-                <ul class="dropdown-menu">
-                    <li>
-                        <a href="{{ path('list_cour_Front') }}" class="nav-link__list">
-                            Tout les prix
-                        </a>
-                    </li>
-                    <li>
-                        <a href="{{ path('listCour_ASC') }}" class="nav-link__list">
-                           prix Ascendant
-                        </a>
-                    </li>
-                    <li>
-                        <a href="{{ path('listCour_DESC')}}" class="nav-link__list">
-                           prix Descendant
-                        </a>
-                    </li>
 
-                </ul>
-            </ul>
+
+
+
+
             <div class="row">
 
-                {% for e in cour %}
+                {% for e in package %}
                     <div class="col-md-6 marginTop-30">
                         <div
                                 href="page-course-details.html"
                                 class="card text-gray shadow-v1"
                         >
-                            <a href="{{ path('cour_details',{'idcour':e.idcour}) }}"> <img
+                             <img
                                         class="card-img-top"
-                                        src="{{ asset("images/cour/#{e.img}") }} "
+                                         src="{{ '/uploads/'~e.getImage }}"
 
                                         alt=""
 
                                 />
                             </a>
                             <div class="card-body">
-                                <a href="#" class="h5"> {{ e.nom }}</a>
+                                <a href="#" class="h5"> {{ e.nompackage }}</a>
                                 <p class="my-3">
                                     <i class="ti-user mr-2"></i>
-                                    {{ e.formateur }}
+                                   Nombre du cour : {{ e.nbrcours}}
                                 </p>
                                 <p class="mb-0">
                                     <i class="fas fa-star text-warning"></i>
@@ -62,13 +43,10 @@
                                     class="card-footer media align-items-center justify-content-between"
                             >
                                 <ul class="list-unstyled mb-0">
-                                    <li class="mb-1">
-                                        <i class="ti-headphone small mr-2"></i>
-                                        46 lectures
-                                    </li>
+
                                     <li class="mb-1">
                                         <i class="ti-time small mr-2"></i>
-                                        {{ e.duration}}
+                                        {{ e.duree}}
                                     </li>
                                 </ul>
                                 <h4 class="h5 text-right">
@@ -81,7 +59,7 @@
             </div>
             {# display navigation #}
             <div class="navigation">
-                {{ knp_pagination_render(cour) }}
+                {{ knp_pagination_render(package) }}
             </div>
             <!--END row-->
         </div>

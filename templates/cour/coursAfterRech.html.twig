@@ -6,7 +6,7 @@
 
     <div class="card">
         <div class="card-header">
-            <h3 class="card-title">LISTE DES PACKAGES :</h3>
+            <h3 class="card-title">LISTE DES COURS :</h3>
         </div>
         <div class="card-body p-0">
             <form class="w-search">
@@ -36,42 +36,41 @@
                 <thead>
                 <tr>
                     <th style="width: 10px">#</th>
-                    <th>NOM PACKAGE</th>
+                    <th>NOM</th>
+                    <th>FORMATEUR</th>
+                    <th>DESCRIPTION</th>
                     <th>PRIX</th>
-                    <th>DUREE</th>
-                    <th>DESCRITION</th>
-                    <th>NBRCOURS</th>
+                    <th>NIVEAU</th>
+                    <th>DURATION</th>
                     <th>CATEGORIE</th>
-                    <th>COUR 1</th>
-                    <th>COUR 2</th>
-                    <th>COUR 3</th>
-                    <th>IMAGE</th>
+                    <th> Image</th>
                     <th>Action</th>
 
                 </tr>
                 </thead>
                 <tbody>
-                {% for e in package %}
+                {% for e in cour %}
 
                     <tr>
-                        <td>{{ e.idpackage}}</td>
-                        <td>{{ e.nompackage }}</td>
-                        <td>{{ e.prix }}</td>
-                        <td>{{ e.duree }} </td>
+                        <td>{{ e.idcour }}</td>
+                        <td>{{ e.nom }}</td>
+                        <td>{{ e.formateur }} </td>
                         <td>{{ e.description }}</td>
+                        <td>{{ e.prix }}</td>
+                        <td>{{ e.niveau }}</td>
+                        <td>{{ e.duration }}</td>
+                        <td>{{ e.idC.nomCat }}</td>
+                        <td>
+                            {{ e.img }}
+                        </td>
 
-                        <td>{{ e.nbrcours }}</td>
-                        <td>{{ e.idca.nomCat }}</td>
-                        <td>{{ e.courp.nom }}</td>
-                        <td>{{ e.courpp.nom }}</td>
-                        <td>{{ e.courppp.nom }}</td>
-                        <td>{{ e.image }}</td>
+
 
                         <td>
-                            <a class="btn btn-block btn-success" href="{{ path('edit_package',{'idPackage':e.idpackage}) }}" > modifier</a>
+                            <a class="btn btn-block btn-success" href="{{ path('edit_cour',{'idCour':e.idcour}) }}" > modifier</a>
                         </td>
                         <td>
-                            <a class="btn btn-block btn-danger"  href="{{ path('delete_package',{'idPackage':e.idpackage}) }}" >supprimer </a>
+                            <a class="btn btn-block btn-danger"  href="{{ path('delete_cour',{'idCour':e.idcour}) }}" >supprimer </a>
                         </td>
 
                         </td>
@@ -83,7 +82,7 @@
 
             </table>
             <div class="navigation">
-                {{ knp_pagination_render(package) }}
+                {{ knp_pagination_render(cour) }}
             </div>
 
         </div>

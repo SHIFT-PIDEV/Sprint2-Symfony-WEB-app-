@@ -6,6 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
+use Symfony\Component\Validator\Constraints as Assert;
 
 
 /**
@@ -45,6 +46,9 @@ class Cour
      * @var string
      *
      * @ORM\Column(name="nom", type="string", length=255, nullable=false)
+     *@Assert\NotBlank(
+     *     message = "Champ Vide!"
+     * )
      */
     private $nom;
 
@@ -59,6 +63,9 @@ class Cour
      * @var string
      *
      * @ORM\Column(name="formateur", type="string", length=255, nullable=false)
+     *  @Assert\NotBlank(
+     *     message = "Champ Vide!"
+     * )
      */
     private $formateur;
 
@@ -66,6 +73,9 @@ class Cour
      * @var string
      *
      * @ORM\Column(name="description", type="string", length=255, nullable=false)
+     *@Assert\NotBlank(
+     *     message = "Champ Vide!"
+     * )
      */
     private $description;
 
@@ -80,6 +90,13 @@ class Cour
      * @var float
      *
      * @ORM\Column(name="prix", type="float", precision=10, scale=0, nullable=false)
+     * @Assert\NotBlank(
+     *     message = "Champ Vide!"
+     * )
+     * @Assert\GreaterThanOrEqual(
+     *     value = 0,
+     *     message= "Ce champ ne doit pas etre negative ! "
+     * )
      */
     private $prix;
 
@@ -94,6 +111,9 @@ class Cour
      * @var string
      *
      * @ORM\Column(name="duration", type="string", length=255, nullable=false)
+     *@Assert\NotBlank(
+     *     message = "Champ Vide!"
+     * )
      */
     private $duration;
 
