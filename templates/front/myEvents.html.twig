@@ -65,34 +65,6 @@
         <section class="padding-y-60 bg-light">
             <div class="container">
 
-                <center style="padding-right: 30px;padding-left: 30px; padding-top: 30px">
-                    {% for message in app.flashes('success') %}
-                        <div class="alert border border-primary text-primary px-4 py-3 alert-dismissible fade show" role="alert">
-                            <strong>Success!</strong> {{ message }}
-                            <button type="button" class="close font-size-14 absolute-center-y" data-dismiss="alert" aria-label="Close">
-                                <i class="ti-close"></i>
-                            </button>
-                        </div>
-                    {% endfor %}
-                </center>
-                <center style="padding-right: 30px;padding-left: 30px; padding-top: 30px">
-                    {% for message in app.flashes('warning') %}
-                    <div
-                            class="alert border border-warning text-warning px-4 py-3 alert-dismissible fade show"
-                            role="alert"
-                    >
-                        <strong> Warning!</strong> {{ message }}
-                        <button
-                                type="button"
-                                class="close font-size-14 absolute-center-y"
-                                data-dismiss="alert"
-                                aria-label="Close"
-                        >
-                            <i class="ti-close"></i>
-                        </button>
-                    </div>
-                    {% endfor %}
-                </center>
                 <div class="row">
 
                    {% if events %}
@@ -112,7 +84,7 @@
                                                 <i class="ti-location-pin text-primary mr-2"></i>En ligne
                                             </li>
                                         </ul>
-                                        <a href="{{ path('eventDetails',{'idEvent':e.getIdevent,'idClient':3}) }}" class="btn btn-link pl-0"
+                                        <a href="{{ path('eventDetails',{'idEvent':e.getIdevent,'idClient':app.user.id}) }}" class="btn btn-link pl-0"
                                         >View Details</a
                                         >
                                     </div>

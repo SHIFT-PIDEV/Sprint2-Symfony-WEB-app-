@@ -11,7 +11,7 @@
                     <ol class="breadcrumb breadcrumb-double-angle bg-transparent p-0">
                         <li class="breadcrumb-item"><a href="#">Home</a></li>
                         <li class="breadcrumb-item"><a href="{{ path('upgradi') }}">Events</a></li>
-                        <li class="breadcrumb-item"><a href="{{ path('eventDetails',{'idEvent':event.getIdevent,'idClient':1}) }}">Event Details</a></li>
+                        <li class="breadcrumb-item"><a href="{{ path('eventDetails',{'idEvent':event.getIdevent,'idClient':app.user.id}) }}">Event Details</a></li>
                     </ol>
                     <h2 class="h1">Events</h2>
 
@@ -25,24 +25,6 @@
 {% block createHere %}
     <section class="padding-y-60 bg-light">
         <div class="container">
-            <center style="padding-right: 30px;padding-left: 30px; padding-top: 30px">
-                {% for message in app.flashes('warning') %}
-                    <div
-                            class="alert border border-warning text-warning px-4 py-3 alert-dismissible fade show"
-                            role="alert"
-                    >
-                        <strong> Warning!</strong> {{ message }}
-                        <button
-                                type="button"
-                                class="close font-size-14 absolute-center-y"
-                                data-dismiss="alert"
-                                aria-label="Close"
-                        >
-                            <i class="ti-close"></i>
-                        </button>
-                    </div>
-                {% endfor %}
-            </center>
             <div class="row">
                 <div class="col-lg-8 mt-4">
                     <div class="card shadow-v1">
@@ -263,9 +245,9 @@
                                 <div class="media mb-5">
                                     <img class="iconbox iconbox-lg mr-3" src="{{ c.getClient.getPic }}" alt=""/>
                                     <div class="media-body">
-                                        {% if c.getClient.getId==3 %}
+                                        {% if c.getClient.getId==app.user.id %}
                                         <a
-                                                href="{{ path('deleteComm',{'idComm':c.getIdcomm,'idEvent':c.getEvent.getIdevent,'idClient':1}) }}"class="float-right btn btn-outline-primary btn-pill btn-sm">
+                                                href="{{ path('deleteComm',{'idComm':c.getIdcomm,'idEvent':c.getEvent.getIdevent,'idClient':app.user.id}) }}"class="float-right btn btn-outline-primary btn-pill btn-sm">
                                             <i class="ti-back-right"></i> Delete
                                         </a>
                                         {% endif %}
@@ -301,10 +283,14 @@
                             {{form_start(form)}}
                             <div class="row mt-4">
                                 <div class="col-md-6 mb-4">
-                                    <input type="text" class="form-control" placeholder="Skander" disabled/>
+                                    {% if app.user %}
+                                    <input type="text" class="form-control" placeholder="{{ app.user.username }}" disabled/>
+                                    {% endif %}
                                 </div>
                                 <div class="col-md-6 mb-4">
-                                    <input type="text" class="form-control" placeholder="skander@esprit.tn" disabled />
+                                    {% if app.user %}
+                                    <input type="text" class="form-control" placeholder="{{app.user.email}}" disabled />
+                                    {% endif %}
                                 </div>
                             </div>
                             {{ form_errors(form.desccomm,{'attr': {'style': 'color:red'}}) }}
@@ -386,39 +372,44 @@
                             </p>
                             <!--  --->
                             <div class="row form-group">
+                                {% if app.user %}
                                 <div class="col-10">
                                     <label>Last name</label>
                                     <input
                                             class="form-control"
                                             type="text"
-                                            value="Skander"
+                                            value="{{ app.user.prenom }}"
                                             id="example-text-input"
                                             disabled
                                     />
                                 </div>
+                                {% endif %}
                             </div>
                             <div class="row form-group">
+                                {% if app.user %}
                                 <div class="col-10">
                                     <label>First name</label>
                                     <input
                                             class="form-control"
                                             type="text"
-                                            value="Hamdi"
+                                            value="{{ app.user.nom }}"
                                             id="example-text-input"
                                             disabled
                                     />
                                 </div>
+                                {% endif %}
                             </div>
                             <div class="row form-group">
+                                {% if app.user %}
                                 <div class="col-10">
                                     <label>Email</label>
                                     <input
                                             class="form-control"
                                             type="text"
-                                            value="skander.hamdi@esprit.tn"
-                                            id="example-text-input"
-                                    />
+                                            value="{{app.user.email}}"
+                                            id="example-text-input"/>
                                 </div>
+                                {% endif %}
                             </div>
                             <!--   -->
                         </div>
@@ -427,8 +418,14 @@
                                 <div class="media-body ml-3">
                                     {%  if event.getDateDebut>date('now') %}
                                     <div style="margin-top: 1px">
-                                        <button onclick="window.location.href='{{ path('sinscrire',{'idEvent':event.getIdevent,'idClient':3})}} ';" class="btn btn-success mr-3 mb-3">Register</button>
-                                        <button onclick="window.location.href='{{ path('annulation',{'idEvent':event.getIdevent,'idClient':3})}} ';" class="btn btn-danger mr-3 mb-3" style="margin-left: 40px">Cancel</button>
+                                        {% if app.user %}
+                                        <button onclick="window.location.href='{{ path('sinscrire',{'idEvent':event.getIdevent,'idClient':app.user.id})}} ';" class="btn btn-success mr-3 mb-3">Register</button>
+                                        <button onclick="window.location.href='{{ path('annulation',{'idEvent':event.getIdevent,'idClient':app.user.id})}} ';" class="btn btn-danger mr-3 mb-3" style="margin-left: 40px">Cancel</button>
+                                            {% else %}
+                                                <button onclick="window.location.href='{{ path('app_login')}} ';" class="btn btn-success mr-3 mb-3">Register</button>
+                                                <button onclick="window.location.href='{{ path('app_login')}} ';" class="btn btn-danger mr-3 mb-3" style="margin-left: 40px">Cancel</button>
+
+                                        {% endif %}
                                     </div>
                                         {% else  %}
                                         <h3>the event has already passed</h3>

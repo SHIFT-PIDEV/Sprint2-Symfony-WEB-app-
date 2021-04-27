@@ -97,4 +97,14 @@ class EventRepository extends ServiceEntityRepository
             ->getResult();
     }
 
+    /**
+     * @return int|mixed|string
+     */
+    public function trier(){
+        $em=$this->getEntityManager();
+        return $em->createQuery('select e from App\Entity\Event e where e.datedebut > CURRENT_DATE()
+         order by e.datedebut ASC')
+            ->getResult();
+    }
+
 }

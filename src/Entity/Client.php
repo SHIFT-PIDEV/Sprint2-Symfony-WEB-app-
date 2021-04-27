@@ -5,6 +5,7 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * Client
@@ -12,7 +13,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="client")
  * *@ORM\Entity(repositoryClass="App\Repository\ClientRepository")
  */
-class Client
+class Client implements UserInterface
 {
     /**
      * @var int
@@ -54,7 +55,7 @@ class Client
     /**
      * @var string
      *
-     * @ORM\Column(name="email", type="string", length=50, nullable=false)
+     * @ORM\Column(name="email", type="string", length=50, nullable=false,unique=true)
      */
     private $email;
 
@@ -78,6 +79,10 @@ class Client
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $pic;
+    /**
+     * @ORM\Column(type="json",nullable=true)
+     */
+    private $roles = [];
 
     public function __construct()
     {
@@ -163,6 +168,7 @@ class Client
         return $this;
     }
 
+
     /**
      * @return Collection|Inscrievent[]
      */
@@ -235,5 +241,46 @@ class Client
         return $this;
     }
 
+    /**
+     * @see UserInterface
+     */
+    public function getRoles()
+    {
+        $roles = $this->roles;
+        // guarantee every user at least has ROLE_USER
+        $roles[] = 'ROLE_USER';
 
+        return array_unique($roles);
+    }
+    public function setRoles(array $roles): self
+    {
+        $this->roles = $roles;
+
+        return $this;
+    }
+
+    /**
+     * @see UserInterface
+     */
+    public function getPassword()
+    {
+        // TODO: Implement getPassword() method.
+    }
+
+    /**
+     * @see UserInterface
+     */
+    public function getSalt()
+    {
+        return null;
+    }
+
+    /**
+     * @see UserInterface
+     */
+    public function eraseCredentials()
+    {
+        // If you store any temporary, sensitive data on the user, clear it here
+        // $this->plainPassword = null;
+    }
 }

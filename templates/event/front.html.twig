@@ -49,14 +49,18 @@
         <div class="container">
             <form class="row">
                 <div class="col-md-6 my-2">
-
+                    <a href="{{ path('eventsTrier')}}">sort Events by date</a>
                 </div>
                 <div class="col-md-6 my-2 text-md-right">
                     <div class="d-inline-flex justify-md-content-end">
                         <!--hereeeeeeee-->
                         <div class="media-body ml-3">
                         <button class="btn btn-primary shadow-primary mr-3 mb-3">
-                            <a href="{{ path('myEvents',{'idclient':3})}}">My Events</a>
+                            {% if app.user %}
+                            <a href="{{ path('myEvents',{'idclient':app.user.id})}}">My Events</a>
+                                {% else %}
+                                    <a href="{{ path('app_login')}}">My Events</a>
+                            {% endif %}
                         </button>
                         </div>
                     </div>
@@ -82,7 +86,9 @@
                         <li class="mb-2"><a href="{{ path('unvailableEvents')}}">unavailable Events</a></li>
                     </ul>
                 </div>
+
             </aside>
+
             <!-- ********************************-->
         <div class="row">
     {% if events %}
@@ -102,9 +108,13 @@
                             <i class="ti-location-pin text-primary mr-2"></i>En ligne
                         </li>
                     </ul>
-                    <a href="{{ path('eventDetails',{'idEvent':e.getIdevent,'idClient':3}) }}" class="btn btn-link pl-0"
-                    >View Details</a
-                    >
+                    {% if app.user %}
+                    <a href="{{ path('eventDetails',{'idEvent':e.getIdevent,'idClient':app.user.id}) }}" class="btn btn-link pl-0"
+                    >View Details</a>
+                        {% else %}
+                            <a href="{{ path('app_login') }}" class="btn btn-link pl-0"
+                            >View Details</a>
+                    {% endif %}
                 </div>
             </div>
         </div>

@@ -12,13 +12,29 @@ use App\Repository\EventRepository;
 use App\Repository\InscrieventRepository;
 use Doctrine\ORM\EntityManager;
 use Knp\Component\Pager\PaginatorInterface;
+use MercurySeries\FlashyBundle\FlashyNotifier;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 class EventController extends AbstractController
 {
+    /**
+     * @Route("/", name="firstPage")
+     * @param EventRepository $repository
+     * @return Response
+     */
+    public function upgradi(EventRepository $repository): Response
+    {
+        $events=$repository->findAll();
+
+        return $this->render('event/front.html.twig', [
+            'events' => $events,
+        ]);
+    }
+
     /**
      * @Route("/upgradi/events", name="upgradi")
      * @param EventRepository $repository
@@ -51,6 +67,18 @@ class EventController extends AbstractController
      */
     public function availableEvents(EventRepository $repository){
         $events=$repository->findvailableEvents();
+        return $this->render('event/front.html.twig', [
+            'events' => $events,
+        ]);
+    }
+
+    /**
+     * @param EventRepository $repository
+     * @return Response
+     * @Route("/upgradi/eventsTrier", name="eventsTrier")
+     */
+    public function lesEventsTrier(EventRepository $repository){
+        $events=$repository->trier();
         return $this->render('event/front.html.twig', [
             'events' => $events,
         ]);
@@ -94,24 +122,24 @@ class EventController extends AbstractController
 
     /**
      * @param Request $request
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
+     * @param FlashyNotifier $flashy
+     * @return RedirectResponse|Response
      * @Route("event/addEvent",name="addEvent")
      */
-    public function addEvent(Request $request){
+    public function addEvent(Request $request,FlashyNotifier $flashy){
         $event =new Event();
         $form =$this->createForm(EventType::class,$event);
         $form->handleRequest($request);
         if($form->isSubmitted()&&$form->isValid()){
-            //On récupere le pic transmise
             $image=$form->get('pic')->getData();
-            //on génère un nouveau nom de fichier
+
             $fichier1=md5(uniqid()).'.'.$image->guessExtension();
-            //on copie le fichier dans le dossier uploads
+
             $image->move(
                 $this->getParameter('images_directory'),
                 $fichier1
             );
-            //on stocke l'image dans la base de données
+
             $event->setPic($fichier1);
 
             $em=$this->getDoctrine()->getManager();
@@ -120,12 +148,16 @@ class EventController extends AbstractController
             $this->addFlash('success',"Event Created successfully");
             return $this->redirectToRoute('allEvents');
         }
-        else{
+        elseif($form->isSubmitted()&&!$form->isValid()){
            // $this->addFlash('notsuccess',"Check your inputs");
+            $flashy->error('check your inputs Please');
             return $this->render('event/addEvent.html.twig',array(
                 'form'=>$form->createView()
             ));
         }
+        return $this->render('event/addEvent.html.twig',array(
+            'form'=>$form->createView()
+        ));
 
 
     }
@@ -133,7 +165,7 @@ class EventController extends AbstractController
     /**
      * @param $idEvent
      * @param EventRepository $repository
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @return RedirectResponse
      * @Route ("admin/event/{idEvent}",name="deleteEvent", methods="delete")
      */
     public function deleteEvent($idEvent,EventRepository $repository){
@@ -149,10 +181,11 @@ class EventController extends AbstractController
      * @param $idEvent
      * @param EventRepository $repository
      * @param Request $request
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
+     * @param FlashyNotifier $flashy
+     * @return RedirectResponse|Response
      * @Route("admin/event/{idEvent}",name="updateEvent",methods="GET|POST")
      */
-    public function updateEvent($idEvent,EventRepository $repository,Request $request){
+    public function updateEvent($idEvent,EventRepository $repository,Request $request,FlashyNotifier $flashy){
         $event=$repository->find($idEvent);
         $form =$this->createForm(EventType::class,$event);
         $form->handleRequest($request);
@@ -174,6 +207,12 @@ class EventController extends AbstractController
             $em->flush();
             $this->addFlash('success',"Event updated successfully");
             return $this->redirectToRoute('allEvents');
+        }
+        elseif($form->isSubmitted()&&!$form->isValid()){
+            $flashy->error('check your inputs Please');
+            return $this->render('event/updateEvent.html.twig',array(
+                'form'=>$form->createView()
+            ));
         }
         return $this->render('event/updateEvent.html.twig',array(
             'form'=>$form->createView()

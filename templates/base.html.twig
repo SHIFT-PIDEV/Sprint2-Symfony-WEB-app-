@@ -11,6 +11,7 @@
     <!--****BLOCK STYLESHITS-->
     {% block stylesheets %}
 
+        <link rel="stylesheet" href="{{ asset('bundles/mercuryseriesflashy/css/flashy.css') }}">
         <!-- favicon
             ============================================ -->
         <link rel="shortcut icon" type="image/x-icon" href="{{ asset('theme/img/favicon.ico') }}">
@@ -1113,7 +1114,9 @@
     <!-- tawk chat JS
         ============================================ -->
     <script src="{{ asset('theme/js/tawk-chat.js') }}"></script>
-
+    <script src="{{ asset('bundles/mercuryseriesflashy/js/flashy.js') }}"></script>
+    <script src="//code.jquery.com/jquery.js"></script>
+    {{ include('@MercurySeriesFlashy/flashy.html.twig') }}
 {% endblock %}
 </body>
 </html>

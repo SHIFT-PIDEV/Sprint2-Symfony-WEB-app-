@@ -6,6 +6,7 @@ use App\Entity\Client;
 use App\Entity\Event;
 use App\Entity\Inscrievent;
 use App\Repository\InscrieventRepository;
+use MercurySeries\FlashyBundle\FlashyNotifier;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -23,6 +24,7 @@ class InscrieventController extends AbstractController
     }
 
     /**
+     * @param FlashyNotifier $flashy
      * @param $idClient
      * @param $idEvent
      * @param InscrieventRepository $repository
@@ -30,7 +32,7 @@ class InscrieventController extends AbstractController
      * @return Response
      * @route("/upgradi/eventDetails/inscription/{idClient}/{idEvent}",name="sinscrire")
      */
-    public function addInscriEvent($idClient,$idEvent,InscrieventRepository $repository,\Swift_Mailer $mailer): Response
+    public function addInscriEvent(FlashyNotifier $flashy,$idClient,$idEvent,InscrieventRepository $repository,\Swift_Mailer $mailer): Response
     {
         $insTest=$repository->findOneByIdClientIdEvent($idClient,$idEvent);
         $client=$this->getDoctrine()->getRepository(Client::class)->find($idClient);
@@ -44,8 +46,6 @@ class InscrieventController extends AbstractController
             $em=$this->getDoctrine()->getManager();
             $em->persist($ins);
             $em->flush();
-            $this->addFlash('success',"votre inscription à l'événement <<".$event->getNomevent().
-                ">> a été enregistrée avec succès mr ".$client->getNom()." please check your mail");
             /*
              * SEND MAIL
              */
@@ -60,6 +60,9 @@ class InscrieventController extends AbstractController
                     'text/html'
                 );
             $mailer->send($message);
+            $s="votre inscription à l'événement <<".$event->getNomevent().
+                ">> a été enregistrée avec succès mr ".$client->getNom()." please click here to check your mail";
+            $flashy->success($s, 'https://mail.google.com/mail/u/0/#inbox');
 
             /*     */
             return $this->redirectToRoute('myEvents',['idclient'=>$idClient]);
@@ -67,6 +70,9 @@ class InscrieventController extends AbstractController
         else{
             $this->addFlash('warning',"vous êtes déjà inscrit à l'événement <<".$event->getNomevent().
                 ">> mr ".$client->getNom()." ");
+            $s1="vous êtes déjà inscrit à l'événement <<".$event->getNomevent().
+                ">> mr ".$client->getNom()." ";
+            $flashy->primaryDark($s1);
             return $this->redirectToRoute('myEvents',['idclient'=>$idClient]);
         }
 
@@ -79,7 +85,7 @@ class InscrieventController extends AbstractController
      * @return Response
      * @Route("/upgradi/eventDetails/annuler/{idClient}/{idEvent}",name="annulation")
      */
-    public function annulerInscri($idClient,$idEvent,InscrieventRepository $repository): Response
+    public function annulerInscri($idClient,$idEvent,InscrieventRepository $repository,FlashyNotifier $flashy): Response
     {
         $ins=$repository->findOneByIdClientIdEvent($idClient,$idEvent);
         $event=$this->getDoctrine()->getRepository(Event::class)->find($idEvent);
@@ -88,14 +94,17 @@ class InscrieventController extends AbstractController
             $em=$this->getDoctrine()->getManager();
             $em->remove($ins);
             $em->flush();
-            $this->addFlash('success',"votre inscription à l'événement <<".$event->getNomevent().
-                ">> a été Supprimer avec succès mr ".$client->getNom()." ");
+            $s="votre inscription à l'événement <<".$event->getNomevent().
+                ">> a été Supprimer avec succès mr ".$client->getNom()."";
+            $flashy->info($s);
             return $this->redirectToRoute('myEvents',['idclient'=>$idClient]);
         }
         else{
-            $this->addFlash('warning',"vous n'avez pas faire l'inscription à l'événement <<".$event->getNomevent().
-                ">>  ".$client->getNom()." ");
-            return $this->redirectToRoute('eventDetails',['idEvent'=>$idEvent]);
+
+            $s1="vous n'avez pas faire l'inscription à l'événement <<".$event->getNomevent().
+                ">>  ".$client->getNom()." ";
+            $flashy->error($s1);
+            return $this->redirectToRoute('eventDetails',['idEvent'=>$idEvent,'idClient'=>$idClient]);
         }
 
     }
@@ -118,12 +127,13 @@ class InscrieventController extends AbstractController
     }
 
     /**
+     * @param FlashyNotifier $flashyNotifier
      * @param $idclient
      * @param InscrieventRepository $repository
      * @return Response
      * @Route("/upgradi/myEvents/{idclient}",name="myEvents")
      */
-    public function inscriOfClient($idclient,InscrieventRepository $repository): Response
+    public function inscriOfClient(FlashyNotifier $flashy,$idclient,InscrieventRepository $repository): Response
     {
         //$inscriptions=$repository->getByIdClient($idclient);
         $client=$this->getDoctrine()->getRepository(Client::class)->find($idclient);
@@ -132,7 +142,6 @@ class InscrieventController extends AbstractController
         for( $i=0;$i<$n;$i++){
             $events[$i]=$this->getDoctrine()->getRepository(Event::class)->find($client->getInscriptions()[$i]->getEvent()->getidevent());
         }
-
         return $this->render("front/myEvents.html.twig",array(
             'events'=>$events
 
