@@ -48,6 +48,10 @@
 
             {{ form_widget(form.courppp,{attr: {class:'form-control','id':'courppp'}}) }}
         </div>
+        <div>
+            {{ form_label(form.image) }}
+            {{ form_widget(form.image, {'attr': {'class': 'form-control form-control-lg','placeholder':'image path'}}) }}
+        </div>
     </div>
     <div class="card-footer">
         <button  type="submit" class="btn btn-primary">Modifier Package</button>

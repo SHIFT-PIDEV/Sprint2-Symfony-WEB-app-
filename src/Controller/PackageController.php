@@ -120,6 +120,17 @@ class PackageController extends AbstractController
 
         if($form->isSubmitted()&& $form->isValid())
         {
+            //On récupere le pic transmise
+            $image=$form->get('image')->getData();
+            //on génère un nouveau nom de fichier
+            $fichier1=md5(uniqid()).'.'.$image->guessExtension();
+            //on copie le fichier dans le dossier uploads
+            $image->move(
+                $this->getParameter('images_directory'),
+                $fichier1
+            );
+            //on stocke l'image dans la base de données
+            $Package->setImage($fichier1);
 
             $entityManager = $this->getDoctrine()->getManager();
 
