@@ -27,4 +27,22 @@ class RedirectController extends AbstractController
             'controller_name' => 'DefaultController',
         ]);
     }
+    /**
+     * @Route("/login", name="login")
+     */
+    public function login(): Response
+    {
+        return $this->render('login.html.twig', [
+            'controller_name' => 'DefaultController',
+        ]);
+    }
+    /**
+     * @Route("/signup", name="signup")
+     */
+    public function signup(): Response
+    {
+        return $this->render('signup.html.twig', [
+            'controller_name' => 'DefaultController',
+        ]);
+    }
 }

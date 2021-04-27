@@ -5,6 +5,7 @@
         style="background: url({{ asset('frontoffice/assets/img/passageex.png')}}) no-repeat"
 >
         <div class="container">
+
             <h1 class="text-white">Mes Examens :</h1>
             <ol
                     class="breadcrumb breadcrumb-double-angle text-white bg-transparent p-0"
@@ -19,7 +20,7 @@
     <section class="pt-5 paddingBottom-100 bg-light-v2">
 
         <div class="container">
-
+            <h5>liste des examen du client : {{ inscripexam[0].idclient.nom}} {{ inscripexam[0].idclient.prenom}}</h5>
             <div class="row">
 
                 {% for e in inscripexam %}

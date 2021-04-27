@@ -3,12 +3,18 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
+use Symfony\Component\Validator\Constraints as Assert;
+
 
 /**
  * Cour
  *
- * @ORM\Table(name="cour")
- * @ORM\Entity
+ * @ORM\Table(name="cour", indexes={@ORM\Index(name="fn_categorie", columns={"id_c"})})
+ * @ORM\Entity(repositoryClass="App\Repository\CourRepository")
+ * @Vich\Uploadable
  */
 class Cour
 {
@@ -20,18 +26,36 @@ class Cour
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     private $idcour;
+    /**
+     * NOTE: This is not a mapped field of entity metadata, just a simple property.
+     *
+     * @Vich\UploadableField(mapping="cour", fileNameProperty="img")
+     *
+     * @var File|null
+     */
+    private $imageFile;
+
+    /**
+     * @var \DateTime|null
+     *
+     * @ORM\Column( type="date", nullable=true)
+     */
+    private $updatedAt;
 
     /**
      * @var string
      *
      * @ORM\Column(name="nom", type="string", length=255, nullable=false)
+     *@Assert\NotBlank(
+     *     message = "Champ Vide!"
+     * )
      */
     private $nom;
 
     /**
-     * @var string
+     * @var string|null
      *
-     * @ORM\Column(name="nomcat", type="string", length=255, nullable=false)
+     * @ORM\Column(name="nomcat", type="string", length=255, nullable=true)
      */
     private $nomcat;
 
@@ -39,6 +63,9 @@ class Cour
      * @var string
      *
      * @ORM\Column(name="formateur", type="string", length=255, nullable=false)
+     *  @Assert\NotBlank(
+     *     message = "Champ Vide!"
+     * )
      */
     private $formateur;
 
@@ -46,13 +73,16 @@ class Cour
      * @var string
      *
      * @ORM\Column(name="description", type="string", length=255, nullable=false)
+     *@Assert\NotBlank(
+     *     message = "Champ Vide!"
+     * )
      */
     private $description;
 
     /**
-     * @var string
+     * @var string|null
      *
-     * @ORM\Column(name="img", type="string", length=255, nullable=false)
+     * @ORM\Column(name="img", type="string", length=255, nullable=true)
      */
     private $img;
 
@@ -60,6 +90,13 @@ class Cour
      * @var float
      *
      * @ORM\Column(name="prix", type="float", precision=10, scale=0, nullable=false)
+     * @Assert\NotBlank(
+     *     message = "Champ Vide!"
+     * )
+     * @Assert\GreaterThanOrEqual(
+     *     value = 0,
+     *     message= "Ce champ ne doit pas etre negative ! "
+     * )
      */
     private $prix;
 
@@ -74,12 +111,37 @@ class Cour
      * @var string
      *
      * @ORM\Column(name="duration", type="string", length=255, nullable=false)
+     *@Assert\NotBlank(
+     *     message = "Champ Vide!"
+     * )
      */
     private $duration;
+
+    /**
+     * @var \Categorie
+     *
+     * @ORM\ManyToOne(targetEntity="Categorie")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="id_c", referencedColumnName="id")
+     * })
+     */
+    private $idC;
 
     public function getIdcour(): ?int
     {
         return $this->idcour;
+    }
+
+    public function getUpdatedAt(): ?\DateTimeInterface
+    {
+        return $this->updatedAt;
+    }
+
+    public function setUpdatedAt(?\DateTimeInterface $updatedAt): self
+    {
+        $this->updatedAt = $updatedAt;
+
+        return $this;
     }
 
     public function getNom(): ?string
@@ -99,7 +161,7 @@ class Cour
         return $this->nomcat;
     }
 
-    public function setNomcat(string $nomcat): self
+    public function setNomcat(?string $nomcat): self
     {
         $this->nomcat = $nomcat;
 
@@ -135,7 +197,7 @@ class Cour
         return $this->img;
     }
 
-    public function setImg(string $img): self
+    public function setImg(?string $img): self
     {
         $this->img = $img;
 
@@ -176,6 +238,36 @@ class Cour
         $this->duration = $duration;
 
         return $this;
+    }
+
+    public function getIdC(): ?Categorie
+    {
+        return $this->idC;
+    }
+
+    public function setIdC(?Categorie $idC): self
+    {
+        $this->idC = $idC;
+
+        return $this;
+    }
+
+
+    public function getImageFile(): ?File
+    {
+        return $this->imageFile;
+    }
+
+    /**
+     * * @param File|\Symfony\Component\HttpFoundation\File\UploadedFile|null $imageFile
+     */
+    public function setImageFile( ?File $imageFile = null): void
+    {
+        $this->imageFile = $imageFile;
+        if (null !== $imageFile) {
+            $this->updatedAt = new \DateTimeImmutable();
+        }
+
     }
 
 

@@ -1,0 +1,34 @@
+{% extends 'DashbordBack.html.twig' %}
+{% block titre %}Gestion des Catégories{% endblock %}
+{% block miniTitre %}Gestion des Catégories{% endblock  %}
+
+{% block content %}
+
+    {{ form_start(form,{'attr': {'novalidate': 'novalidate'}} ) }}
+
+
+    <div class="container">
+        <div class="form-group">
+            {{ form_label(form.nomCat,"Nom Categorie:") }}
+
+            {{ form_widget(form.nomCat, {attr: {class:'form-control','id':'Nom Categorie'}}) }}
+
+            <div style="color: red">
+                {{ form_errors(form.nomCat) }}
+            </div>
+        </div>
+
+
+    </div>
+    <div class="card-footer">
+        <button  type="submit" href="{{ path('add_categorie') }}" class="btn btn-primary">Ajouter Categorie</button>
+    </div>
+
+
+
+
+    {{ form_end(form) }}
+
+
+
+{% endblock  %}

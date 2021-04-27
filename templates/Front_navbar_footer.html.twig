@@ -207,6 +207,8 @@
                         </div>
                     </li>
 
+
+                    <!--block cour navbar -->
                     <li class="nav-item nav-item__has-dropdown">
                         <a
                                 class="nav-link dropdown-toggle"
@@ -214,46 +216,28 @@
                                 data-toggle="dropdown">Courses</a>
                         <ul class="dropdown-menu">
                             <li>
-                                <a href="page-sp-all-courcess.html" class="nav-link__list"
+                                <a href="{{ path('list_cour_Front') }}" class="nav-link__list"
                                 >All Courses</a
-                                >
-                            </li>
-                            <li>
-                                <a
-                                        href="page-sp-all-courcess-list.html"
-                                        class="nav-link__list"
-                                >Courses List</a
-                                >
-                            </li>
-                            <li>
-                                <a
-                                        href="page-sp-all-courcess-with-sidebar.html"
-                                        class="nav-link__list"
-                                >Courses Grid</a
-                                >
-                            </li>
-                            <li>
-                                <a
-                                        href="page-sp-all-courcess-list-with-sidebar.html"
-                                        class="nav-link__list"
-                                >Courses List Sidebar</a
-                                >
-                            </li>
-                            <li>
-                                <a
-                                        href="page-sp-all-courcess-with-sidebar.html"
-                                        class="nav-link__list"
-                                >Courses Grid Sidebar</a
-                                >
-                            </li>
-                            <li>
-                                <a href="page-sp-course-details.html" class="nav-link__list"
-                                >Courses Details</a
                                 >
                             </li>
                         </ul>
 
                     </li>
+                    <li class="nav-item nav-item__has-dropdown">
+                        <a
+                                class="nav-link dropdown-toggle"
+                                href="#"
+                                data-toggle="dropdown">Package</a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a href="{{ path('list_package_Front') }}" class="nav-link__list"
+                                >All Packages</a
+                                >
+                            </li>
+                        </ul>
+
+                    </li>
+                    <!--endblock cour navbar -->
                     <!--block examen navbar -->
                     <li class="nav-item nav-item__has-dropdown">
                         <a
@@ -275,382 +259,9 @@
                         </ul>
                     </li>
                 <!--Endblock examen navbar -->
-                    <li class="nav-item nav-item__has-dropdown">
-                        <a
-                                class="nav-link dropdown-toggle"
-                                data-toggle="dropdown"
-                                href="#">pages</a>
-                        <div class="dropdown-menu">
-                            <ul class="list-unstyled">
-                                <li>
-                                    <a class="nav-link__list" href="page-about.html">About</a>
-                                </li>
 
-                                <li class="nav-item__has-dropdown">
-                                    <a
-                                            class="nav-link__list dropdown-toggle"
-                                            href="#"
-                                            data-toggle="dropdown"
-                                    >
-                                        Events
-                                    </a>
-                                    <div class="dropdown-menu">
-                                        <ul class="list-unstyled">
-                                            <li>
-                                                <a class="nav-link__list" href="page-events.html">
-                                                    Events
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a
-                                                        class="nav-link__list"
-                                                        href="page-event-details.html"
-                                                >
-                                                    Events Details</a
-                                                >
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </li>
 
-                                <li class="nav-item__has-dropdown">
-                                    <a
-                                            class="nav-link__list dropdown-toggle"
-                                            href="#"
-                                            data-toggle="dropdown"
-                                    >
-                                        Support
-                                    </a>
-                                    <div class="dropdown-menu">
-                                        <ul class="list-unstyled">
-                                            <li>
-                                                <a
-                                                        class="nav-link__list"
-                                                        href="page-help-&-support.html"
-                                                >
-                                                    Support
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a
-                                                        class="nav-link__list"
-                                                        href="page-help-&-support-topics.html"
-                                                >
-                                                    Support Topic</a
-                                                >
-                                            </li>
-                                            <li>
-                                                <a
-                                                        class="nav-link__list"
-                                                        href="page-help-&-support-details.html"
-                                                >
-                                                    Support Details</a
-                                                >
-                                            </li>
-                                            <li>
-                                                <a
-                                                        class="nav-link__list"
-                                                        href="page-terms-and-privacy-policy.html"
-                                                >
-                                                    Privacy Policy
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </li>
 
-                                <li class="nav-item__has-dropdown">
-                                    <a
-                                            class="nav-link__list dropdown-toggle"
-                                            href="#"
-                                            data-toggle="dropdown"
-                                    >
-                                        User
-                                    </a>
-                                    <div class="dropdown-menu">
-                                        <ul class="list-unstyled">
-                                            <li>
-                                                <a class="nav-link__list" href="page-login.html">
-                                                    Login
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a class="nav-link__list" href="page-signup.html">
-                                                    Sign up</a
-                                                >
-                                            </li>
-                                            <li>
-                                                <a
-                                                        class="nav-link__list"
-                                                        href="page-recover-password.html"
-                                                >
-                                                    Reset Password</a
-                                                >
-                                            </li>
-                                            <li>
-                                                <a
-                                                        class="nav-link__list"
-                                                        href="page-sp-student-profile.html"
-                                                >
-                                                    Students Profile</a
-                                                >
-                                            </li>
-                                            <li>
-                                                <a
-                                                        class="nav-link__list"
-                                                        href="page-user-profile.html"
-                                                >
-                                                    Instructors Profile</a
-                                                >
-                                            </li>
-                                            <li>
-                                                <a
-                                                        class="nav-link__list"
-                                                        href="page-sp-become-instructor.html"
-                                                >
-                                                    Become Instructors</a
-                                                >
-                                            </li>
-                                            <li>
-                                                <a
-                                                        class="nav-link__list"
-                                                        href="page-sp-order-details.html"
-                                                >
-                                                    Order Details</a
-                                                >
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </li>
-
-                                <li class="nav-item__has-dropdown">
-                                    <a
-                                            class="nav-link__list dropdown-toggle"
-                                            href="#"
-                                            data-toggle="dropdown"
-                                    >
-                                        Notice
-                                    </a>
-                                    <div class="dropdown-menu">
-                                        <ul class="list-unstyled">
-                                            <li>
-                                                <a class="nav-link__list" href="page-notice.html">
-                                                    Notices
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a
-                                                        class="nav-link__list"
-                                                        href="page-notice-details.html"
-                                                >
-                                                    Notics Details</a
-                                                >
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </li>
-
-                                <li class="nav-item__has-dropdown">
-                                    <a
-                                            class="nav-link__list dropdown-toggle"
-                                            href="#"
-                                            data-toggle="dropdown"
-                                    >
-                                        Faculty
-                                    </a>
-                                    <div class="dropdown-menu">
-                                        <ul class="list-unstyled">
-                                            <li>
-                                                <a
-                                                        class="nav-link__list"
-                                                        href="page-sp-faculty.html"
-                                                >
-                                                    Faculty
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a
-                                                        class="nav-link__list"
-                                                        href="page-sp-research.html"
-                                                >
-                                                    Research
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a
-                                                        class="nav-link__list"
-                                                        href="page-sp-research-details.html"
-                                                >
-                                                    Research Details</a
-                                                >
-                                            </li>
-                                            <li>
-                                                <a
-                                                        class="nav-link__list"
-                                                        href="page-sp-scholarship.html"
-                                                >
-                                                    Scholarship</a
-                                                >
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </li>
-
-                                <li class="nav-item__has-dropdown">
-                                    <a
-                                            class="nav-link__list dropdown-toggle"
-                                            href="#"
-                                            data-toggle="dropdown"
-                                    >
-                                        Career
-                                    </a>
-                                    <div class="dropdown-menu">
-                                        <ul class="list-unstyled">
-                                            <li>
-                                                <a class="nav-link__list" href="page-career.html">
-                                                    Careers
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a
-                                                        class="nav-link__list"
-                                                        href="page-career-details.html"
-                                                >
-                                                    Career Details
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </li>
-
-                                <li>
-                                    <a class="nav-link__list" href="page-sp-vc.html">VC</a>
-                                </li>
-                                <li>
-                                    <a class="nav-link__list" href="page-faq.html"> FAQs </a>
-                                </li>
-                                <li>
-                                    <a class="nav-link__list" href="page-contact.html"
-                                    >Contact</a
-                                    >
-                                </li>
-                                <li>
-                                    <a class="nav-link__list" href="page-404.html"> 404 </a>
-                                </li>
-                                <li>
-                                    <a class="nav-link__list" href="page-coming-soon.html"
-                                    >Coming Soon</a
-                                    >
-                                </li>
-                            </ul>
-                        </div>
-                    </li>
-
-                    <li class="nav-item nav-item__has-dropdown">
-                        <a
-                                class="nav-link dropdown-toggle"
-                                href="#"
-                                data-toggle="dropdown"
-                        >
-                            Blog
-                        </a>
-                        <div class="dropdown-menu">
-                            <ul class="list-unstyled">
-                                <li class="nav-item__has-dropdown">
-                                    <a
-                                            class="nav-link__list dropdown-toggle"
-                                            href="#"
-                                            data-toggle="dropdown"
-                                    >
-                                        Layout
-                                    </a>
-                                    <div class="dropdown-menu">
-                                        <ul class="list-unstyled">
-                                            <li>
-                                                <a class="nav-link__list" href="blog-standard.html">
-                                                    Standard
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a class="nav-link__list" href="blog-card.html">
-                                                    Card
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a class="nav-link__list" href="blog-masonry.html">
-                                                    Mesonry
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a class="nav-link__list" href="blog-list.html">
-                                                    List
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </li>
-
-                                <li class="nav-item__has-dropdown">
-                                    <a
-                                            class="nav-link__list dropdown-toggle"
-                                            href="#"
-                                            data-toggle="dropdown"
-                                    >
-                                        Single Post</a
-                                    >
-                                    <div class="dropdown-menu">
-                                        <ul class="list-unstyled">
-                                            <li>
-                                                <a class="nav-link__list" href="blog-single.html">
-                                                    Image
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a
-                                                        class="nav-link__list"
-                                                        href="blog-single-audio.html"
-                                                >
-                                                    Audio
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a
-                                                        class="nav-link__list"
-                                                        href="blog-single-soundcloud.html"
-                                                >
-                                                    Sound Cloud
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a
-                                                        class="nav-link__list"
-                                                        href="blog-single-video-HTML5.html"
-                                                >
-                                                    HTML5 Video
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a
-                                                        class="nav-link__list"
-                                                        href="blog-single-video-youtube.html"
-                                                >
-                                                    Youtube Video
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a
-                                                        class="nav-link__list"
-                                                        href="blog-single-video-vimeo.html"
-                                                >
-                                                    Vimeo Video
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>
-                    </li>
 
                     <li class="nav-item nav-item__has-dropdown">
                         <a

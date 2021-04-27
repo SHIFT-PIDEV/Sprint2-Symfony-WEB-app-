@@ -1,0 +1,64 @@
+{% extends 'DashbordBack.html.twig' %}
+{% block titre %}Gestion des Cours{% endblock %}
+{% block miniTitre %}Gestion des Cours{% endblock  %}
+
+{% block content %}
+
+    {{ form_start(form,{attr:{'id':'form_chauffeur'}}) }}
+    <div class="container">
+        <div class="form-group">
+            {{ form_label(form.nom,"Nom :") }}
+
+            {{ form_widget(form.nom, {attr: {class:'form-control','id':'nom'}}) }}
+        </div>
+        <div class="form-group">
+            {{ form_label(form.formateur,"Formateur :" ) }}
+
+            {{ form_widget(form.formateur, {attr: {class:'form-control','id':'formateur'}}) }}
+        </div>
+
+        <div class="form-group">
+            {{ form_label(form.description,"Description :" ) }}
+
+            {{ form_widget(form.description, {attr: {class:'form-control','id':'description'}}) }}
+        </div>
+        <div class="form-group">
+            {{ form_label(form.prix,"Prix  :" ) }}
+
+            {{ form_widget(form.prix,{attr: {class:'form-control','id':'prix'}}) }}
+        </div>
+
+        <div class="form-group">
+            {{ form_label(form.niveau,"Niveau :" ) }}
+
+            {{ form_widget(form.niveau,{attr: {class:'form-control','id':'niveau'}}) }}
+        </div>
+        <div class="form-group">
+            {{ form_label(form.duration,"Duration :" ) }}
+
+            {{ form_widget(form.duration,{attr: {class:'form-control','id':'duration'}}) }}
+        </div>
+
+        <div class="form-group">
+            {{ form_label(form.idC,"Categorie:" ) }}
+
+            {{ form_widget(form.idC,{attr: {class:'form-control','id':'idC'}}) }}
+        </div>
+        <div class=" col-md-2">
+            {{ form_row(form.imageFile  ) }}
+
+        </div>
+
+    </div>
+
+
+
+
+    <div class="card-footer">
+        <button  type="submit" href="{{ path('add_cour') }}" class="btn btn-primary">Modifier cour</button>
+    </div>
+    {{ form_end(form) }}
+
+
+
+{% endblock  %}

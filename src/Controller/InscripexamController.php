@@ -141,6 +141,7 @@ class InscripexamController extends AbstractController
     {   $entityManager = $this->getDoctrine()->getManager();
 
             $idc=4;
+
             $inscripexam = $entityManager->getRepository(Inscripexam::class)->findBy(array('idclient' => $idc));
         $pagination = $paginator->paginate(
             $inscripexam,

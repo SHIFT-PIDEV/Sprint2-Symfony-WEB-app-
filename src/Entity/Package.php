@@ -7,8 +7,8 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Package
  *
- * @ORM\Table(name="package")
- * @ORM\Entity
+ * @ORM\Table(name="package", indexes={@ORM\Index(name="fn_packagesss", columns={"courppp"}), @ORM\Index(name="fn_categories", columns={"idca"}), @ORM\Index(name="fn_packages", columns={"courp"}), @ORM\Index(name="fn_packagess", columns={"courpp"})})
+ * @ORM\Entity(repositoryClass="App\Repository\PackageRepository")
  */
 class Package
 {
@@ -50,16 +50,16 @@ class Package
     private $description;
 
     /**
-     * @var string
+     * @var string|null
      *
-     * @ORM\Column(name="categorie", type="string", length=255, nullable=false)
+     * @ORM\Column(name="categorie", type="string", length=255, nullable=true)
      */
     private $categorie;
 
     /**
-     * @var string
+     * @var string|null
      *
-     * @ORM\Column(name="image", type="string", length=255, nullable=false)
+     * @ORM\Column(name="image", type="string", length=255, nullable=true)
      */
     private $image;
 
@@ -69,6 +69,46 @@ class Package
      * @ORM\Column(name="nbrcours", type="integer", nullable=false)
      */
     private $nbrcours;
+
+    /**
+     * @var \Categorie
+     *
+     * @ORM\ManyToOne(targetEntity="Categorie")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="idca", referencedColumnName="id")
+     * })
+     */
+    private $idca;
+
+    /**
+     * @var \Cour
+     *
+     * @ORM\ManyToOne(targetEntity="Cour")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="courp", referencedColumnName="idCour")
+     * })
+     */
+    private $courp;
+
+    /**
+     * @var \Cour
+     *
+     * @ORM\ManyToOne(targetEntity="Cour")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="courpp", referencedColumnName="idCour")
+     * })
+     */
+    private $courpp;
+
+    /**
+     * @var \Cour
+     *
+     * @ORM\ManyToOne(targetEntity="Cour")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="courppp", referencedColumnName="idCour")
+     * })
+     */
+    private $courppp;
 
     public function getIdpackage(): ?int
     {
@@ -128,7 +168,7 @@ class Package
         return $this->categorie;
     }
 
-    public function setCategorie(string $categorie): self
+    public function setCategorie(?string $categorie): self
     {
         $this->categorie = $categorie;
 
@@ -140,7 +180,7 @@ class Package
         return $this->image;
     }
 
-    public function setImage(string $image): self
+    public function setImage(?string $image): self
     {
         $this->image = $image;
 
@@ -155,6 +195,54 @@ class Package
     public function setNbrcours(int $nbrcours): self
     {
         $this->nbrcours = $nbrcours;
+
+        return $this;
+    }
+
+    public function getIdca(): ?Categorie
+    {
+        return $this->idca;
+    }
+
+    public function setIdca(?Categorie $idca): self
+    {
+        $this->idca = $idca;
+
+        return $this;
+    }
+
+    public function getCourp(): ?Cour
+    {
+        return $this->courp;
+    }
+
+    public function setCourp(?Cour $courp): self
+    {
+        $this->courp = $courp;
+
+        return $this;
+    }
+
+    public function getCourpp(): ?Cour
+    {
+        return $this->courpp;
+    }
+
+    public function setCourpp(?Cour $courpp): self
+    {
+        $this->courpp = $courpp;
+
+        return $this;
+    }
+
+    public function getCourppp(): ?Cour
+    {
+        return $this->courppp;
+    }
+
+    public function setCourppp(?Cour $courppp): self
+    {
+        $this->courppp = $courppp;
 
         return $this;
     }
