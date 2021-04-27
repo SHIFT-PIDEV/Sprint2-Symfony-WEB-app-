@@ -2,25 +2,25 @@
 
 namespace App\Form;
 
-use App\Entity\Panier;
+use App\Entity\Cart;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class PanierType extends AbstractType
+class CartType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('idcour')
-            ->add('idclient')
+            ->add('nom')
+            ->add('prix')
         ;
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => Panier::class,
+            'data_class' => Cart::class,
         ]);
     }
 }

@@ -963,12 +963,12 @@
                 <ul class="navbar-nav ec-nav__navbar">
                     <li class="nav-item nav-item__has-dropdown">
                         <a
-                                class="nav-link dropdown-toggle no-caret"
-                                href="#"
-                                data-toggle="dropdown"
-                        ><i class="ti-shopping-cart"></i
+                                class="nav-link dropdown-toggle no-caret site-search-toggle"
+                                href="{{ path('list-cart') }}">
+                                <!--data-toggle="dropdown" (hottha f ligne 967)-->
+                        <i class="ti-shopping-cart"></i
                             ></a>
-                        <ul
+                      <!--  <ul
                                 class="dropdown-menu dropdown-cart"
                                 aria-labelledby="navbarDropdown"
                         >
@@ -1027,12 +1027,12 @@
                                 >
                             </li>
                             <li class="px-2 pb-4 text-center">
-                                <a href="{{ path('list_cart') }}" class="btn btn-outline-primary mx-1">
+                            {#     <a href="{{ path('list_cart') }}" class="btn btn-outline-primary mx-1">
                                     View Cart
                                 </a>
-                                <a href="{{ path('add_pm') }}" class="btn btn-primary mx-1">Checkout</a>
+                                <a href="{{ path('add_pm') }}" class="btn btn-primary mx-1">Checkout</a>#}
                             </li>
-                        </ul>
+                        </ul>-->
                     </li>
                     <li class="nav-item">
                         <a class="nav-link site-search-toggler" href="#">
@@ -1066,7 +1066,24 @@
     </form>
 </div>
 <!-- END site-search-->
-
+<div class="site-search">
+    <div class="site-search__close bg-black-0_8"></div>
+    <form class="form-site-search" action="#" method="POST">
+        <div class="input-group">
+            <input
+                    type="text"
+                    placeholder="Search"
+                    class="form-control py-3 border-white"
+                    required=""
+            />
+            <div class="input-group-append">
+                <button class="btn btn-primary" type="submit">
+                    <i class="ti-search"></i>
+                </button>
+            </div>
+        </div>
+    </form>
+</div>
 {% block body %}
 {% endblock %}
 
