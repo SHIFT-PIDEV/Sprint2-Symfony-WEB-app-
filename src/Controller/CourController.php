@@ -80,7 +80,7 @@ class CourController extends AbstractController
 
         $writer = new Xlsx($spreadsheet);
 
-        $writer->save('helloworld.xlsx');
+        $writer->save('cour.xlsx');
 
         return $this->redirectToRoute('list_cour');
     }
