@@ -85,6 +85,11 @@ class Event
     private $comms;
 
     /**
+     * @ORM\OneToMany (targetEntity=Likeevent::class,mappedBy="event",cascade={"all"},orphanRemoval=true)
+     */
+    private $likes;
+
+    /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $pic;
@@ -94,6 +99,7 @@ class Event
     {
         $this->inscriptions = new ArrayCollection();
         $this->comms = new ArrayCollection();
+        $this->likes = new ArrayCollection();
     }
 
 
@@ -256,6 +262,47 @@ class Event
         $this->pic = $pic;
 
         return $this;
+    }
+
+    /**
+     * @return Collection|Likeevent[]
+     */
+    public function getLikes(): Collection
+    {
+        return $this->likes;
+    }
+
+    public function addLike(Likeevent $like): self
+    {
+        if (!$this->likes->contains($like)) {
+            $this->likes[] = $like;
+            $like->setEvent($this);
+        }
+
+        return $this;
+    }
+
+    public function removeLike(Likeevent $like): self
+    {
+        if ($this->likes->removeElement($like)) {
+            // set the owning side to null (unless already changed)
+            if ($like->getEvent() === $this) {
+                $like->setEvent(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param Client $client
+     * @return bool
+     */
+    public function isLikedByUser(Client $client):bool{
+        foreach ($this->likes as $like){
+            if($like->getClient()===$client) return true;
+        }
+        return false;
     }
 
 

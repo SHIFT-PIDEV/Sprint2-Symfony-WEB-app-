@@ -76,6 +76,11 @@ class Client implements UserInterface
     private $comms;
 
     /**
+     * @ORM\OneToMany (targetEntity=Likeevent::class,mappedBy="client",cascade={"all"},orphanRemoval=true)
+     */
+    private $likes;
+
+    /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $pic;
@@ -88,6 +93,7 @@ class Client implements UserInterface
     {
         $this->inscriptions = new ArrayCollection();
         $this->comms = new ArrayCollection();
+        $this->likes = new ArrayCollection();
     }
 
 
@@ -282,5 +288,35 @@ class Client implements UserInterface
     {
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
+    }
+
+    /**
+     * @return Collection|Likeevent[]
+     */
+    public function getLikes(): Collection
+    {
+        return $this->likes;
+    }
+
+    public function addLike(Likeevent $like): self
+    {
+        if (!$this->likes->contains($like)) {
+            $this->likes[] = $like;
+            $like->setClient($this);
+        }
+
+        return $this;
+    }
+
+    public function removeLike(Likeevent $like): self
+    {
+        if ($this->likes->removeElement($like)) {
+            // set the owning side to null (unless already changed)
+            if ($like->getClient() === $this) {
+                $like->setClient(null);
+            }
+        }
+
+        return $this;
     }
 }

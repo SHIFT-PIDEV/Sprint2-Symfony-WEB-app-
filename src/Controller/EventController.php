@@ -5,15 +5,19 @@ namespace App\Controller;
 use App\Entity\Client;
 use App\Entity\Commentaire;
 use App\Entity\Event;
+use App\Entity\Likeevent;
 use App\Form\CommentaireType;
 use App\Form\EventType;
 use App\Repository\CommentaireRepository;
 use App\Repository\EventRepository;
 use App\Repository\InscrieventRepository;
+use App\Repository\LikeRepository;
 use Doctrine\ORM\EntityManager;
+use Doctrine\Persistence\ObjectManager;
 use Knp\Component\Pager\PaginatorInterface;
 use MercurySeries\FlashyBundle\FlashyNotifier;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -278,5 +282,47 @@ class EventController extends AbstractController
             'form'=>$form->createView(),
             'commentaires'=>$CommentairesList
         ));
+    }
+
+    /**
+     * @param Event $event
+     * @param LikeRepository $likeRepository
+     * @param FlashyNotifier $flashy
+     * @return JsonResponse|RedirectResponse
+     * @Route("/event/{idevent}/like",name="likeevent")
+     */
+    public function gestionDesLike(Event $event,LikeRepository $likeRepository,FlashyNotifier $flashy)
+    {
+
+        $client=$this->getUser();
+        if(!$client){
+            $flashy->mutedDark('You should be connected to react with an event');
+            return $this->redirectToRoute('app_login');
+        }
+        elseif($event->isLikedByUser($client)){
+            $like=$likeRepository->findOneBy([
+                'event'=>$event,
+                'client'=>$client
+            ]);
+            $em=$this->getDoctrine()->getManager();
+            $em->remove($like);
+            $em->flush();
+        }
+
+        else{
+            $like1=new Likeevent();
+            $like1->setEvent($event)
+                ->setClient($client);
+            $em=$this->getDoctrine()->getManager();
+            $em->persist($like1);
+            $em->flush();
+        }
+
+        return $this->json([
+            'code'=>200,'message'=>'ca marche bien',
+            'nbLikes'=>$likeRepository->count(['event'=>$event])
+        ],
+            200);
+       // return $this->redirectToRoute('firstPage');
     }
 }

@@ -6,6 +6,7 @@ use App\Entity\Event;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Migrations\Query\Query;
 use Doctrine\Persistence\ManagerRegistry;
+use Endroid\QrCode\Builder\BuilderInterface;
 
 /**
  * @method Event|null find($id, $lockMode = null, $lockVersion = null)
@@ -18,6 +19,14 @@ class EventRepository extends ServiceEntityRepository
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Event::class);
+
+    }
+    public function __constructs(BuilderInterface $customQrCodeBuilder)
+    {
+        $result = $customQrCodeBuilder
+            ->size(400)
+            ->margin(20)
+            ->build();
     }
 
     // /**
@@ -106,5 +115,6 @@ class EventRepository extends ServiceEntityRepository
          order by e.datedebut ASC')
             ->getResult();
     }
+
 
 }

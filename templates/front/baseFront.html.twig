@@ -54,6 +54,11 @@
     <!-- stylesheet-->
     <link rel="stylesheet" href="{{ asset('themeFront/assets/css/vendors.bundle.css') }}" />
     <link rel="stylesheet" href="{{ asset('themeFront/assets/css/style.css') }}" />
+    <!-- style for the fontawesome -->
+    <link href="/your-path-to-fontawesome/css/fontawesome.css" rel="stylesheet">
+    <link href="/your-path-to-fontawesome/css/brands.css" rel="stylesheet">
+    <link href="/your-path-to-fontawesome/css/solid.css" rel="stylesheet">
+    <!-- end style for the fontawesome -->
 </head>
 
 <body>
@@ -1210,4 +1215,6 @@
 <script src="//code.jquery.com/jquery.js"></script>
 {{ include('@MercurySeriesFlashy/flashy.html.twig') }}
 </body>
+{% block javascript %}
+{% endblock %}
 </html>
