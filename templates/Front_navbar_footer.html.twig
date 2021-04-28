@@ -590,75 +590,19 @@
                     <li class="nav-item nav-item__has-dropdown">
                         <a
                                 class="nav-link dropdown-toggle no-caret"
-                                href="#"
-                                data-toggle="dropdown"
+                                href="{{ path('list-cart') }}"
+
                         ><i class="ti-shopping-cart"></i
                             ></a>
-                        <ul
-                                class="dropdown-menu dropdown-cart"
-                                aria-labelledby="navbarDropdown"
-                        >
-                            <li class="dropdown-cart__item">
-                                <div class="media">
-                                    <img
-                                            class="dropdown-cart__img"
-                                            src="{{ asset('frontoffice/assets/img/shop/products/2.jpg') }}"
-                                            alt=""
-                                    />
-                                    <div class="media-body pl-3">
-                                        <a href="#" class="h6">Quick intro to Python</a>
-                                        <span class="text-primary">$199.00</span>
-                                    </div>
-                                </div>
-                                <a href="#" class="dropdown-cart__item-remove">
-                                    <i class="ti-close"></i>
-                                </a>
-                            </li>
-                            <li class="dropdown-cart__item">
-                                <div class="media">
-                                    <img
-                                            class="dropdown-cart__img"
-                                            src="    {{ asset('frontoffice/assets/img/shop/products/4.jpg') }}"
-                                            alt=""
-                                    />
-                                    <div class="media-body pl-3">
-                                        <a href="#" class="h6">Gentel intro to C++</a>
-                                        <span class="text-primary">$45.00</span>
-                                    </div>
-                                </div>
-                                <a href="#" class="dropdown-cart__item-remove">
-                                    <i class="ti-close"></i>
-                                </a>
-                            </li>
-                            <li class="dropdown-cart__item">
-                                <div class="media">
-                                    <img
-                                            class="dropdown-cart__img"
-                                            src="{{ asset('frontoffice/assets/img/shop/products/3.jpg') }}"
-                                            alt=""
-                                    />
-                                    <div class="media-body pl-3">
-                                        <a href="#" class="h6">Programming 101</a>
-                                        <span class="text-primary">$79.00</span>
-                                    </div>
-                                </div>
-                                <a href="#" class="dropdown-cart__item-remove">
-                                    <i class="ti-close"></i>
-                                </a>
-                            </li>
-                            <li class="px-2 py-4 text-center">
-                                Subtotal:
-                                <span class="text-primary font-weight-semiBold">
-											$275.00</span
-                                >
-                            </li>
-                            <li class="px-2 pb-4 text-center">
-                                <a class="btn btn-outline-primary mx-1" href="#">
-                                    View Cart
-                                </a>
-                                <a class="btn btn-primary mx-1", >Checkout</a>
-                            </li>
-                        </ul>
+
+                            {% block mini_panier %}
+
+                            {% endblock  %}
+
+
+
+
+
                     </li>
                     <li class="nav-item">
                         <a class="nav-link site-search-toggler" href="#">
@@ -694,10 +638,31 @@
 <!-- END site-search-->
 
 
-        {% block title %}{% endblock %}
+{% block title %}{% endblock %}
 
 
-{% block body %}
+{% block body %}{% endblock %}
+
+
+{% block talk_chat %}
+    <div  class="col-sm-6">
+        <!----- block chat bot --->
+        <!--Start of Tawk.to Script-->
+        <script type="text/javascript">
+            var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+            (function(){
+                var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+                s1.async=true;
+                s1.src='https://embed.tawk.to/6077961ff7ce1827093a8b5d/1f39i4r77';
+                s1.charset='UTF-8';
+                s1.setAttribute('crossorigin','*');
+                s0.parentNode.insertBefore(s1,s0);
+            })();
+        </script>
+        <!--End of Tawk.to Script-->
+        <!----- block chat bot --->
+    </div>
+
 {% endblock %}
 
 <footer class="site-footer">

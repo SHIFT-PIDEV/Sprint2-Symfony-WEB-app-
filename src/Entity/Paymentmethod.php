@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Paymentmethod
@@ -25,6 +26,9 @@ class Paymentmethod
      * @var string
      *
      * @ORM\Column(name="nom", type="string", length=25, nullable=false)
+     * @Assert\NotBlank(
+     *     message = "Champ Vide!"
+     * )
      */
     private $nom;
 
@@ -32,6 +36,9 @@ class Paymentmethod
      * @var string
      *
      * @ORM\Column(name="prenom", type="string", length=25, nullable=false)
+     * @Assert\NotBlank(
+     *     message = "Champ Vide!"
+     * )
      */
     private $prenom;
 
@@ -39,6 +46,10 @@ class Paymentmethod
      * @var string
      *
      * @ORM\Column(name="email", type="string", length=255, nullable=false)
+     * @Assert\NotBlank(message="Champ vide")
+     * @Assert\Email(
+     *     message = "email '{{ value }}' est non valide."
+     * )
      */
     private $email;
 
@@ -46,6 +57,8 @@ class Paymentmethod
      * @var string
      *
      * @ORM\Column(name="pays", type="string", length=25, nullable=false)
+     * @Assert\NotEqualTo("NULL", message = "Choisi votre pays !")
+     * )
      */
     private $pays;
 
@@ -53,6 +66,14 @@ class Paymentmethod
      * @var int
      *
      * @ORM\Column(name="codepostal", type="integer", nullable=false)
+     * @Assert\NotBlank(
+     *     message = "Champ Vide!"
+     * )
+     * @Assert\GreaterThanOrEqual(
+     *     value = 0,
+     *     message= "Ce champ ne doit pas etre negative ! "
+     * )
+     * @Assert\Length(max=5)
      */
     private $codepostal;
 
@@ -60,6 +81,13 @@ class Paymentmethod
      * @var int
      *
      * @ORM\Column(name="numcarte", type="integer", nullable=false)
+     * @Assert\NotBlank(
+     *     message = "Champ Vide!"
+     * )
+     * @Assert\GreaterThanOrEqual(
+     *     value = 0,
+     *     message= "Ce champ ne doit pas etre negative ! "
+     * )
      */
     private $numcarte;
 
@@ -67,6 +95,13 @@ class Paymentmethod
      * @var int
      *
      * @ORM\Column(name="cvc", type="integer", nullable=false)
+     * @Assert\NotBlank(
+     *     message = "Champ Vide!"
+     * )
+     * @Assert\GreaterThanOrEqual(
+     *     value = 0,
+     *     message= "Ce champ ne doit pas etre negative ! "
+     * )
      */
     private $cvc;
 
@@ -74,6 +109,9 @@ class Paymentmethod
      * @var string
      *
      * @ORM\Column(name="datecarte", type="string", length=5, nullable=false)
+     * @Assert\NotBlank(
+     *     message = "Champ Vide!"
+     * )
      */
     private $datecarte;
 

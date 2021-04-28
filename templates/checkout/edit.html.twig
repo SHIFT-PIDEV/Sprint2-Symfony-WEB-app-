@@ -1,0 +1,163 @@
+{% extends 'Front_navbar_footer.html.twig' %}
+{% block pagetitre %}Modifier{% endblock %}
+{% block minititre %}Checkout{% endblock %}
+{% block body %}
+
+    <section class="padding-y-50">
+        <div class="container">
+            <div class="row">
+                <!-- Cart List -->
+                <div class="col-md-4 order-md-2 mb-4">
+                    <h4 class="d-flex justify-content-between align-items-center mb-3">
+                        <span>Your cart</span>
+                        <span class="badge badge-primary badge-pill">3</span>
+                    </h4>
+                    <ul class="list-group mb-3">
+                        <li
+                                class="list-group-item d-flex justify-content-between lh-condensed"
+                        >
+                            <div>
+                                <h6 class="my-0">Product name</h6>
+                                <small class="text-muted">Brief description</small>
+                            </div>
+                            <span class="text-muted">$12</span>
+                        </li>
+                        <li
+                                class="list-group-item d-flex justify-content-between lh-condensed"
+                        >
+                            <div>
+                                <h6 class="my-0">Second product</h6>
+                                <small class="text-muted">Brief description</small>
+                            </div>
+                            <span class="text-muted">$8</span>
+                        </li>
+                        <li
+                                class="list-group-item d-flex justify-content-between lh-condensed"
+                        >
+                            <div>
+                                <h6 class="my-0">Third item</h6>
+                                <small class="text-muted">Brief description</small>
+                            </div>
+                            <span class="text-muted">$5</span>
+                        </li>
+                        <li
+                                class="list-group-item d-flex justify-content-between bg-light"
+                        >
+                            <div class="text-success">
+                                <h6 class="my-0">Promo code</h6>
+                                <small>EXAMPLECODE</small>
+                            </div>
+                            <span class="text-success">-$5</span>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between">
+                            <span>Total (USD)</span>
+                            <strong>$20</strong>
+                        </li>
+                    </ul>
+                    <form class="card p-2">
+                        <div class="input-group">
+                            <input
+                                    type="text"
+                                    class="form-control"
+                                    placeholder="Promo code"
+                            />
+                            <div class="input-group-append">
+                                <button type="submit" class="btn btn-primary">Redeem</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <!-- End Cart List -->
+                <!--Form taa checkout -->
+                <div class="col-md-8 order-md-1">
+                    <h4 class="mb-3">Payment</h4>
+                    {{ form_start(form,{'attr': {'novalidate': 'novalidate'}} ) }}
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            {{ form_label(form.nom,"Nom" ) }}
+                            {{ form_widget(form.nom, {attr: {class:'form-control','id':'nom'}}) }}
+                            <div style="color: red;">
+                                {{ form_errors(form.nom)}}
+
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            {{ form_label(form.prenom,"Prenom" ) }}
+
+                            {{ form_widget(form.prenom,{attr: {class:'form-control','id':'prenom'}}) }}
+                            <div style="color: red;">
+                                {{ form_errors(form.prenom)}}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        {{ form_label(form.email,"Email:") }}
+
+                        {{ form_widget(form.email, {attr: {class:'form-control','id':'email'}}) }}
+                        <div style="color: red;">
+                            {{ form_errors(form.email)}}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            {{ form_label(form.pays,"Pays:") }}
+                            {{ form_widget(form.pays, {attr: {class:'form-control','id':'pays'}}) }}
+                            <!-- <select
+                                     class="custom-select d-block w-100"
+                                     id="country"
+                                     required=""
+                             >
+                                 <option value="">Choose...</option>
+                                 <option>United States</option>
+                             </select> -->
+                            <div style="color: red;">
+                                {{ form_errors(form.pays)}}
+                            </div>
+
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            {{ form_label(form.codepostal,"Code Postal:") }}
+
+                            {{ form_widget(form.codepostal, {attr: {class:'form-control','id':'codepostal'}}) }}
+                            <div style="color: red;">
+                                {{ form_errors(form.codepostal)}}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        {{ form_label(form.numcarte,"Numero Carte:") }}
+
+                        {{ form_widget(form.numcarte, {attr: {class:'form-control','id':'numcarte'}}) }}
+                        <div style="color: red;">
+                            {{ form_errors(form.numcarte)}}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            {{ form_label(form.datecarte,"Date Exp:") }}
+
+                            {{ form_widget(form.datecarte, {attr: {class:'form-control','id':'datecarte'}}) }}
+                            <div style="color: red;">{{ form_errors(form.datecarte)}}</div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            {{ form_label(form.cvc,"CVC:") }}
+
+                            {{ form_widget(form.cvc, {attr: {class:'form-control','id':'cvc'}}) }}
+                            <div style="color: red;"> {{ form_errors(form.cvc)}}</div>
+                        </div>
+
+                    </div>
+                    <button href="{{ path('add_pm') }}" class="btn btn-primary btn-lg btn-block" type="submit">
+                        Confirm
+                    </button>
+                    {{ form_end(form) }}
+                </div>
+
+                <!-- End Form taa checkout -->
+            </div>
+        </div>
+        <!-- END container-->
+    </section>
+
+{% endblock  %}

@@ -35,7 +35,7 @@ class ClientController extends AbstractController
         }
         else if($client == null)
         {
-
+            return $this->render('signup.html.twig');
         }
         else{
             $examen = $this->getDoctrine()->getRepository(Examen::class)->findAll();

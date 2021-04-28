@@ -1,0 +1,162 @@
+{% extends 'Front_navbar_footer.html.twig' %}
+
+{% block title %} <div
+
+        class="padding-y-60 bg-cover"
+        data-dark-overlay="6"
+        style="background: url({{ asset('frontoffice/assets/img/passageex.png')}}) no-repeat"
+>
+    <div class="container">
+        <h1 class="text-white">commande :</h1>
+        <ol
+                class="breadcrumb breadcrumb-double-angle text-white bg-transparent p-0"
+        >
+            <li class="breadcrumb-item"><a href="#">Home</a></li>
+            <li class="breadcrumb-item"><a href="#">commande</a></li>
+            <li class="breadcrumb-item">commande</li>
+        </ol>
+    </div>
+</div>
+{% endblock %}
+
+{% block body %}
+
+
+<section class="padding-y-50">
+    <div class="container">
+        <div class="row">
+    <div class="col-md-4 order-md-2 mb-4">
+        <h4 class="d-flex justify-content-between align-items-center mb-3">
+            <span>Your cart</span>
+            <span class="badge badge-primary badge-pill">1</span>
+        </h4>
+        <ul class="list-group mb-3">
+            <li
+                    class="list-group-item d-flex justify-content-between lh-condensed"
+            >
+                <div>
+                    <h6 class="my-0">Product name</h6>
+                    <small class="text-muted">Brief description</small>
+                </div>
+                <span class="text-muted">$12</span>
+            </li>
+            <li
+                    class="list-group-item d-flex justify-content-between bg-light"
+            >
+                <div class="text-success">
+                    <h6 class="my-0">Promo code</h6>
+                    <small>EXAMPLECODE</small>
+                </div>
+                <span class="text-success">-$2</span>
+            </li>
+            <li class="list-group-item d-flex justify-content-between">
+                <span>Total (USD)</span>
+                <strong>$10</strong>
+            </li>
+        </ul>
+        <form class="card p-2">
+            <div class="input-group">
+                <input
+                        type="text"
+                        class="form-control"
+                        placeholder="Promo code"
+                />
+                <div class="input-group-append">
+                    <button type="submit" class="btn btn-primary">Redeem</button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+        <div class="card-body p-0">
+            <div class="col-lg-6 my-4">
+                {% for i in nom %}
+                <h6 class="mb-2">Informations</h6>
+                <ul class="list-group">
+                    <li class="list-group-item"><i class="ti-user"></i>    {{ i.nom }} {{ i.prenom }}</li>
+                    <li class="list-group-item"><i class=" ti-email" ></i> {{ i.email }}</li>
+                    <li class="list-group-item"><i class="ti-map" ></i>  {{ i.pays }}</li>
+                    <li class="list-group-item"><i class="ti-tag" ></i>  {{ i.codepostal }}</li>
+                    <li class="list-group-item"><img src="\frontoffice\assets\img\shop\payment\visa.jpg" width="50" height="30" ></img>46**************</li>
+                    <li class="list-group-item"><i class="ti-calendar" ></i>  {{ i.datecarte }}</li>
+                    <li class="list-group-item"><i class="ti-agenda" ></i>   {{ i.cvc }}</li>
+                    <li class="list-group-item " style="display: none"><i class="ti-user"></i>    {{ i.id }} </li>
+                </ul>
+                    <a class="btn btn-opacity-primary" href="{{ path('edit_pm',{'id':i.id} ) }}" data-toggle="tooltip" data-placement="bottom" data-original-title="Modifier">
+                        <i class="ti-pencil"></i>
+                    </a>
+                <a class="btn btn-opacity-danger" href="{{ path('delete_pm',{'id':i.id}) }} " data-toggle="tooltip" data-placement="bottom" data-original-title="Supprimer">
+                    <i class="ti-close"></i>
+                </a>
+                <a class="btn btn-opacity-primary " href="{{path('pdf')}}" data-toggle="tooltip" data-placement="bottom" data-original-title="Print">
+                    <i class="ti-printer"></i>
+                </a>
+                <a class="btn btn-outline-primary" href="{{ path('success') }}" >
+                    Payez
+                </a>
+            </div>
+                {% endfor %}
+            </div>
+            <!--<table id="panier" class="table table-striped">
+                <thead>
+                <tr>
+                    <th style="width: 10px">#</th>
+                    <th>Nom</th>
+                    <th>Prenom</th>
+                    <th>Email</th>
+                    <th>Pays</th>
+                    <th>Code Postal</th>
+                    <th>Num Carte</th>
+                    <th>Date</th>
+                    <th>CVC</th>
+                    <th class="text-center">Action</th>
+
+                </tr>
+                </thead>
+                <tbody>
+                ------------------
+                    <tr>
+                    {#    <td>{{ i.id }}</td>
+                        <td>{{ i.nom }}</td>
+                        <td>{{ i.prenom }}</td>
+                        <td>{{ i.email }}</td>
+                        <td>{{ i.pays }}</td>
+                        <td>{{ i.codepostal }}</td>
+                        <td>{{ i.numcarte }}</td>
+                        <td>{{ i.datecarte }}</td>
+                        <td>{{ i.cvc }}</td>
+
+                        <td>
+                            <a  href="{{ path('edit_pm',{'id':i.id}) }}"
+                                data-fancybox=""
+                                data-src="#trueModal"
+                                data-modal="true"
+                                href="javascript:;"
+                                data-toggle="tooltip" data-placement="bottom" data-original-title="Edit item"><i class="ti-pencil-alt"></i></a>
+                        </td>
+                        <td>
+                            <a  href="{{ path('delete_pm',{'id':i.id}) }}"#}
+                                data-fancybox=""
+                                data-src="#trueModal"
+                                data-modal="true"
+                                href="javascript:;"
+                                data-toggle="tooltip" data-placement="bottom" data-original-title="Supprimer item"><i class="ti-close"></i></a>
+                        </td>
+
+                        </td>
+                    </tr>
+
+
+                --------------
+                </tbody>
+
+            </table>-->
+        </div>
+    </div>
+
+    </div>
+
+</section>
+
+
+{% endblock  %}
