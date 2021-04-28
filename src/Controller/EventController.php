@@ -16,6 +16,7 @@ use Doctrine\ORM\EntityManager;
 use Doctrine\Persistence\ObjectManager;
 use Knp\Component\Pager\PaginatorInterface;
 use MercurySeries\FlashyBundle\FlashyNotifier;
+use Snipe\BanBuilder\CensorWords;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -143,8 +144,14 @@ class EventController extends AbstractController
                 $this->getParameter('images_directory'),
                 $fichier1
             );
+            /*$image->move(
+                $this->getParameter('java_directory'),
+                $fichier1
+            );*/
 
             $event->setPic($fichier1);
+            $var="/images/events.png";
+            $event->setImage("$var");
 
             $em=$this->getDoctrine()->getManager();
             $em->persist($event);
@@ -204,9 +211,14 @@ class EventController extends AbstractController
                 $this->getParameter('images_directory'),
                 $fichier1
             );
+            $image->move(
+                $this->getParameter('java_directory'),
+                $fichier1
+            );
             //on stocke l'image dans la base de données
             $event->setPic($fichier1);
-
+            $var="/images/".$fichier1."";
+            $event->setImage("$var");
             $em=$this->getDoctrine()->getManager();
             $em->flush();
             $this->addFlash('success',"Event updated successfully");
@@ -275,11 +287,14 @@ class EventController extends AbstractController
          * partie affichage commentaires
          */
         $CommentairesList=$event->getComms();
-
+        $censor = new CensorWords;
+        $lang = array('fr','en-us');
+        $censor->setDictionary($lang);
         return $this->render("front/eventDetails.html.twig",array(
             'event'=>$event,
             'client'=>$client,
             'form'=>$form->createView(),
+            'censor'=>$censor,
             'commentaires'=>$CommentairesList
         ));
     }

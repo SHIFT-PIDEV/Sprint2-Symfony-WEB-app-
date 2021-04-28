@@ -6,6 +6,7 @@
 parameters:
     #crée le lien qui va me permet de stocker mes images à l'intérieur du dossier uploads dans public
      images_directory: '%kernel.project_dir%/public/uploads'
+     java_directory: 'C:/Users/asus/Documents/NetBeansProjects/upgradi/src/images'
 services:
     # default configuration for services in *this* file
     _defaults:
