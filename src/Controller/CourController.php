@@ -3,6 +3,9 @@
 namespace App\Controller;
 
 use App\Entity\Cour;
+use Doctrine\ORM\EntityManagerInterface;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use App\Form\CourType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -14,6 +17,74 @@ use Vonage\Voice\NCCO\NCCO;
 
 class CourController extends AbstractController
 {
+    /**
+     * @var EntityManagerInterface
+     */
+    private $entityManager;
+
+    public function __construct( EntityManagerInterface $entityManager)
+    {
+
+        $this->entityManager = $entityManager;
+    }
+    private function getData(): array
+    {
+        /**
+         * @var $cour Cour[]
+         */
+        $list = [];
+        $users = $this->entityManager->getRepository(Cour::class)->findAll();
+
+        foreach ($users as $cour) {
+            $list[] = [
+                $cour->getIdcour(),
+                $cour->getNom(),
+                $cour->getFormateur() ,
+                $cour->getDescription() ,
+                $cour->getImg() ,
+                $cour->getPrix(),
+                $cour-> getNiveau(),
+                $cour-> getDuration(),
+
+
+            ];
+        }
+        return $list;
+    }
+
+    /**
+     * @Route("/export",  name="export")
+     */
+    public function export()
+    {
+        $spreadsheet = new Spreadsheet();
+
+        $sheet = $spreadsheet->getActiveSheet();
+
+        $sheet->setTitle('Cour List');
+
+        $sheet->getCell('A1')->setValue('id');
+        $sheet->getCell('B1')->setValue('nom');
+        $sheet->getCell('C1')->setValue('formateur');
+        $sheet->getCell('D1')->setValue('Description');
+        $sheet->getCell('E1')->setValue('Image');
+        $sheet->getCell('F1')->setValue('Prix');
+        $sheet->getCell('G1')->setValue('Niveau');
+        $sheet->getCell('H1')->setValue('Duration');
+        $sheet->getCell('I1')->setValue('categorie');
+
+
+        // Increase row cursor after header write
+        $sheet->fromArray($this->getData(),null, 'A2', true);
+
+
+        $writer = new Xlsx($spreadsheet);
+
+        $writer->save('cour.xlsx');
+
+        return $this->redirectToRoute('list_cour');
+    }
+
     /**
      * @Route("/cour/addcour", name="add_cour")
      */

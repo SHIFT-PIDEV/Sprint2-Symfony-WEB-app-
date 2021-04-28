@@ -47,30 +47,30 @@ class PackageController extends AbstractController
             $entityManager->persist($package);
 
             $entityManager->flush();
-           // require_once __DIR__ . '/../../vendor/autoload.php';
+            // require_once __DIR__ . '/../../vendor/autoload.php';
 
 
 
 // Your Account SID and Auth Token from twilio.com/console
-          //  $account_sid = "ACfb8b46160b4d160d8ebe08b50d01e354";
-          //  $auth_token = "7f6f078694f2d844beb18fa803db0d66";
+            //  $account_sid = "ACfb8b46160b4d160d8ebe08b50d01e354";
+            //  $auth_token = "7f6f078694f2d844beb18fa803db0d66";
 // In production, these should be environment variables. E.g.:
 // $auth_token = $_ENV["TWILIO_ACCOUNT_SID"]
 
 // A Twilio number you own with Voice capabilities
-           // $twilio_number = "+17622246038";
+            // $twilio_number = "+17622246038";
 
 // Where to make a voice call (your cell phone?)
-         //   $to_number = "+21658494321";
+            //   $to_number = "+21658494321";
 
-           // $client = new Client($account_sid, $auth_token);
-           // $client->account->calls->create(
-             //   $to_number,
-               // $twilio_number,
-              //  array(
-                 //   "url" => "http://demo.twilio.com/docs/voice.xml"
-               // )
-         //   );
+            // $client = new Client($account_sid, $auth_token);
+            // $client->account->calls->create(
+            //   $to_number,
+            // $twilio_number,
+            //  array(
+            //   "url" => "http://demo.twilio.com/docs/voice.xml"
+            // )
+            //   );
 
             return $this->redirectToRoute('list_package');
 
@@ -120,6 +120,17 @@ class PackageController extends AbstractController
 
         if($form->isSubmitted()&& $form->isValid())
         {
+            //On récupere le pic transmise
+            $image=$form->get('image')->getData();
+            //on génère un nouveau nom de fichier
+            $fichier1=md5(uniqid()).'.'.$image->guessExtension();
+            //on copie le fichier dans le dossier uploads
+            $image->move(
+                $this->getParameter('images_directory'),
+                $fichier1
+            );
+            //on stocke l'image dans la base de données
+            $Package->setImage($fichier1);
 
             $entityManager = $this->getDoctrine()->getManager();
 

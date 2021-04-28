@@ -1,0 +1,65 @@
+
+{% extends 'Front_navbar_footer.html.twig' %}
+{% block body %}
+    {% block content %}
+
+        <!-- END site-search-->
+
+        <div
+                class="py-5 bg-cover"
+                data-dark-overlay="6"
+                style="background: url(assets/img/1920/658_2.jpg) no-repeat"
+        >
+            <div class="container">
+                <h2 class="text-white">Reclamation</h2>
+                <ol
+                        class="breadcrumb breadcrumb-double-angle text-white bg-transparent p-0"
+                >
+                    <li class="breadcrumb-item"><a href="#">Home</a></li>
+                    <li class="breadcrumb-item"><a href="#">Page</a></li>
+                    <li class="breadcrumb-item">Reclamation</li>
+                </ol>
+            </div>
+        </div>
+
+
+
+        <section class="padding-y-100 bg-light-v2">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12 text-center mb-5">
+                        <h2>Send Message</h2>
+                        {{ include('page/Reclamation/_form.html.twig') }}
+
+                    </div>
+                    <div
+                            class="width-4rem height-4 bg-primary my-2 mx-auto rounded"
+                    ></div>
+                </div>
+                <div class="col-12 text-center">
+
+                </div>
+            </div>
+            <!-- END row-->
+            </div>
+            <!-- END container-->
+        </section>
+
+        <div
+                class="google-map"
+                data-address="Harvard University"
+                data-zoom="14"
+                data-key="AIzaSyB0uuKeEkPfAo7EUINYPQs3bzXn7AabgJI"
+                style="height: 450px"
+        ></div>
+
+        <!-- END site-footer -->
+
+        <div class="scroll-top">
+            <i class="ti-angle-up"></i>
+        </div>
+
+
+
+    {% endblock content %}
+{% endblock body %}

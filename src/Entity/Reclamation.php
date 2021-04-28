@@ -3,12 +3,15 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use phpDocumentor\Reflection\Types\Integer;
+use Symfony\Component\Validator\Constraints as Assert;
+
 
 /**
  * Reclamation
  *
  * @ORM\Table(name="reclamation")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="App\Repository\ReclamationRepository")
  */
 class Reclamation
 {
@@ -25,15 +28,29 @@ class Reclamation
      * @var string
      *
      * @ORM\Column(name="objet", type="string", length=225, nullable=false)
+     *@Assert\NotBlank(message="objet is required")
+
      */
     private $objet;
+
+
+
+
+
 
     /**
      * @var string
      *
      * @ORM\Column(name="description", type="string", length=225, nullable=false)
+     *@Assert\NotBlank(message="Description is required")
+
      */
     private $description;
+
+    /**
+     * @ORM\Column(type="integer", nullable=true, options={"default" : 0})
+     */
+    private $status;
 
     public function getId(): ?int
     {
@@ -60,6 +77,18 @@ class Reclamation
     public function setDescription(string $description): self
     {
         $this->description = $description;
+
+        return $this;
+    }
+
+    public function getStatus(): ?int
+    {
+        return $this->status;
+    }
+
+    public function setStatus(?int $status): self
+    {
+        $this->status = $status;
 
         return $this;
     }

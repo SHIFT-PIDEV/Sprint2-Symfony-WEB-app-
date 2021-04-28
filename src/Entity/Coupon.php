@@ -3,12 +3,11 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+use App\Repository\CouponRepository;
 
 /**
- * Coupon
- *
- * @ORM\Table(name="coupon")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass=CouponRepository::class)
  */
 class Coupon
 {
@@ -25,20 +24,33 @@ class Coupon
      * @var string
      *
      * @ORM\Column(name="type", type="string", length=255, nullable=false)
+     * @Assert\NotBlank(
+     *     message = "Champ vide"
+     * )
      */
     private $type;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="validite", type="string", length=255, nullable=false)
+     * @ORM\Column(name="val", type="string", length=255, nullable=false)
+     * @Assert\NotBlank(
+     *     message = "Champ vide"
+     * )
      */
-    private $validite;
+    private $val;
 
     /**
      * @var int|null
      *
      * @ORM\Column(name="score", type="integer", nullable=true)
+     *  @Assert\NotBlank(
+     *     message = "Champ vide"
+     * )
+     *  @Assert\GreaterThanOrEqual(
+     *     value = 0,
+     *     message= "Le score est negative "
+     * )
      */
     private $score;
 
@@ -59,14 +71,14 @@ class Coupon
         return $this;
     }
 
-    public function getValidite(): ?string
+    public function getVal(): ?string
     {
-        return $this->validite;
+        return $this->val;
     }
 
-    public function setValidite(string $validite): self
+    public function setVal(string $val): self
     {
-        $this->validite = $validite;
+        $this->val = $val;
 
         return $this;
     }

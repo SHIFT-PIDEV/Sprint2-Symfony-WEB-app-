@@ -1,0 +1,196 @@
+
+{% extends 'Front_navbar_footer.html.twig' %}
+{% block body %}
+
+
+
+
+        <div
+                class="py-5 bg-cover"
+                data-dark-overlay="6"
+                style="background: url(assets/img/1920/658_2.jpg) no-repeat"
+        >
+            <div class="container">
+                <h2 class="text-white">Demande</h2>
+                <ol
+                        class="breadcrumb breadcrumb-double-angle text-white bg-transparent p-0"
+                >
+                    <li class="breadcrumb-item"><a href="#">Home</a></li>
+                    <li class="breadcrumb-item"><a href="#">Page</a></li>
+                    <li class="breadcrumb-item">Demande</li>
+                </ol>
+            </div>
+        </div>
+
+        <div class="py-5 shadow-v2 position-relative">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-4 col-md-6 mt-4">
+                        <div class="media">
+							<span class="iconbox iconbox-md bg-primary text-white"
+                            ><i class="ti-mobile"></i
+                                ></span>
+                            <div class="media-body ml-3">
+                                <h5 class="mb-0">1-800-643-4500</h5>
+                                <p>Call Us (8AM-10PM)</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4 col-md-6 mt-4">
+                        <div class="media">
+							<span class="iconbox iconbox-md bg-primary text-white"
+                            ><i class="ti-email"></i
+                                ></span>
+                            <div class="media-body ml-3">
+                                <a href="mailto:support@echotheme.com" class="h5"
+                                >support@echotheme.com</a
+                                >
+                                <p>Call Us (8AM-10PM)</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4 col-md-6 mt-4">
+                        <div class="media">
+							<span class="iconbox iconbox-md bg-primary text-white"
+                            ><i class="ti-location-pin"></i
+                                ></span>
+                            <div class="media-body ml-3">
+                                <h5 class="mb-0">New York Avenue, USA</h5>
+                                <p>Unit 25 Suite 3, 925 Prospect</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <section class="padding-y-100 bg-light-v2">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12 text-center mb-5">
+                        {% block content %}
+                        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+                        <script>
+                            $(document).ready(function(){
+                                $("#myInput").on("keyup", function() {
+                                    var value = $(this).val().toLowerCase();
+                                    $("#myTable").filter(function() {
+                                        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                                    });
+                                });
+                            });
+                        </script>
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title">LISTE DES Demande :</h3>
+                                <a href="{{ path('demandepdf') }}">  Pdf </a>
+
+                            </div>
+                            <hr class="card-body p-0">
+                                <form class="w-search">
+                                    <div class="sidebar-search">
+
+                                        <div class="input-group custom-search-form">
+
+                                            <input type="text" id="myInput" class="form-control pl-3" placeholder="Search here">
+                                        </div>
+                                        <!-- /input-group -->
+                                    </div>
+                                    <ul class="nav" id="side-menu">
+                                        <li>
+                                            <a href="#"><span class="fa arrow"></span></a>
+                                            <ul style="background-color: #0b0b0b" class="nav " id="entitiesNav">
+                                            </ul>
+                                        </li>
+                                    </ul>
+
+
+
+                                </form>
+                                <br>
+                                <br>
+                                <br>
+                                <table class="table">
+                                    <thead>
+                                    <tr>
+                                        <th>Id</th>
+                                        <th>Objet</th>
+                                        <th>Description</th>
+                                        <th>Cv</th>
+                                        <th>actions</th>
+
+                                    </tr>
+                                    </thead>
+                                    <tbody id="myTable">
+
+                                    {% for demande in demandes %}
+                                        <tr>
+                                            <td>{{ demande.id }}</td>
+                                            <td>{{ demande.objet }}</td>
+                                            <td>{{ demande.description }}</td>
+                                            <td>{{ demande.cv }}</td>
+
+                                            <td>
+                                                <a class="btn btn-block btn-success" href="{{ path('demande_editF',{'id': demande.id}) }}" > modifier</a>
+
+                                            </td>
+                                            <td>
+                                                {{ include('page/demande/_delete_form.html.twig') }}
+                                            </td>
+                                        </tr>
+
+
+
+                                    {% endfor %}
+
+                                    </tbody>
+                                </table>
+                            <br>
+                            <br>
+                            <br>
+
+                            </div>
+
+                        {# display navigation #}
+                        <div class="navigation">
+                            {{ knp_pagination_render(demandes) }}
+                        </div>
+
+                        </div>
+
+                        <!-- END site-search-->
+                    </div>
+                    <div
+                            class="width-4rem height-4 bg-primary my-2 mx-auto rounded"
+                    ></div>
+                </div>
+                <div class="col-12 text-center">
+
+                </div>
+            </div>
+
+            <!-- END row-->
+            </div>
+            <!-- END container-->
+        </section>
+
+        <div
+                class="google-map"
+                data-address="Harvard University"
+                data-zoom="14"
+                data-key="AIzaSyB0uuKeEkPfAo7EUINYPQs3bzXn7AabgJI"
+                style="height: 450px"
+        ></div>
+
+        <!-- END site-footer -->
+
+        <div class="scroll-top">
+            <i class="ti-angle-up"></i>
+        </div>
+        <script src="assets/js/vendors.bundle.js"></script>
+        <script src="assets/js/app.min.js"></script>
+
+    {% endblock content %}
+{% endblock body %}

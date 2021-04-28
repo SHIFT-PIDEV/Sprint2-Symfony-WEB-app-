@@ -1,0 +1,13 @@
+{% extends 'DashbordBack.html.twig' %}
+
+{% block title %}Edit Demande{% endblock %}
+
+{% block body %}
+    <h1>Edit Demande</h1>
+
+    {{ include('demande/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('list_demande') }}">back to list</a>
+
+    {{ include('demande/_delete_form.html.twig') }}
+{% endblock %}

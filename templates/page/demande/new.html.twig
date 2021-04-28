@@ -1,0 +1,51 @@
+
+{% extends 'Front_navbar_footer.html.twig' %}
+{% block body %}
+    {% block content %}
+
+        <!-- END site-search-->
+
+
+
+
+
+        <section class="padding-y-100 bg-light-v2">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12 text-center mb-5">
+                        <h2>Send Message</h2>
+                        {{ include('page/demande/_form.html.twig') }}
+
+                    </div>
+                        <div
+                                class="width-4rem height-4 bg-primary my-2 mx-auto rounded"
+                        ></div>
+                    </div>
+                    <div class="col-12 text-center">
+
+                    </div>
+                </div>
+                <!-- END row-->
+            </div>
+            <!-- END container-->
+        </section>
+
+        <div
+                class="google-map"
+                data-address="Harvard University"
+                data-zoom="14"
+                data-key="AIzaSyB0uuKeEkPfAo7EUINYPQs3bzXn7AabgJI"
+                style="height: 450px"
+        ></div>
+
+        <!-- END site-footer -->
+
+        <div class="scroll-top">
+            <i class="ti-angle-up"></i>
+        </div>
+
+        <script src="assets/js/vendors.bundle.js"></script>
+        <script src="assets/js/app.min.js"></script>
+
+    {% endblock content %}
+{% endblock body %}

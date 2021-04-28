@@ -1,0 +1,37 @@
+<style>
+    img {
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        padding: 5px;
+        width: 150px;
+    }
+
+</style>
+{% block body %}
+
+<table>
+    <thead>
+    <tr>
+        <th>Id</th>
+        <th>Objet</th>
+
+        <th>Description</th>
+
+    </tr>
+    </thead>
+    <tbody>
+    {% for reclamation in reclamations %}
+            <tr>
+                <td>{{ reclamation.id }}</td>
+                <td>{{ reclamation.objet }}</td>
+                <td>{{ reclamation.description }}</td>
+
+
+
+
+            </tr>
+
+    {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

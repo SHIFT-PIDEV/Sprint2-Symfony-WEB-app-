@@ -31,25 +31,20 @@ class ClientController extends AbstractController
 
         if($login=="admin" && $mdp=="admin")
         {
-            return $this->render('DashbordBack.html.twig');
+            return $this->render('DashbordBack.html.twig',[]);
         }
         else if($client == null)
         {
             return $this->render('signup.html.twig');
         }
         else{
-            $examen = $this->getDoctrine()->getRepository(Examen::class)->findAll();
-            $pagination = $paginator->paginate(
-                $examen,
-                $request->query->getInt('page', 1), /*page number*/
-                3 /*limit per page*/
-            );
-            return $this->render('examen/FrontExamen_list.html.twig',[
-                "examen" =>$pagination,
+
+            return $this->render('Front_Body.html.twig',[
+                "client" =>$client,
             ]);
         }
 
-        return $this->render('Front_navbar_footer.html.twig');
+
 
 
 

@@ -3,7 +3,20 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+
     <title>UPGADI.TN</title>
+
+    <link
+
+            rel="icon"
+            type="image/x-icon"
+            href="{{ asset('frontoffice/assets/img/upgardi2.ico') }}"
+    />
+    <link rel="shortcut icon" href="{{ asset('frontoffice/assets/img/upgradi2.ico') }}" />
+    <link
+            rel="apple-touch-icon-precomposed"
+            href="{{ asset('frontoffice/assets/img/favicon/upgradi3.png') }}"
+    />
 
     {% block css %}
         <!-- Google Font: Source Sans Pro -->
@@ -371,6 +384,68 @@
 
                         </ul>
                     </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">
+                            <i class='fas fa-id-card'></i>
+                            <p>
+                                Coupons et Avis
+                                <i class="fas fa-angle-left right"></i>
+
+                            </p>
+                        </a>
+                        <ul class="nav nav-treeview">
+
+                            <li class="nav-item">
+
+                                <p style="color: #00a8c6">Gestion des Coupons </p>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ path('add_coupon') }}" class="nav-link">
+                                    <i class='fas fa-pencil-alt'></i>
+                                    <p>Nouveau Coupon </p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ path('list_coupon') }}" class="nav-link">
+                                    <i class='far fa-file-alt'></i>
+                                    <p>Liste des Coupons</p>
+                                </a>
+                            </li>
+
+
+                        </ul>
+
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">
+                            <i class='fas fa-id-card'></i>
+                            <p>
+                                Reclamtions et Demandes
+                                <i class="fas fa-angle-left right"></i>
+
+                            </p>
+                        </a>
+                        <ul class="nav nav-treeview">
+
+
+                            <li class="nav-item">
+                                <a href="{{ path('list_reclamation') }}" class="nav-link">
+                                    <i class='fas fa-pencil-alt'></i>
+                                    <p>Listes des Reclamtions  </p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ path('list_demande') }}" class="nav-link">
+                                    <i class='far fa-file-alt'></i>
+                                    <p>Liste des Demandes </p>
+                                </a>
+                            </li>
+
+
+                        </ul>
+
+                    </li>
+
 
                     <li class="nav-item">
                         <a href="#" class="nav-link">
