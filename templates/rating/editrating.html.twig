@@ -1,0 +1,34 @@
+{% extends 'dashboard.html.twig' %}
+{% block content %}
+
+    {{ form_start(form,{'attr': {'novalidate': 'novalidate'}} ) }}
+    <div class="container">
+        <div class="form-group">
+
+
+            {{ form_label(form.commentaire,"Commentaire:") }}
+
+            {{ form_widget(form.commentaire, {attr: {class:'form-control','id':'commentaire'}}) }}
+            <div style="color: red;">
+                {{ form_errors(form.commentaire)}}
+            </div>
+        </div>
+        <div class="form-group" >
+
+
+            {{ form_label(form.rate,"Rate:" ) }}
+
+            {{ form_widget(form.rate,{attr: {class:'form-control','id':'rate'}}) }}
+            <div style="color: #ff0000;">
+                {{ form_errors(form.rate)}}
+            </div>
+
+        </div>
+
+
+    </div>
+    <div class="card-footer">
+        <button  type="submit" href="{{ path('add_rating') }}" class="btn btn-primary">Modifier votre avis</button>
+    </div>
+    {{ form_end(form) }}
+{% endblock  %}

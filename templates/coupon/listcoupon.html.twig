@@ -1,0 +1,88 @@
+{% extends 'dashboard.html.twig' %}
+
+{% block title %}{% endblock %}
+
+{% block content %}
+
+    {% for message in app.flashes('success') %}
+        <div class="alert alert-success">
+            {{ message }}
+
+        </div>
+
+    {% endfor %}
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">Liste des coupons:</h3>
+        </div>
+        <div class="card-body p-0">
+            <form class="w-search">
+                <div class="sidebar-search">
+
+                    <div class="input-group custom-search-form">
+
+
+                        <input type="text" id="search" class="form-control" placeholder="Search">
+                    </div>
+                    <!-- /input-group -->
+                </div>
+                <ul class="nav" id="side-menu">
+                    <li>
+                        <a href="#"><span class="fa arrow"></span></a>
+                        <ul style="background-color: #0b0b0b" class="nav " id="entitiesNav">
+                        </ul>
+                    </li>
+                </ul>
+
+
+
+            </form>
+            <br>
+            <br>
+            <br>
+
+            <table id="t" class="table table-striped">
+                <thead>
+                <tr>
+                    <th style="width: 10px">#</th>
+                    <th>Type</th>
+                    <th>Validite</th>
+                    <th>Scopre</th>
+                    <th>Action</th>
+
+                </tr>
+                </thead>
+                <tbody id="all">
+                {% for i in val %}
+                    <tr>
+                        <td>{{ i.idc }}</td>
+                        <td>{{ i.type }}</td>
+                        <td>{{ i.val }}</td>
+                        <td>{{ i.score }}</td>
+
+                        <td>
+                            <a class="btn btn-block btn-success" href=" {{ path('edit_coupon',{'id':i.idc}) }} " > modifier</a>
+                        </td>
+                        <td>
+                            <a class="btn btn-block btn-danger"  href="{{ path('delete_coupon',{'id':i.idc}) }} " onclick="confirm('Etes-vous sûr de supprimer cet element?');" >supprimer </a>
+                        </td>
+
+                        </td>
+                    </tr>
+
+
+                {% endfor %}
+                </tbody>
+<tbody id="search">
+</tbody>
+
+            </table>
+        </div>
+
+
+
+    </div>
+    </script>
+
+
+{% endblock content %}

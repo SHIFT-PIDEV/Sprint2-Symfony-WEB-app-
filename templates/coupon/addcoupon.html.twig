@@ -1,0 +1,50 @@
+{% extends 'dashboard.html.twig' %}
+{% block content %}
+
+    {{ form_start(form,{'attr': {'novalidate': 'novalidate'}} ) }}
+    <div class="container">
+        <div class="form-group">
+
+
+            {{ form_label(form.type,"Type:") }}
+
+            {{ form_widget(form.type, {attr: {class:'form-control','id':'type'}}) }}
+            <div style="color: red;">
+                {{ form_errors(form.type)}}
+            </div>
+        </div>
+        <div class="form-group" >
+
+
+            {{ form_label(form.val,"Validite:" ) }}
+
+            {{ form_widget(form.val,{attr: {class:'form-control','id':'val'}}) }}
+            <div style="color: #ff0000;">
+                {{ form_errors(form.val)}}
+            </div>
+
+        </div>
+        <div class="form-group" >
+
+
+            {{ form_label(form.score,"Score:" ) }}
+
+            {{ form_widget(form.score,{attr: {class:'form-control','id':'score'}}) }}
+            <div style="color: #ff0000;">
+                {{ form_errors(form.score)}}
+            </div>
+
+        </div>
+
+
+    </div>
+
+    <div class="card-footer">
+        <button  type="submit" href="{{ path('add_coupon') }}" class="btn btn-primary">Ajouter Coupon</button>
+
+    </div>
+
+    {{ form_end(form) }}
+
+
+{% endblock  %}

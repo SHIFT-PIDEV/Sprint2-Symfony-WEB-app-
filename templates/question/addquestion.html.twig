@@ -1,0 +1,29 @@
+{% extends 'dashboard.html.twig' %}
+{% block content %}
+
+    {{ form_start(form,{attr:{'id':'form_chauffeur'}}) }}
+    <div class="container">
+        <div class="form-group">
+            {{ form_label(form.question,"Question:") }}
+
+            {{ form_widget(form.question, {attr: {class:'form-control','id':'question'}}) }}
+        </div>
+        <div class="form-group">
+            {{ form_label(form.reponsec,"Reponse Correct:" ) }}
+
+            {{ form_widget(form.reponsec,{attr: {class:'form-control','id':'reponsec'}}) }}
+        </div>
+
+    </div>
+    <div class="card-footer">
+        <button  type="submit" href="{{ path('add_question') }}" class="btn btn-primary">Ajouter Question</button>
+    </div>
+
+
+
+
+    {{ form_end(form) }}
+
+
+
+{% endblock  %}

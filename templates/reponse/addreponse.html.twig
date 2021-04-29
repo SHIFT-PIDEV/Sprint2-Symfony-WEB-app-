@@ -1,0 +1,29 @@
+{% extends 'dashboard.html.twig' %}
+{% block content %}
+
+    {{ form_start(form,{attr:{'id':'form_reponse'}}) }}
+    <div class="container">
+        <div class="form-group">
+            {{ form_label(form.reponse,"Reponse:") }}
+
+            {{ form_widget(form.reponse, {attr: {class:'form-control','id':'reponse'}}) }}
+        </div>
+        <div class="form-group">
+            {{ form_label(form.reponsec,"Reponse Correct:" ) }}
+
+            {{ form_widget(form.reponsec,{attr: {class:'form-control','id':'reponsec'}}) }}
+        </div>
+
+    </div>
+    <div class="card-footer">
+        <button  type="submit" href="{{ path('add_reponse') }}" class="btn btn-primary">Submit</button>
+    </div>
+
+
+
+
+    {{ form_end(form) }}
+
+
+
+{% endblock  %}
