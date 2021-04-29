@@ -205,6 +205,7 @@
 
 
                                     <!-- END row-->
+
                                     <ul
                                             class="list-inline d-inline-block py-3 px-4 shadow-v3 bg-white rounded-pill"
                                     >
@@ -324,8 +325,87 @@
                             <a href="#" class="btn btn-primary marginTop-40">Buy Ticket</a>
                         </div>
                     </div>
+                    <br><br>
+                    <div class="card shadow-v1">
+                        <div class="card-body">
+                            <h4 class="mb-2">Donner votre avis</h4>
+                    {% block rating %}
+
+                        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
 
 
+                        Voter Commentaire :<input  class="form-control pl-3 "  type="text" id="com" name="com">
+                        <br>
+                        <div align="center">
+                            <ul po style="background:#9C9E9E;"  class="list-inline d-inline-block py-3 px-4 shadow-v3 ">
+                                <i  class="fa fa-star fa-2x" data-index="0"></i>
+                                <i class="fa fa-star fa-2x" data-index="1"></i>
+                                <i class="fa fa-star fa-2x" data-index="2"></i>
+                                <i class="fa fa-star fa-2x" data-index="3"></i>
+                                <i class="fa fa-star fa-2x" data-index="4"></i>
+                            </ul>
+                        </div>
+
+
+
+                        <?php echo round($avg,2) ?>
+
+
+
+
+                        <script src="http://code.jquery.com/jquery-3.4.0.min.js" integrity="sha256-BJeo0qm959uMBGb65z40ejJYGSgR7REI4+CW1fNKwOg=" crossorigin="anonymous"></script>
+                        <script>
+                            var ratedIndex = -1, uID = 0;
+
+                            $(document).ready(function () {
+                                resetStarColors();
+
+                                $('.fa-star').on('click', function () {
+                                    ratedIndex = parseInt($(this).data('index'));
+                                    localStorage.setItem('ratedIndex', ratedIndex);
+                                    console.log(ratedIndex);
+
+                                    saveToTheDB();
+                                });
+
+                                $('.fa-star').mouseover(function () {
+                                    resetStarColors();
+                                    var currentIndex = parseInt($(this).data('index'));
+                                    setStars(currentIndex);
+                                });
+
+                                $('.fa-star').mouseleave(function () {
+                                    resetStarColors();
+
+                                    if (ratedIndex != -1)
+                                        setStars(ratedIndex);
+                                });
+                            });
+                            function setStars(max) {
+                                for (var i=0; i <= max; i++)
+                                    $('.fa-star:eq('+i+')').css('color', 'yellow');
+                            }
+
+                            function resetStarColors() {
+                                $('.fa-star').css('color', 'white');
+                            }
+                            function saveToTheDB() {
+                                var com = $('#com').val();
+                                $.ajax({
+                                    url: "{{ path('add_rating') }}",
+                                    method: "POST",
+                                    data: {
+                                        'ratedIndex': ratedIndex,
+                                        'com' : com,
+                                        'idexam' : {{ inscripexam.idexam.id }},
+                                        'idclient' :{{ inscripexam.idclient.id }}
+
+                                    }
+                                });
+                            }
+                        </script>
+                    {% endblock %}
+                        </div></div>
                 </div>
             </div>
             <!-- END row-->
