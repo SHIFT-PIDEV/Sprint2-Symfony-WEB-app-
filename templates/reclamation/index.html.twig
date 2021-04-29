@@ -70,9 +70,8 @@
                         <td> Non Traite</td>
 {% endif %}
 
-
                         <td>
-                            <a class="btn btn-block btn-success" href="{{ path('reclamation_edit',{'id': reclamation.id}) }}" > modifier</a>
+                            <a class="btn btn-block btn-success" href="{{ path('traiter_edit',{'id': reclamation.id}) }}" > traiter</a>
                         </td>
                         <td>
                             {{ include('reclamation/_delete_form.html.twig') }}

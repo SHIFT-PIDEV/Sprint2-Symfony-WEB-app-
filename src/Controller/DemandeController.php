@@ -31,7 +31,23 @@ class DemandeController extends AbstractController
 
         $this->entityManager = $entityManager;
     }
+    private function getData(): array
+    {
+        /**
+         * @var $Demande demande[]
+         */
+        $list = [];
+        $users = $this->entityManager->getRepository(Demande::class)->findAll();
 
+        foreach ($users as $user) {
+            $list[] = [
+                $user->getId(),
+                $user->getObjet(),
+                $user->getDescription()
+            ];
+        }
+        return $list;
+    }
     /**
      * @Route("/new", name="demande_new", methods={"GET","POST"})
      */
@@ -193,49 +209,7 @@ class DemandeController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/{id}/edit", name="demande_edit", methods={"GET","POST"})
-     */
-    public function edit(Request $request, Demande $demande,  \Swift_Mailer $mailer): Response
-    {
-        $form = $this->createForm(DemandeType::class, $demande);
-        $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $cv = $form->get('cv')->getData();
-            //on génère un nouveau nom de fichier
-            $fichier1 = md5(uniqid()) . '.' . $cv->guessExtension();
-            //on copie le fichier dans le dossier uploads
-            $cv->move(
-                $this->getParameter('images_directory'),
-                $fichier1
-            );
-            //on stocke l'image dans la base de données
-            $demande->setCv($fichier1);
-            $this->getDoctrine()->getManager()->flush();
-            $message = (new \Swift_Message('Hello Email'))
-                ->setFrom('send@example.com')
-                ->setTo("hajouwa1998@gmail.com")
-                ->setBody(
-                    $this->renderView(
-                    // templates/emails/registration.html.twig
-                        'emails/try.html.twig'
-
-                    )
-                    ,
-                    'text/html'
-                );
-
-            $mailer->send($message);
-
-            return $this->redirectToRoute('list_demande');
-        }
-
-        return $this->render('demande/edit.html.twig', [
-            'demande' => $demande,
-            'form' => $form->createView(),
-        ]);
-    }
 
     /**
      * @Route("/{id}/editF", name="demande_editF", methods={"GET","POST"})
@@ -285,7 +259,7 @@ class DemandeController extends AbstractController
     /**
      * @Route("/{id}/traiterd", name="traiter_editd", methods={"GET","POST"})
      */
-    public function traiter_edit(Request $request, Demande $demande, PaginatorInterface $paginator): Response
+    public function traiter_edit(Request $request, Demande $demande, PaginatorInterface $paginator, \Swift_Mailer $mailer): Response
     {
 
         $entityManager = $this->getDoctrine()->getManager();
@@ -297,10 +271,21 @@ class DemandeController extends AbstractController
             ->findAll();
         $pagination = $paginator->paginate(
             $demandes,
-            $request->query->getInt('page', 1), 5
+            $request->query->getInt('page', 1), 5);
+        $message = (new \Swift_Message('Hello Email'))
+            ->setFrom('send@example.com')
+            ->setTo("hajouwa1998@gmail.com")
+            ->setBody(
+                $this->renderView(
+                // templates/emails/registration.html.twig
+                    'emails/try2.html.twig'
 
+                )
+                ,
+                'text/html'
+            );
 
-        );
+        $mailer->send($message);
         return $this->render('demande/index.html.twig', [
             'demandes' => $pagination,
         ]);
@@ -326,8 +311,8 @@ class DemandeController extends AbstractController
     {
         $repository = $this->getDoctrine()->getRepository(Demande::class);
         $requestString = $request->get('searchValue');
-        $cart = $repository->findDemandeByName($requestString);
-        $jsonContent = $Normalizer->normalize($cart, 'json', ['groups' => 'demande:read']);
+        $demande = $repository->findDemandeByName($requestString);
+        $jsonContent = $Normalizer->normalize($demande, 'json', ['Groups' => 'demande:read']);
         $retour = json_encode($jsonContent);
         return new Response($retour);
 

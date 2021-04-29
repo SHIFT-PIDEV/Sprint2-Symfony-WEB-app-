@@ -66,9 +66,7 @@
                             {% if demande.status==1 %}
                                 <td>{{ " Traite" }}</td>
                             {% endif %}
-                            <td>
-                                <a class="btn btn-block btn-success" href="{{ path('demande_edit',{'id': demande.id}) }}" > modifier</a>
-                            </td>
+
                             <td>
                                 {{ include('demande/_delete_form.html.twig') }}
                             </td>

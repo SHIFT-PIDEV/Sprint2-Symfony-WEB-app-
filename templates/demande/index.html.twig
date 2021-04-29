@@ -24,77 +24,77 @@
             <a href="{{ path('export') }}">  excel </a>
         </div>
 
-        </div>
-        <div class="card-body p-0">
-            <form class="w-search">
-                <div class="sidebar-search">
+    </div>
+    <div class="card-body p-0">
+        <form class="w-search">
+            <div class="sidebar-search">
 
-                    <div class="input-group custom-search-form">
+                <div class="input-group custom-search-form">
 
-                        <input type="text" id="myInput" class="form-control pl-3" placeholder="Search here">
-                    </div>
-                    <!-- /input-group -->
+                    <input type="text" id="myInput" class="form-control pl-3" placeholder="Search here">
                 </div>
-                <ul class="nav" id="side-menu">
-                    <li>
-                        <a href="#"><span class="fa arrow"></span></a>
-                        <ul style="background-color: #0b0b0b" class="nav " id="entitiesNav">
-                        </ul>
-                    </li>
-                </ul>
+                <!-- /input-group -->
+            </div>
+            <ul class="nav" id="side-menu">
+                <li>
+                    <a href="#"><span class="fa arrow"></span></a>
+                    <ul style="background-color: #0b0b0b" class="nav " id="entitiesNav">
+                    </ul>
+                </li>
+            </ul>
 
 
 
-            </form>
-            <br>
-            <br>
-            <br>
-            <table class="table">
-                <thead>
-                <tr>
-                    <th>Id</th>
-                    <th>Objet</th>
-                    <th>Description</th>
-                    <th>Cv</th>
-                    <th>Status</th>
-                    <th>actions</th>
+        </form>
+        <br>
+        <br>
+        <br>
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Id</th>
+                <th>Objet</th>
+                <th>Description</th>
+                <th>Cv</th>
+                <th>Status</th>
+                <th>actions</th>
 
-                </tr>
-                </thead>
-                <tbody id="myTable">
-                {% for demande in demandes %}
-                    {% if demande.status==0 %}
-                        <tr>
-                            <td>{{ demande.id }}</td>
-                            <td>{{ demande.objet }}</td>
-                            <td>{{ demande.description }}</td>
-                            <td>{{ demande.cv }}</td>
-                            {% if demande.status==0 %}
-                                <td>{{ " Non Traite" }}</td>
-                            {% endif %}
-                            <td>
-                                <a class="btn btn-block btn-success" href="{{ path('traiter_editd',{'id': demande.id}) }}" > traiter</a>
-                            </td>
-                            <td>
-                                <a class="btn btn-block btn-success" href="{{ path('demande_editF',{'id': demande.id}) }}" > modifier</a>
-                            </td>
-                            <td>
-                                {{ include('demande/_delete_form.html.twig') }}
-                            </td>
-                        </tr>
+            </tr>
+            </thead>
+            <tbody id="myTable">
+            {% for demande in demandes %}
+                {% if demande.status==0 %}
+                    <tr>
+                        <td>{{ demande.id }}</td>
+                        <td>{{ demande.objet }}</td>
+                        <td>{{ demande.description }}</td>
+                        <td>{{ demande.cv }}</td>
+                        {% if demande.status==0 %}
+                            <td>{{ " Non Traite" }}</td>
+                        {% endif %}
+                        <td>
+                            <a class="btn btn-block btn-success" href="{{ path('traiter_editd',{'id': demande.id}) }}" > traiter</a>
+                        </td>
+
+                        <td>
+                            {{ include('demande/_delete_form.html.twig') }}
+                        </td>
+                    </tr>
 
 
-                    {% endif %}
-                {% endfor %}
+                {% endif %}
+            {% endfor %}
 
-                </tbody>
-            </table>
-        </div>
+            </tbody>
+        </table>
+    </div>
 
 
-        {# display navigation #}
-        <div class="navigation">
-            {{ knp_pagination_render(demandes) }}
-        </div>
+    {# display navigation #}
+    <div class="navigation">
+        {{ knp_pagination_render(demandes) }}
+    </div>
     </div>
 {% endblock content %}
+
+

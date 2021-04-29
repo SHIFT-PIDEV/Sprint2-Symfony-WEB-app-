@@ -43,7 +43,6 @@ class Demande
      * @var string
      *
      * @ORM\Column(name="cv", type="string", length=225, nullable=false)
-     * @Assert\File(mimeTypes={ "application/pdf" })
      */
     private $cv;
 

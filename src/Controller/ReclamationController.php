@@ -16,6 +16,8 @@ use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Symfony\Component\Routing\Annotation\Route;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
+use Symfony\Component\Serializer\SerializerInterface;
 
 /**
  * @Route("/reclamation")
@@ -28,6 +30,19 @@ class ReclamationController extends AbstractController
     {
 
         $this->entityManager = $entityManager;
+    }
+    /**
+     *@Route("/searchajax", name="ajaxsearch")
+     */
+    public function search(Request $request,NormalizerInterface $Normalizer)
+    {
+        $repository = $this->getDoctrine()->getRepository(Reclamation::class);
+        $requestString = $request->get('searchValue');
+        $reclamation = $repository->findDemandeByName($requestString);
+        $jsonContent = $Normalizer->normalize($reclamation, 'json', ['Groups' => 'reclamation:read']);
+        $retour = json_encode($jsonContent);
+        return new Response($retour);
+
     }
 
     /**
@@ -145,7 +160,7 @@ class ReclamationController extends AbstractController
                 ->setBody(
                     $this->renderView(
                     // templates/emails/registration.html.twig
-                        'emails/try.html.twig'
+                        'emails/try0.html.twig'
 
                     )
                     ,
@@ -169,39 +184,6 @@ class ReclamationController extends AbstractController
     {
         return $this->render('reclamation/show.html.twig', [
             'reclamation' => $reclamation,
-        ]);
-    }
-
-    /**
-     * @Route("/{id}/edit", name="reclamation_edit", methods={"GET","POST"})
-     */
-    public function edit(Request $request, Reclamation $reclamation, \Swift_Mailer $mailer): Response
-    {
-        $form = $this->createForm(ReclamationType::class, $reclamation);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
-            $message = (new \Swift_Message('Hello Email'))
-                ->setFrom('send@example.com')
-                ->setTo("hajouwa1998@gmail.com")
-                ->setBody(
-                    $this->renderView(
-                    // templates/emails/registration.html.twig
-                        'emails/try.html.twig'
-
-                    )
-                    ,
-                    'text/html'
-                );
-
-            $mailer->send($message);
-            return $this->redirectToRoute('list_reclamation');
-        }
-
-        return $this->render('reclamation/edit.html.twig', [
-            'reclamation' => $reclamation,
-            'form' => $form->createView(),
         ]);
     }
 
@@ -254,10 +236,10 @@ class ReclamationController extends AbstractController
     private function getData(): array
     {
         /**
-         * @var $Demande demande[]
+         * @var Reclamation reclamation[]
          */
         $list = [];
-        $users = $this->entityManager->getRepository(Demande::class)->findAll();
+        $users = $this->entityManager->getRepository(Reclamation::class)->findAll();
 
         foreach ($users as $user) {
             $list[] = [
@@ -271,7 +253,7 @@ class ReclamationController extends AbstractController
     /**
      * @Route("/{id}/traiter", name="traiter_edit", methods={"GET","POST"})
      */
-    public function traiter_edit(Request $request, Reclamation $reclamation,  PaginatorInterface $paginator): Response
+    public function traiter_edit(Request $request, Reclamation $reclamation,  PaginatorInterface $paginator, \Swift_Mailer $mailer): Response
     {
 
         $entityManager = $this->getDoctrine()->getManager();
@@ -283,10 +265,21 @@ class ReclamationController extends AbstractController
             ->findAll();
         $pagination = $paginator->paginate(
             $reclamations,
-            $request->query->getInt('page', 1), 7
+            $request->query->getInt('page', 1), 7);
+        $message = (new \Swift_Message('Hello Email'))
+            ->setFrom('send@example.com')
+            ->setTo("hajouwa1998@gmail.com")
+            ->setBody(
+                $this->renderView(
+                // templates/emails/registration.html.twig
+                    'emails/try1.html.twig'
 
+                )
+                ,
+                'text/html'
+            );
 
-        );
+        $mailer->send($message);
         return $this->render('reclamation/index.html.twig', [
             'reclamations' => $pagination,
         ]);
