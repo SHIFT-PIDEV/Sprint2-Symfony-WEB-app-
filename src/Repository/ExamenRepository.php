@@ -59,4 +59,5 @@ class ExamenRepository extends ServiceEntityRepository
 
             )->setParameter('str', '%'.$str.'%')->getResult();
     }
+
 }

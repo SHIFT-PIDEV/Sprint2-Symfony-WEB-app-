@@ -31,7 +31,33 @@ class MobileExamController extends AbstractController
         $formatted = $serializer->normalize($examen);
         return new JsonResponse($formatted);
     }
+    /**
+     * @Route("/mobile/rechexam", name="mobile_Rech_exam")
+     */
+    public function searchAction(Request $request)
+    {
+        $em=$this->getDoctrine()->getManager();
+        $requestString = $request->get('titre');
 
+       $examen = $em->getRepository(Examen::class)->findEntitiesByString($requestString);
+        if(!$examen)
+        {
+            $result['examen']['error']="examen introuvable :( ";
+
+        }else{
+            $result['examen']=$this->getRealEntities($examen);
+        }
+
+        return new JsonResponse($result);
+
+
+    }
+    public function getRealEntities($examen){
+        foreach ($examen    as $examen){
+            $realEntities[$examen->getId()] = [$examen->getTitre(), $examen->getNiveau(), $examen->getPrix()];
+        }
+        return $realEntities;
+    }
     /////////////////////////////////////EndBlock webservice des examens ///////////////////
 
 
@@ -76,7 +102,7 @@ class MobileExamController extends AbstractController
     }
 
     /**
-     * @Route("/mobile/mesexamens", name="list_mes_exam")
+     * @Route("/mobile/mesexamens", name="list_mes_examMobile")
      */
     public function mesExamens(Request $request)
     {   $entityManager = $this->getDoctrine()->getManager();
