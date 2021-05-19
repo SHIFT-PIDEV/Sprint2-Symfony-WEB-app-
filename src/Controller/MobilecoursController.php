@@ -27,6 +27,18 @@ class MobilecoursController extends AbstractController
         return new JsonResponse($formatted);
     }
     /**
+     * @Route("/mobile/coursTrier", name="mobile_coursTrier")
+     */
+    public function listcoursTrier(SerializerInterface $serializer)
+    {
+        $cour = $this->getDoctrine()->getRepository(Cour::class)->findBy(array(),array("prix"=>"ASC"));
+
+
+        $serializer = new Serializer([new ObjectNormalizer()]);
+        $formatted = $serializer->normalize($cour);
+        return new JsonResponse($formatted);
+    }
+    /**
      * @Route("/mobile/package", name="mobile_package")
      */
     public function listpackage(SerializerInterface $serializer)

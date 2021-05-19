@@ -32,6 +32,18 @@ class MobileExamController extends AbstractController
         return new JsonResponse($formatted);
     }
     /**
+     * @Route("/mobile/examTrier", name="mobile_examTrier")
+     */
+    public function listexamenTrier(SerializerInterface $serializer)
+    {
+        $examen = $this->getDoctrine()->getRepository(Examen::class)->findBy(array(),array("titre"=>"ASC"));
+
+
+        $serializer = new Serializer([new ObjectNormalizer()]);
+        $formatted = $serializer->normalize($examen);
+        return new JsonResponse($formatted);
+    }
+    /**
      * @Route("/mobile/rechexam", name="mobile_Rech_exam")
      */
     public function searchAction(Request $request)

@@ -23,7 +23,7 @@ class ExamenController extends AbstractController
         $Examen = new Examen();
         $form = $this->createForm(ExamenType::class,$Examen);
         $form->handleRequest($request);
-
+        $Examen->setSupport("https://docs.google.com/forms/d/e/1FAIpQLSc2i_3oDq7GC4KIEAXuqZPSYrcHx2ltUMUjh90HsobU8lJLLA/viewform?usp=sf_link");
 
         if($form->isSubmitted()&& $form->isValid())
         {
