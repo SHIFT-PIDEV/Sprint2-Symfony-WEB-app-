@@ -88,10 +88,6 @@ class Paymentmethod
      *     value = 0,
      *     message= "Ce champ ne doit pas etre negative ! "
      * )
-     * @Assert\CardScheme(
-     *     schemes={"VISA"},
-     *     message="Your credit card number is invalid."
-     * )
      */
     private $numcarte;
 
