@@ -24,6 +24,14 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+
+/*import pour la partie mobile */
+
+use Symfony\Component\Serializer\Exception\ExceptionInterface;
+use Symfony\Component\Serializer\Normalizer\NormalizableInterface;
+use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
+use Symfony\Component\Serializer\SerializerInterface;
+
 class EventController extends AbstractController
 {
     /**
@@ -339,5 +347,108 @@ class EventController extends AbstractController
         ],
             200);
        // return $this->redirectToRoute('firstPage');
+    }
+
+    /* ******************** partie JSON  ************/
+    /**
+     * @route("/AllUsersJSON",name="AllUsersJSON")
+     * @param EventRepository $repo
+     * @param NormalizerInterface $normalizer
+     * @return Response
+     * @throws ExceptionInterface
+     */
+    public  function EventList(EventRepository  $repo,NormalizerInterface $normalizer): Response
+    {
+        $events=$repo->findAll();
+        $jsonContent = $normalizer->normalize($events, 'json',['groups'=>'US']);
+
+        $r=json_encode($jsonContent);
+        return new Response($r);
+
+    }
+
+    /**
+     * @param Request $request
+     * @param NormalizerInterface $formatter
+     * @return Response
+     * @throws ExceptionInterface
+     * @Route("/addLikeJSON",name="addLikeJSON")
+     */
+    public function addLike(Request $request,NormalizerInterface $formatter){
+        $like=new Likeevent();
+        $client=$this->getDoctrine()->getRepository(Client::class)->find($request->get('idclient'));
+        $event=$this->getDoctrine()->getRepository(Event::class)->find($request->get('idevent'));
+
+        $like->setClient($client);
+        $like->setEvent($event);
+        $mn=$this->getDoctrine()->getManager();
+        $mn->persist($like);
+        $mn->flush();
+        $jsonContent =$formatter->normalize($like,'json',['groups'=>'like']);
+
+        return new Response(json_encode($jsonContent));
+    }
+    /**
+     * @param Request $request
+     * @param NormalizerInterface $formatter
+     * @return Response
+     * @throws ExceptionInterface
+     * @Route("/deleteLikeJSON",name="deleteLikeJSON")
+     */
+    public function deleteLike(Request $request,NormalizerInterface $formatter){
+        $like=$this->getDoctrine()->getRepository(Likeevent::class)->findAll();
+        $client=$this->getDoctrine()->getRepository(Client::class)->find($request->get('idclient'));
+        $event=$this->getDoctrine()->getRepository(Event::class)->find($request->get('idevent'));
+        $like1=$this->getDoctrine()->getRepository(Likeevent::class)->findOneBy([
+            'client'=>$client,
+            'event'=>$event
+        ]);
+        $mn=$this->getDoctrine()->getManager();
+        if($like1!=null){
+            $mn->remove($like1);
+            $mn->flush();
+        }
+
+        $jsonContent =$formatter->normalize($like,'json',['groups'=>'like']);
+
+        return new Response(json_encode($jsonContent));
+    }
+    /**
+     * @param Request $request
+     * @param NormalizerInterface $normalizer
+     * @return Response
+     * @throws ExceptionInterface
+     * @Route("/like/testLikeExist/{idclient}/{idevent}",name="testLike")
+     */
+    public function getLike(Request $request,NormalizerInterface $normalizer){
+        $client=$this->getDoctrine()->getRepository(Client::class)->find($request->get('idclient'));
+        $event=$this->getDoctrine()->getRepository(Event::class)->find($request->get('idevent'));
+        $like= $this->getDoctrine()->getRepository(Likeevent::class)->findBy([
+            'client'=>$client,
+            'event'=>$event
+        ]);
+
+        $jsonContent1 =$normalizer->normalize($like,'json',['groups'=>'like']);
+        return new Response(json_encode($jsonContent1));
+    }
+
+    /**
+     * @param Request $request
+     * @param NormalizerInterface $normalizer
+     * @return Response
+     * @throws ExceptionInterface
+     * @Route ("/MyEventsJSON",name="MyEventsJSON")
+     */
+    public function myEventsJSON(Request $request,NormalizerInterface $normalizer): Response
+    {
+        $client=$this->getDoctrine()->getRepository(Client::class)->find($request->get('idclient'));
+        $events= array();
+        $n=sizeof($client->getInscriptions());
+        for( $i=0;$i<$n;$i++){
+            $events[$i]=$this->getDoctrine()->getRepository(Event::class)->find($client->getInscriptions()[$i]->getEvent()->getidevent());
+        }
+        $jsonContent=$normalizer->normalize($events,'json',['groups'=>'US']);
+        $r=json_encode($jsonContent);
+        return new Response($r);
     }
 }

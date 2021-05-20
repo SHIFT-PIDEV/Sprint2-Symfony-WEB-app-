@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
+
 
 /**
  * Inscrievent
@@ -10,18 +12,20 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Inscrievent
 {
+
     /**
      * @var int
      *
      * @ORM\Column(name="idInscri", type="integer", nullable=false)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
+     * @Groups("ins")
      */
     private $idinscri;
 
     /**
      * @var \DateTime
-     *
+     *@Groups("ins")
      * @ORM\Column(name="dateInscri", type="datetime", nullable=false)
      */
     private $dateinscri;

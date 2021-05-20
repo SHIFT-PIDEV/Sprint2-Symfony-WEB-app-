@@ -7,9 +7,13 @@ use App\Entity\Event;
 use App\Entity\Inscrievent;
 use App\Repository\InscrieventRepository;
 use MercurySeries\FlashyBundle\FlashyNotifier;
+use Monolog\Formatter\NormalizerFormatter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Serializer\Exception\ExceptionInterface;
+use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
 class InscrieventController extends AbstractController
 {
@@ -148,4 +152,46 @@ class InscrieventController extends AbstractController
         ));
     }
 
+    /* Partie JSON*/
+    /**
+     * @param Request $request
+     * @param NormalizerInterface $formatter
+     * @return Response
+     * @throws ExceptionInterface
+     * @Route("/sinscrire/newInscriJSON",name="newInscriJSON")
+     */
+    public function addInscri(Request $request,NormalizerInterface $formatter){
+        $inscri=new Inscrievent();
+        $client=$this->getDoctrine()->getRepository(Client::class)->find($request->get('idclient'));
+        $event=$this->getDoctrine()->getRepository(Event::class)->find($request->get('idevent'));
+
+        $inscri->setClient($client);
+        $inscri->setEvent($event);
+        $inscri->setDateinscri(new \DateTime());
+        $mn=$this->getDoctrine()->getManager();
+        $mn->persist($inscri);
+        $mn->flush();
+        $jsonContent =$formatter->normalize($inscri,'json',['groups'=>'ins']);
+
+        return new Response(json_encode($jsonContent));
+    }
+
+    /**
+     * @param Request $request
+     * @param NormalizerInterface $normalizer
+     * @return Response
+     * @throws ExceptionInterface
+     * @Route("/sinscrire/testInscriExist/{idclient}/{idevent}",name="test")
+     */
+    public function getInscri(Request $request,NormalizerInterface $normalizer){
+        $client=$this->getDoctrine()->getRepository(Client::class)->find($request->get('idclient'));
+        $event=$this->getDoctrine()->getRepository(Event::class)->find($request->get('idevent'));
+       $inscri= $this->getDoctrine()->getRepository(Inscrievent::class)->findBy([
+           'client'=>$client,
+            'event'=>$event
+        ]);
+
+       $jsonContent1 =$normalizer->normalize($inscri,'json',['groups'=>'ins']);
+        return new Response(json_encode($jsonContent1));
+    }
 }

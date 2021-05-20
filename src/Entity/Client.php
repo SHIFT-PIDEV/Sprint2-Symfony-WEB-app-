@@ -6,6 +6,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * Client
@@ -17,51 +18,51 @@ class Client implements UserInterface
 {
     /**
      * @var int
-     *
      * @ORM\Column(name="id", type="integer", nullable=false)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
+     * @Groups ("cl")
      */
     private $id;
 
     /**
      * @var string
-     *
+     *@Groups ("cl")
      * @ORM\Column(name="nom", type="string", length=50, nullable=false)
      */
     private $nom;
 
     /**
      * @var string
-     *
+     *@Groups ("cl")
      * @ORM\Column(name="prenom", type="string", length=50, nullable=false)
      */
     private $prenom;
 
     /**
      * @var string
-     *
+     *@Groups ("cl")
      * @ORM\Column(name="userName", type="string", length=50, nullable=false)
      */
     private $username;
 
     /**
      * @var string
-     *
+     *@Groups ("cl")
      * @ORM\Column(name="mdp", type="string", length=50, nullable=false)
      */
     private $mdp;
 
     /**
      * @var string
-     *
+     *@Groups ("cl")
      * @ORM\Column(name="email", type="string", length=50, nullable=false,unique=true)
      */
     private $email;
 
     /**
      * @var int|null
-     *
+     *@Groups ("cl")
      * @ORM\Column(name="nbrnotif", type="integer", nullable=true)
      */
     private $nbrnotif;
@@ -82,6 +83,7 @@ class Client implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Groups ("cl")
      */
     private $pic;
     /**

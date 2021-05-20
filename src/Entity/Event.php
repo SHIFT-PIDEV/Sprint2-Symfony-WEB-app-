@@ -5,6 +5,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * Event
@@ -19,6 +20,7 @@ class Event
      * @ORM\Column(name="idEvent", type="integer", nullable=false)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
+     * @Groups ("US")
      */
     private $idevent;
 
@@ -26,6 +28,7 @@ class Event
      * @var int
      * @Assert\NotNull(message="idformateur is required!")
      * @ORM\Column(name="idFormateur", type="integer", nullable=false)
+     * @Groups ("US")
      */
     private $idformateur;
 
@@ -33,6 +36,7 @@ class Event
      * @var string
      * @Assert\NotNull(message="Event name is required!")
      * @ORM\Column(name="nomEvent", type="string", length=100, nullable=false)
+     * @Groups ("US")
      */
     private $nomevent;
 
@@ -41,6 +45,7 @@ class Event
      *@Assert\NotNull(message="Date is required!")
      * @Assert\GreaterThanOrEqual("today",message="Date should be greater than today!")
      * @ORM\Column(name="dateDebut", type="date", nullable=true)
+     * @Groups ("US")
      */
     private $datedebut;
 
@@ -49,6 +54,7 @@ class Event
      *@Assert\NotNull(message="Hour is required!")
      * @Assert\Range(min=0,max=23,notInRangeMessage="check the hour!")
      * @ORM\Column(name="heure", type="integer", nullable=false)
+     * @Groups ("US")
      */
     private $heure;
 
@@ -57,6 +63,7 @@ class Event
      *@Assert\NotNull(message="Duration is required!")
      * @Assert\Positive(message="check the duration!")
      * @ORM\Column(name="duree", type="integer", nullable=false)
+     * @Groups ("US")
      */
     private $duree;
 
@@ -64,6 +71,7 @@ class Event
      * @var string
      * @Assert\NotNull (message="Description is required!")
      * @ORM\Column(name="descEvent", type="text", nullable=false)
+     * @Groups ("US")
      */
     private $descevent;
 
@@ -71,6 +79,7 @@ class Event
      * @var string
      *
      * @ORM\Column(name="image", type="string", length=500, nullable=true)
+     * @Groups ("US")
      */
     private $image;
 
@@ -91,6 +100,7 @@ class Event
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Groups ("US")
      */
     private $pic;
 
@@ -199,7 +209,13 @@ class Event
     {
         return $this->inscriptions;
     }
-
+    /**
+     * @Groups ("US")
+     */
+    public function getInscriptionsNumber(): int
+    {
+        return sizeof($this->inscriptions);
+    }
     public function addInscription(Inscrievent $inscription): self
     {
         if (!$this->inscriptions->contains($inscription)) {
@@ -270,6 +286,13 @@ class Event
     public function getLikes(): Collection
     {
         return $this->likes;
+    }
+    /**
+     * @Groups ("US")
+     */
+    public function getLikesNumber(): int
+    {
+        return sizeof($this->likes);
     }
 
     public function addLike(Likeevent $like): self
